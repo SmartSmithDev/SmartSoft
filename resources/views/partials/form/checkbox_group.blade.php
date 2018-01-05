@@ -8,3 +8,4 @@
     @endforeach
     {!! $errors->first($name, '<p class="help-block">:message</p>') !!}
 </div>
+bro

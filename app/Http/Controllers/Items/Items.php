@@ -122,6 +122,7 @@ class Items extends Controller
         $input_items = request('item');
         $supply_state_id = request('supply_state_id');
         $discountType = request('discountType');
+        $rateType=request('rateType');
         //$discountType = 1;
 
         $json = new \stdClass;
@@ -137,6 +138,7 @@ class Items extends Controller
         $tax_total = 0;
 
         $items = array();
+
 
         //Process each Item data
         if ($input_items) {
@@ -161,8 +163,12 @@ class Items extends Controller
 
                 $gstCalculator = new GstCalculator();
                 $taxData = array();
+                if($rateType==1){  //for amount with inclusive gst
+                $taxData = $gstCalculator->getReverseTax($supply_state_id , 27 , $GstID , $CessId , $itemTaxableValue);
+                }
+                else{
                 $taxData = $gstCalculator->getTax($supply_state_id , 27 , $GstID , $CessId , $itemTaxableValue);
-
+                  }
                 //$itemTotalTax = ($itemTaxableValue / 100) * 500 ;
                 //$itemTotalTax = ($itemTaxableValue / 100) * $GstRates['rate'];
 
@@ -190,11 +196,11 @@ class Items extends Controller
 
                 //Set ItemData Attributes
                 $itemData['discount'] = round($itemDiscount , 2) ;
-                // $itemData['cgst'] = $itemCgst ;
-                // $itemData['sgst'] = $itemSgst ;
-                // $itemData['igst'] = $itemIgst ;
-                // $itemData['ugst'] = $itemUgst ;
-                // $itemData['cess'] = $itemCess ;
+                $itemData['cgst'] = $itemCgst ;
+                $itemData['sgst'] = $itemSgst ;
+                $itemData['igst'] = $itemIgst ;
+                $itemData['ugst'] = $itemUgst ;
+                $itemData['cess'] = $itemCess ;
                 $itemData['subTotal'] = round($item_sub_total , 2) ;
                 $itemData['taxableValue'] = round($itemTaxableValue , 2) ;
                 $itemData['totalTax'] = round($itemTotalTax , 2) ;
@@ -218,5 +224,18 @@ class Items extends Controller
         $json->grand_total = round($grand_total , 2);
         //Return Data in JSON Format
         return response()->json($json);
+    }
+
+
+    public function hsn(Request $req){
+    
+         $hsn_code=$req->input('hsn_code');
+         $data=HSN::where('hsn',$hsn_code)->get()->toArray();
+
+         $unit=Unit::where('unit',$data[0]['item_type'])->pluck('id')->toArray();
+          //dd($data[0]);
+         $data[0]['unit_id']=$unit[0];
+        return json_encode($data[0]);
+
     }
 }

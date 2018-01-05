@@ -49,3 +49,24 @@
     </div>
 
 @endsection
+
+@section('css')
+<style type="text/css">
+    button[title="Delete"]{
+        border:none;
+        background:none;
+        width:100%;
+        color:grey;
+    }
+
+    button[title="Delete"]:hover{
+        background-color:#E1E3E9;
+        color:black;
+    }
+
+    .dropdown-menu >li >a{
+        text-align: center;
+    }
+
+
+</style>
