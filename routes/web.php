@@ -17,16 +17,14 @@ Route::get('/', function () {
     return view('dashboard.dashboard.index');
 });
 
-Route::post('items/ajaxStore','Items\Items@ajaxStore');
+
 Route::resource('sales', 'Sales\Sales');
 Route::resource('items', 'Items\Items');
 Route::post('items/itemCalculate', 'Items\Items@itemCalculate');
 Route::post('/hsn','Items\Items@hsn');
 Route::get('/autofill','Sales\Sales@autoFill');
 Route::post('/vendorInfo','Sales\Sales@vendorInfo');
-
-
-
+//Route::post('sales/vendor', ['as' => 'sales/vendor', 'uses' => 'Sales\Sales@save_data']);
 
 
 Route::get('test', function () {

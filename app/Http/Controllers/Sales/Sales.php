@@ -31,8 +31,11 @@ class Sales extends Controller
         $states = State::all()->pluck ('name' , 'id');
         $items=DB::table('items')->pluck('name');
         $items=$items->toArray();
+        $vendor_type= Sales::getEnumValues('vendors','vendor_type');
+        $business_type= Sales::getEnumValues('vendors','business_type');
+
         //dd($items);
-        return view('sales.sales' , compact('gst' , 'vendors' , 'hsn' , 'units' , 'states','items'));
+        return view('sales.sales' , compact('gst' , 'vendors' , 'hsn' , 'units' , 'states','items','vendor_type','business_type'));
     }
 
     /**
@@ -54,6 +57,10 @@ class Sales extends Controller
     public function store(Request $request)
     {
         //
+         $user = Vendor::create($request->all());
+        // return redirect()->route('/sales');
+        // return view('sales.sales');
+             return redirect("sales");
     }
     
     /**
@@ -107,9 +114,7 @@ class Sales extends Controller
         $data=$req->item;  //item is the get data from url
         //var_dump($data);
         $item_details=Item::where('name','=',$data)->get()->toArray();
-        $gst_type=HSN::where('hsn','=',$item_details[0]['hsn'])->pluck('gst_id')->toArray();
-         $item_details[0]['gst']=$gst_type[0];
-        //dd($item_details[0]);
+        
         //dd(json_encode($item_details[0]));
        
         return json_encode($item_details[0]);
@@ -121,4 +126,23 @@ class Sales extends Controller
         $vendor_state=Vendor::where('id',$vendor_id)->pluck('state_id')->toArray();
         return json_encode($vendor_state);
     }
+
+    //to retrieve enum values from  database as an array
+    public static function getEnumValues($table, $column) {
+      $type = DB::select(DB::raw("SHOW COLUMNS FROM $table WHERE Field = '{$column}'"))[0]->Type ;
+      preg_match('/^enum\((.*)\)$/', $type, $matches);
+      $enum = array();
+      foreach( explode(',', $matches[1]) as $value )
+      {
+        $v = trim( $value, "'" );
+        $enum = array_add($enum, $v, $v);
+      }
+      return $enum;
+    }
+
+    public function save_data(Request $request){     
+
+    }
+
+
 }

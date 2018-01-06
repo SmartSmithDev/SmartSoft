@@ -65,7 +65,6 @@ class Items extends Controller
     public function show($id)
     {
         //
-
     }
 
     /**
@@ -233,14 +232,10 @@ class Items extends Controller
          $hsn_code=$req->input('hsn_code');
          $data=HSN::where('hsn',$hsn_code)->get()->toArray();
 
+         $unit=Unit::where('unit',$data[0]['item_type'])->pluck('id')->toArray();
+          //dd($data[0]);
+         $data[0]['unit_id']=$unit[0];
         return json_encode($data[0]);
 
-    }
-
-    public function ajaxStore(Request $req){
-        $item=Item::create($req->all());
-        $gst_type=HSN::where('hsn','=',$item->hsn)->pluck('gst_id')->toArray();
-        $item->gst=$gst_type[0];
-        return json_encode($item);
     }
 }
