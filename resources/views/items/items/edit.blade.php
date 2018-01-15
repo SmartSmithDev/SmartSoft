@@ -13,40 +13,47 @@
     ]) !!}
 
     <div class="box-body">
-        {{ Form::textGroup('name', 'Item Name' , 'id-card-o') }}
+        {{ Form::textGroup('name',trans('items.name'), 'id-card-o') }}
 
-        {{ Form::textGroup('sku', 'Item SKU' , 'key') }}
+        {{ Form::textGroup('sku', trans('items.sku') , 'key') }}
 
-        {{ Form::selectGroup('hsn', 'HSN Code' , 'barcode', $hsn, null , []) }}
+        {{ Form::selectGroup('hsn', trans('general.hsn') , trans('items.barcode'), $hsn, null , []) }}
 
-        {{ Form::selectGroup('unit_id', 'Unit' , 'balance-scale', $units, null, []) }}
+        {{ Form::selectGroup('unit_id', trans('general.unit') ,trans('items.balance-scale') , $units, null, []) }}
 
-        {{ Form::itemTypeGroup('type', 'Item Type' ) }}
+        {{ Form::itemTypeGroup('type', trans('items.items_type')) }}
 
-        {{ Form::textareaGroup('details', 'Item Details') }}
+        {{ Form::textareaGroup('details', trans('items.items_details')) }}
 
     </div>
     <!-- /.box-body -->
 
     <div class="box-footer">
+
         {{ Form::saveButtons('items/items') }}
+
     </div>
     <!-- /.box-footer -->
     {!! Form::close() !!}
 
 </div>
+
 @endsection
 
 
 @section('js')
     <script src="{{ asset('js/bootstrap-fancyfile.js') }}"></script>
+
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('dist/css/select2.min.css') }}">
     <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
+
 @endsection
 
 @section('css')
+
     <link rel="stylesheet" href="{{ asset('css/bootstrap-fancyfile.css') }}">
+
 @endsection
 
 @section('scripts')
@@ -54,7 +61,7 @@
         var text_yes = '{{ trans('general.goods') }}';
         var text_no = '{{ trans('general.service') }}';
 
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('#type_0').trigger('click');
 
             $('#name').focus();
@@ -69,6 +76,6 @@
 
         });
 
-
     </script>
+    
 @endsection

@@ -16,9 +16,9 @@
 
                 {{ Form::selectGroup('unit_id', trans('general.unit') ,trans('items.balance-scale') , $units, '59', []) }}
 
-                {{ Form::itemTypeGroup('type', trans('items.items type') }}
+                {{ Form::itemTypeGroup('type', trans('items.items_type')) }}
 
-                {{ Form::textareaGroup('details', trans('items.items details')) }}
+                {{ Form::textareaGroup('details', trans('items.items_details')) }}
             </div>
             <!-- /.box-body -->
 
