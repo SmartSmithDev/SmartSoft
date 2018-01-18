@@ -17,6 +17,9 @@ class CreatePurchasesTable extends Migration
         Schema::create('purchases', function(Blueprint $table)
         {
             $table->integer('id' , true);
+            $table->integer('company_id');
+            $table->integer('company_branch_id');
+            $table->integer('company_account_id');
             $table->string('invoice_number', 30)->unique('uk_purchase_invoice_number');
             $table->date('invoice_date');
             $table->string('company_gstin', 16)->default('27BIMPB4559A1ZG');

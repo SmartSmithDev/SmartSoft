@@ -18,6 +18,9 @@ class CreateCreditDebitNotesTable extends Migration
         {
             $table->integer('id' , true);
             $table->string('note_number', 30);
+            $table->integer('company_id');
+            $table->integer('company_branch_id');
+            $table->integer('company_account_id');
             $table->date('note_date');
             $table->enum('note_type', array('Credit','Debit'));
             $table->enum('note_reason', array('01-Sales Return','02-Post Sale Discount','03-Deficiency in services','04-Correction in Invoice','05-Change in POS','06-Finalization of Provisional assessment','07-Others'))->default('07-Others');

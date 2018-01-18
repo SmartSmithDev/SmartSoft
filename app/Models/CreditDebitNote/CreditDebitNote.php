@@ -62,6 +62,21 @@ class CreditDebitNote extends Model
         return $this->belongsTo('App\Models\Vendor\Vendor');
     }
 
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Company\Company');
+    }
+
+    public function companyBankAccount()
+    {
+        return $this->belongsTo('App\Models\Company\CompanyBankAccount');
+    }
+
+    public function companyBranch()
+    {
+        return $this->belongsTo('App\Models\Cendor\CompanyBranch');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

@@ -17,7 +17,22 @@ return [
     'sales'                 => 'Sales Invoice',
     'notes'                 => 'Note|Notes',
     'attachment'            => 'Attachment',
-
+     'vendors'               => 'Vendor|Vendors',
+    'name'                  => 'Name',
+    'email'                 => 'Email',
+    'phone'                 => 'Phone',
+    'vendor_type'           => 'Vendor Type',
+    'business_type'         => 'Business Type',
+    'actions'               => 'Actions',
+    'payments'              => 'Payment|Payments',
+    'date'                  => 'Date',
+    'amount'                => 'Amount',
+    'payment_terms'         => 'Payment Terms',
+    'company'               => 'Company',
+    'payment_types'         => 'Payment Type|Payment Types',
+    'payment_notes'         => 'Payment Notes',
+    'payment_mode'          => 'Payment Mode',
+    'reference'             => 'Reference',
 
     'title' => [
         'new'               => 'New :type',

@@ -24,7 +24,7 @@ class CreateSalesPaymentsTable extends Migration
             $table->string('payment_terms', 50);
             $table->enum('payment_type', array('Complete Payment','Advance Payment','Partial Payment','Balance Payment','Instalment Payment'))->default('Complete Payment');
             $table->integer('company_account_id');
-            $table->integer('vendor_account_id');
+            $table->integer('customer_account_id');
             $table->string('payment_reference', 20);
             $table->text('payment_notes', 65535);
             $table->timestamps();

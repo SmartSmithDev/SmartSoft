@@ -12,6 +12,10 @@ use App\Models\Tax\Cess;
 use App\Models\Item\Item;
 use App\Models\Sale\Sale;
 use App\Models\Sale\SalesItem;
+<<<<<<< HEAD
+=======
+use App\Models\Company\CompanyBranch;
+>>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use PDF;
@@ -25,6 +29,7 @@ class Sales extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+<<<<<<< HEAD
     public function index()     {
         
         $hsn = Hsn::all()->pluck('hsn' , 'hsn');
@@ -40,6 +45,12 @@ class Sales extends Controller
         $cess=Cess::all()->pluck ('description' , 'id');
         //dd($items);
         return view('sales.sales' , compact('gst' , 'vendors' , 'hsn' , 'units' , 'states','items','vendor_type','business_type','cess'));
+=======
+    public function index()
+    {
+        //
+        
+>>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
 
     }
 
@@ -50,7 +61,23 @@ class Sales extends Controller
      */
     public function create() {
         //
+<<<<<<< HEAD
 
+=======
+        $hsn = Hsn::all()->pluck('hsn' , 'hsn');
+        $units = Unit::all()->pluck ('unit' , 'id');
+        $vendors = Vendor::all()->pluck ('name' , 'id');
+        $gst = Gst::all()->pluck ('description' , 'id');
+        $states = State::all()->pluck ('name' , 'id');
+        $items=Item::pluck('name');
+        $items=$items->toArray();
+        $bank_branch=CompanyBranch::all()->pluck('branch_name','id');
+        $vendor_type= Sales::getEnumValues('vendors','vendor_type');
+        $business_type= Sales::getEnumValues('vendors','business_type');
+        $cess=Cess::all()->pluck ('description' , 'id');
+        //dd($items);
+        return view('sales.sales.create' , compact('gst' , 'vendors' , 'hsn' , 'units' , 'states','items','bank_branch','vendor_type','business_type','cess'));
+>>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
     }
 
     /**
@@ -59,6 +86,7 @@ class Sales extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+<<<<<<< HEAD
     public function store(Request $request) {  
         try {
               $sale_table=Sale::create(json_decode($request->input('common-object'),true));
@@ -96,6 +124,37 @@ class Sales extends Controller
                 return $pdf->download('items.pdf');
 
                 //return view("sales_invoice",["sale"=>$sale_table,"items"=>$items_table]);
+=======
+    public function store(Request $request) {
+        try {
+            $sale_table=Sale::create(json_decode($request->input('common-object'),true));
+            $sale_id=$sale_table->id;
+            $items_table=json_decode($request->input('table-object'),true);
+            
+            foreach($items_table as $item_row){
+                 //dd($item_row);
+                if(!empty($item_row)) {
+                    SalesItem::insert(['sales_id'=>$sale_id,'item_id'=>$item_row['id'],'hsn'=>$item_row['hsn'],'item_type'=>$item_row['type'],'unit_price'=>$item_row['unit_price'],'quantity'=>$item_row['quantity'],'unit_id'=>$item_row['unit_id'],'discount'=>$item_row['discount'],'taxable_value'=>$item_row['taxable_value'],'gst_id'=>$item_row['gst'],'cgst'=>$item_row['cgst'],'sgst'=>$item_row['sgst'],'igst'=>$item_row['igst'],'ugst'=>$item_row['ugst'],'cess_id'=>$item_row['cess'],'tax_amount'=>$item_row['tax_amount'],'total_product_amount'=>$item_row['total_amount'],'cess_amount'=>$item_row['cess_amount']]);
+                }
+            }
+        }
+        catch (Exception $e) {
+            $errorCode = $e->errorInfo[1];          
+            if($errorCode == 1062){
+                return redirect('sales');
+            }
+        }
+
+        $vendor=$sale_table->vendor()->pluck('address','gstin')->toArray();
+        $state=$sale_table->supplyState()->pluck('state_tax_code')->toArray()[0];
+        $sale_table["gstin"]=array_keys($vendor)[0];
+        $sale_table["address"]=array_values($vendor)[0];
+        $sale_table["state"]=$state;
+        $pdf = PDF::loadView("sales_invoice",["sale"=>$sale_table,"items"=>$items_table]);
+        return $pdf->download('items.pdf');
+
+        //return view("sales_invoice",["sale"=>$sale_table,"items"=>$items_table]);
+>>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
 
     }
     
@@ -140,12 +199,19 @@ class Sales extends Controller
         //
     }
 
+<<<<<<< HEAD
 //autoFill() returns the item details using item name
     public function autoFill(Request $req) {
+=======
+    //autoFill() returns the item details using item name
+    public function autoFill(Request $req)
+    {
+>>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
         $data=$req->item;  //item is the get data from url
         //var_dump($data);
         $item_details=Item::where('name','=',$data)->get()->toArray();
         $hsn_row=HSN::where('hsn','=',$item_details[0]['hsn'])->pluck('gst_id','cess_id')->toArray();//returns an associative array with key as cess_id and value as gst_id of each row
+<<<<<<< HEAD
          $gst_id=array_values($hsn_row);
          $cess_id=array_keys($hsn_row);
          $item_details[0]['gst']=$gst_id[0];
@@ -154,11 +220,25 @@ class Sales extends Controller
         
         //dd(json_encode($item_details[0]));
        
+=======
+        $gst_id=array_values($hsn_row);
+        $cess_id=array_keys($hsn_row);
+        $item_details[0]['gst']=$gst_id[0];
+        $item_details[0]['cess']=$cess_id[0];
+
+
+        //dd(json_encode($item_details[0]));
+
+>>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
         return json_encode($item_details[0]);
        
     }
 
+<<<<<<< HEAD
     public function vendorInfo(Request $req) {
+=======
+    public function vendorInfo(Request $req){
+>>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
         $vendor_id=$req->input('vendor_id');
         $vendor_state=Vendor::where('id',$vendor_id)->pluck('state_id')->toArray();
         return json_encode($vendor_state);
@@ -176,6 +256,7 @@ class Sales extends Controller
         return $enum;
     }
 
+<<<<<<< HEAD
 //     public function domPdf(){
 //         //$dompdf=new Dompdf();
 //         //$dompdf->set_option('chroot', '/path/to/document/root');
@@ -466,6 +547,8 @@ class Sales extends Controller
 //   //return view('sales_invoice',["sale"=>$sale_table,"items"=>$items_table]);          
 //     }
 
+=======
+>>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
     public function checkExist(Request $req) {
         $id=$req->input('id');
         $value=$req->input('val');
@@ -477,6 +560,10 @@ class Sales extends Controller
             $count=Sale::where("order_id",'=',$value)->count();
             return $count;
         }
+<<<<<<< HEAD
     }   
 
+=======
+    }
+>>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
 }

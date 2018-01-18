@@ -10,6 +10,7 @@ use App\Models\Item\Item;
 use Illuminate\Support\Facades\DB;
 use App\libraries\GstCalculator;
 use App\Models\Tax\Gst;
+use Illuminate\Support\Collection;
 
 class Items extends Controller
 {
@@ -20,12 +21,7 @@ class Items extends Controller
      */
     public function index()
     {
-        //
-       // $items = Item::all()->pluck('HSN Code');
         $items = DB::table('items')->get();
-        //echo $items;
-        //foreach($items as $item)
-         //echo $items;
         return view('items.items.index' , compact('items'));
     }
 
@@ -36,10 +32,8 @@ class Items extends Controller
      */
     public function create()
     {
-        //
         $hsn = Hsn::all()->pluck('hsn' , 'hsn');
         $units = Unit::all()->pluck ('unit' , 'id');
-
         return view ('items.items.create' , compact('hsn' , 'units'));
         //return view ('Items.create');
     }
@@ -51,7 +45,7 @@ class Items extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {  
         Item::create($request->all());
         return redirect('items');
     }
@@ -65,6 +59,7 @@ class Items extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
@@ -122,6 +117,7 @@ class Items extends Controller
         $input_items = request('item');
         $supply_state_id = request('supply_state_id');
         $discountType = request('discountType');
+        $rateType=request('rateType');
         //$discountType = 1;
 
         $json = new \stdClass;
@@ -138,14 +134,16 @@ class Items extends Controller
 
         $items = array();
 
+
         //Process each Item data
         if ($input_items) {
             foreach ($input_items as $key => $item) {
                 $item_sub_total = ($item['price'] * $item['quantity']);
-
+               $itemTotal=0;
+               $itemTotalTax=0;
                 //Get GST ID and Data from Database
                 $GstID = $item['gst_id'];
-                $CessId = 0;
+                $CessId = $item['cess_id'];
                 //$GstRates = Gst::find($GstID);
 
                 if($discountType == 1)
@@ -161,8 +159,19 @@ class Items extends Controller
 
                 $gstCalculator = new GstCalculator();
                 $taxData = array();
+                if($rateType==1){  //for amount with inclusive gst
+                $taxData = $gstCalculator->getReverseTax($supply_state_id , 27 , $GstID , $CessId , $itemTaxableValue);
+               $itemTotalTax = $taxData['Total Tax'];
+               $totalTaxableValue += $taxData['Tax Exclusive'];
+               $itemTaxableValue=$taxData['Tax Exclusive'];  
+                }
+                else{
                 $taxData = $gstCalculator->getTax($supply_state_id , 27 , $GstID , $CessId , $itemTaxableValue);
-
+              $itemTotalTax = $taxData['Total Tax'];
+                 $itemTaxableValue = $item_sub_total - $itemDiscount;
+                $totalTaxableValue += $itemTaxableValue ;
+                
+                  }
                 //$itemTotalTax = ($itemTaxableValue / 100) * 500 ;
                 //$itemTotalTax = ($itemTaxableValue / 100) * $GstRates['rate'];
 
@@ -174,9 +183,9 @@ class Items extends Controller
                  $itemIgst = $taxData['IGST'] ;
                  $itemUgst = $taxData['UGST'] ;
                  $itemCess = $taxData['Cess'] ;
-                 $itemTotalTax = $taxData['Total Tax'] ;
-
-                $itemTotal = $itemTaxableValue + $itemTotalTax ;
+                $itemTotal = $itemTaxableValue + $itemTotalTax;
+                  
+                
 
                 //Total Calculations
                  $totalCgst += $itemCgst ;
@@ -185,16 +194,16 @@ class Items extends Controller
                  $totalUgst += $itemUgst ;
                  $totalCess += $itemCess ;
                 $totalDiscount += $itemDiscount ;
-                $totalTaxableValue += $itemTaxableValue ;
+                
                 $tax_total += $itemTotalTax ;
 
                 //Set ItemData Attributes
                 $itemData['discount'] = round($itemDiscount , 2) ;
-                // $itemData['cgst'] = $itemCgst ;
-                // $itemData['sgst'] = $itemSgst ;
-                // $itemData['igst'] = $itemIgst ;
-                // $itemData['ugst'] = $itemUgst ;
-                // $itemData['cess'] = $itemCess ;
+                $itemData['cgst'] = $itemCgst ;
+                $itemData['sgst'] = $itemSgst ;
+                $itemData['igst'] = $itemIgst ;
+                $itemData['ugst'] = $itemUgst ;
+                $itemData['cess'] = round($itemCess , 2) ; ;
                 $itemData['subTotal'] = round($item_sub_total , 2) ;
                 $itemData['taxableValue'] = round($itemTaxableValue , 2) ;
                 $itemData['totalTax'] = round($itemTotalTax , 2) ;
@@ -218,5 +227,26 @@ class Items extends Controller
         $json->grand_total = round($grand_total , 2);
         //Return Data in JSON Format
         return response()->json($json);
+    }
+
+
+    public function hsn(Request $req){
+    
+         $hsn_code=$req->input('hsn_code');
+         $data=HSN::where('hsn',$hsn_code)->get()->toArray();
+         //$data=$data->only(['gst_id','cess_id','item_type']) 
+        
+        return json_encode($data);
+
+    }
+
+    public function ajaxStore(Request $req){
+        $item=Item::create($req->all());
+        $hsn_row=HSN::where('hsn','=',$item->hsn)->pluck('gst_id','cess_id')->toArray();
+        $gst_id=array_values($hsn_row);
+         $cess_id=array_keys($hsn_row);
+        $item->gst=$gst_id[0];
+        $item->cess=$cess_id[0];
+        return json_encode($item);
     }
 }

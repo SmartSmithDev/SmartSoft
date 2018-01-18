@@ -82,6 +82,21 @@
                 });
             });
 
+
+$(document).ready(function(){
+$('.radio-inline label').removeClass('active');
+$('.radio-inline').on('click','label',function(){
+if($(this).attr('id')=="type_0"){
+  $(this).css({"background-color":"#398439","color":"white"});
+  $('#type_1').css({"background-color":"#E7E7E7","color":"black"});
+}
+else{
+$(this).css({"background-color":"#3C8DBC","color":"white"});
+  $('#type_0').css({"background-color":"#E7E7E7","color":"black"});
+}
+});
+});
+
     </script>
     
 @endsection

@@ -190,6 +190,16 @@ return [
         Lavary\Menu\ServiceProvider::class,
         //Laravel Flash
         Laracasts\Flash\FlashServiceProvider::class,
+        //Laravel Installer
+        RachidLaasri\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
+        //Laravel Permissions
+        Spatie\Permission\PermissionServiceProvider::class,
+        //Google Drive Driver ivanvermeyen/laravel-google-drive-demo
+        App\Providers\GoogleDriveServiceProvider::class,
+        //DomPDF
+        Barryvdh\DomPDF\ServiceProvider::class,
+        //Inventory Management
+        //'Stevebauman\Inventory\InventoryServiceProvider'
     ],
 
     /*
@@ -249,6 +259,8 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         //Lavary Menu
         'Menu'      => Lavary\Menu\Facade::class,
+        //DomPDF
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
 
 

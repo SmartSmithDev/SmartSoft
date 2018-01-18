@@ -3,6 +3,10 @@
     <div class="input-group">
         <div class="input-group-addon"><i class="fa fa-{{ $icon }}"></i></div>
         {!! Form::text($name, $value, array_merge(['class' => 'form-control', 'placeholder' => trans('general.form.enter', ['field' => $text])], $attributes)) !!}
+        
     </div>
+    @if($name=="invoice_number"|| $name=="order_id")
+        <span class="{{ $name }}">Already Exist</span>
+        @endif
     {!! $errors->first($name, '<p class="help-block">:message</p>') !!}
 </div>

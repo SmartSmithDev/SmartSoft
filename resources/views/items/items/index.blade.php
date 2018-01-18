@@ -12,6 +12,7 @@
 
     <div class="box-body">
        
+<<<<<<< HEAD
         <table class="table table-striped table-hover" id="tbl-items">
             <thead>
                 <tr>
@@ -26,6 +27,10 @@
 
             <tbody>
                 @foreach($items as $item)
+=======
+            <table class="table table-striped table-hover" id="tbl-items">
+                <thead>
+>>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
                     <tr>
                         <td class="col-md-1">{{ $item->sku }}</td>
                         <td class="col-md-1">{{ $item->name }}</td>
@@ -48,16 +53,25 @@
                 @endforeach
 
                 </tbody>
+<<<<<<< HEAD
         </table>
+=======
+            </table>
+>>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
        
     </div>
 
 @endsection
 
 @section('css')
+<<<<<<< HEAD
 
 <style type="text/css">
     button[title="Delete"]  {
+=======
+<style type="text/css">
+    button[title="Delete"]{
+>>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
         border:none;
         background:none;
         width:100%;
