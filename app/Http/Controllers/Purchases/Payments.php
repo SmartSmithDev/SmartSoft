@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Purchases;
-
+use App\Http\Controllers\Purchases
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Sale\SalesPayment;
@@ -23,8 +23,13 @@ class Payments extends Controller
     public function index()
     {
         //
-        $vendors=DB::table('vendors')->get();
-        return view('payments.payments.index',compact('vendors'));
+       //Display the payments
+        $d =Sale::select('sales.invoice_type as invoice_type','sales.order_date as order_date','sales.total_taxable_value as total_taxable_value','sales.total_discount as total_discount ','sales.total_tax_amount as total_tax_amount','sales.shipping_cost as shipping_cost','sales.round_off as round_off','sales.total_amount as total_amount','sales.reverse_charge as reverse_chargep','sales.status as status','sales_payments.payment_date as payment_date','sales_payments.payment_mode as payment_mode','sales_payments.paid_amount as paid_amount','sales_payments.payment_type as payment_type')
+          ->join('sales_payments', 'sales.id', '=', 'sales_payments.sales_id')
+          ->get();
+        $status = array('Paid','Unpaid');
+        return view('Payments.payments',compact('d','status'));
+
     }
 
     /**
@@ -63,11 +68,22 @@ class Payments extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show(Request $req) {
+        $status = $req->input('status');
+        if($status == 0) {
+        //if status is complete
+            $d =Sale::select('sales.invoice_type as invoice_type','sales.order_date as order_date','sales.total_taxable_value as total_taxable_value','sales.total_discount as total_discount ','sales.total_tax_amount as total_tax_amount','sales.shipping_cost as shipping_cost','sales.round_off as round_off','sales.total_amount as total_amount','sales.reverse_charge as reverse_chargep','sales.status as status','sales_payments.payment_date as payment_date','sales_payments.payment_mode as payment_mode','sales_payments.paid_amount as paid_amount','sales_payments.payment_type as payment_type')
+          ->join('sales_payments', 'sales.id', '=', 'sales_payments.sales_id')->where('status','=','complete')
+          ->get();
+        }
+       else {
+        //if status is incomplete
+            $d =Sale::select('sales.invoice_type as invoice_type','sales.order_date as order_date','sales.total_taxable_value as total_taxable_value','sales.total_discount as total_discount ','sales.total_tax_amount as total_tax_amount','sales.shipping_cost as shipping_cost','sales.round_off as round_off','sales.total_amount as total_amount','sales.reverse_charge as reverse_chargep','sales.status as status','sales_payments.payment_date as payment_date','sales_payments.payment_mode as payment_mode','sales_payments.paid_amount as paid_amount','sales_payments.payment_type as payment_type')
+          ->join('sales_payments', 'sales.id', '=', 'sales_payments.sales_id')->where('status','=','incomplete')
+          ->get();
+        }
+        return json_encode($d);
     }
-
     /**
      * Show the form for editing the specified resource.
      *

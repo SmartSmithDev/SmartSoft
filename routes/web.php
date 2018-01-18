@@ -28,7 +28,7 @@ Route::get('/autofill','Sales\Sales@autoFill');
 Route::post('/vendorInfo','Sales\Sales@vendorInfo');
 Route::post('vendorajax','Vendors\Vendors@store1');
 Route::post('invoice_order_check','Sales\Sales@checkExist');
-
+Route::get('Payments','Purchases\Payments@show');
 Route::post('items/itemCalculate', 'Items\Items@itemCalculate');
 Route::post('items/ajaxStore','Items\Items@ajaxStore');
 Route::resource('items', 'Items\Items');
