@@ -9,6 +9,7 @@ use App\Models\Company\Company;
 use App\Models\Company\CompanyBankAccount;
 use App\Models\Company\CompanyBranch;
 use App\Models\Company\CompanyGstin;
+use Illuminate\Support\Facades\DB;
 
 class Companies extends Controller
 {
@@ -34,7 +35,7 @@ class Companies extends Controller
         //
         $states = State::all()->pluck('name' ,'id');
         $city=["0"=>"Mumbai"];
-        $country=["0"=>"India"];
+        $country=DB::table('countries')->get()->pluck('name','id');
         return view('company.company.create',compact('states','city','country'));
     }
 
