@@ -97,7 +97,7 @@ class Payments extends Controller
         $company_accounts=CompanyBankAccount::all()->pluck('account_number','id');
         $payment_mode=Payments::getEnumValues('sales_payments','payment_mode');
         $payment_type=Payments::getEnumValues('sales_payments','payment_type');
-        return view('payments.payments.edit',compact('vendor','vendor_accounts','company_accounts','payment_mode','payment_type'));
+        return view('Payments.edit',compact('vendor','vendor_accounts','company_accounts','payment_mode','payment_type'));
     }
 
     /**
