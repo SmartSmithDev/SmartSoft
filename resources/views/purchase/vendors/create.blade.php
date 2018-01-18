@@ -5,7 +5,7 @@
 @section('content')
     <!-- Default box -->
         <div class="box box-success">
-            {!! Form::open(['action' => 'Vendors\Vendors@store']) !!}
+            {!! Form::open(['action' => 'Purchases\Vendors@store']) !!}
 
             <div class="box-body">
 
@@ -61,22 +61,9 @@
 
 @section('scripts')
     <script type="text/javascript">
-        var text_yes = '{{ trans('general.goods') }}';
-        var text_no = '{{ trans('general.service') }}';
 
         $(document).ready(function(){
-            $('#type_0').trigger('click');
-
             $('#name').focus();
-
-            $("#unit_id").select2({
-                placeholder: "{{ trans('general.form.select.field', ['field' => trans_choice('general.unit' , 2)]) }}"
-            });
-
-            $("#hsn").select2({
-                placeholder: "{{ trans('general.form.select.field', ['field' => trans('general.hsn')]) }}"
-            });
-
         });
 
     </script>
