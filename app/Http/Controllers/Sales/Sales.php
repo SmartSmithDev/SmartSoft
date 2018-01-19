@@ -13,7 +13,12 @@ use App\Models\Item\Item;
 use App\Models\Sale\Sale;
 use App\Models\Sale\SalesItem;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+use App\Models\Customer\Customer;
+use App\Models\Company\Company;
+>>>>>>> 143ced183f1c01a32a51b2061f77843978a41f65
 use App\Models\Company\CompanyBranch;
 >>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
 use Illuminate\Support\Facades\DB;
@@ -49,8 +54,17 @@ class Sales extends Controller
     public function index()
     {
         //
+<<<<<<< HEAD
         
 >>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
+=======
+        $sales=Sale::all(); 
+        foreach($sales as $sale){
+            $sale->customer=Customer::find($sale->customer_id)->name;
+            $sale->company=Company::find($sale->company_id)->name;
+        }
+        return view('sales.sales.index',compact('sales'));
+>>>>>>> 143ced183f1c01a32a51b2061f77843978a41f65
 
     }
 
@@ -86,6 +100,7 @@ class Sales extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+<<<<<<< HEAD
 <<<<<<< HEAD
     public function store(Request $request) {  
         try {
@@ -139,24 +154,53 @@ class Sales extends Controller
             }
         }
         catch (Exception $e) {
+=======
+
+    public function store(Request $request)
+    {  
+    try{
+          
+        $sale_table=Sale::create(json_decode($request->input('common-object'),true));
+        $bank_branch_id=$request->input('bank_branch'); 
+        $sale_id=$sale_table->id;
+        $company=Company::find($bank_branch_id);
+        $company_id=$company->id;
+        $account_id=$company->companyBankAccount()->first()->id;
+     $items_table=json_decode($request->input('table-object'),true);
+        foreach($items_table as $item_row){
+             //dd($item_row);
+             if(!empty($item_row)){
+             SalesItem::insert(['sales_id'=>$sale_id,'item_id'=>$item_row['id'],'hsn'=>$item_row['hsn'],'item_type'=>$item_row['type'],'unit_price'=>$item_row['unit_price'],'quantity'=>$item_row['quantity'],'unit_id'=>$item_row['unit_id'],'discount'=>$item_row['discount'],'taxable_value'=>$item_row['taxable_value'],'gst_id'=>$item_row['gst'],'cgst'=>$item_row['cgst'],'sgst'=>$item_row['sgst'],'igst'=>$item_row['igst'],'ugst'=>$item_row['ugst'],'cess_id'=>$item_row['cess'],'tax_amount'=>$item_row['tax_amount'],'total_product_amount'=>$item_row['total_amount'],'cess_amount'=>$item_row['cess_amount'],"company_branch_id"=>$bank_branch_id,"company_id"=>$company_id,"company_account_id"=>$account_id]);
+         }
+     }
+
+$vendor=$sale_table->vendor()->pluck('address','gstin')->toArray();
+$state=$sale_table->supplyState()->pluck('state_tax_code')->toArray()[0];
+$sale_table["gstin"]=array_keys($vendor)[0];
+$sale_table["address"]=array_values($vendor)[0];
+$sale_table["state"]=$state;
+//dd($items_table);
+$pdf = PDF::loadView("sales_invoice",["sale"=>$sale_table,"items"=>$items_table]);
+
+return $pdf->download('items.pdf');
+   }
+     catch (Exception $e) {
+>>>>>>> 143ced183f1c01a32a51b2061f77843978a41f65
             $errorCode = $e->errorInfo[1];          
-            if($errorCode == 1062){
-                return redirect('sales');
-            }
+           return "Some error occured";
         }
+    }
 
-        $vendor=$sale_table->vendor()->pluck('address','gstin')->toArray();
-        $state=$sale_table->supplyState()->pluck('state_tax_code')->toArray()[0];
-        $sale_table["gstin"]=array_keys($vendor)[0];
-        $sale_table["address"]=array_values($vendor)[0];
-        $sale_table["state"]=$state;
-        $pdf = PDF::loadView("sales_invoice",["sale"=>$sale_table,"items"=>$items_table]);
-        return $pdf->download('items.pdf');
 
+    
+
+
+<<<<<<< HEAD
         //return view("sales_invoice",["sale"=>$sale_table,"items"=>$items_table]);
 >>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
+=======
+>>>>>>> 143ced183f1c01a32a51b2061f77843978a41f65
 
-    }
     
     /**
      * Display the specified resource.

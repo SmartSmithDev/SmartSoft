@@ -60,50 +60,7 @@
                     
                 </tbody>
             </table>
-     <!--  <table class="table table-striped">
-        <thead>
-            <th>Account Identifier</th>
-            <th>Entity Name</th>
-            <th>Holder Name</th>
-            <th>Bank Name</th>
-            <th>Account Number</th>
-            <th>Ifsc Code</th>
-            <th>Notes</th>
- </thead>
-          <tbody>
-             <td>
-<div class="form-group">
-    <input type="text" class="form-control" id="account-i-0" name="accounts[0][account_identifier]">
-</div>
-             </td>
-             <td>
-                 <div class="form-group">
-    <input type="text" class="form-control" id="e-name-0" name="accounts[0][entity_name]">
-</div>
-             </td>
-             <td>
-                 <div class="form-group">
-    <input type="text" class="form-control" id="holder-0" name="accounts[0][holder_name]">
-</div>
-             </td>
-             <td><div class="form-group">
-    <input type="text" class="form-control" id="bank-0" name="accounts[0][bank_name]">
-</div></td>
-             <td><div class="form-group">
-    <input type="text" class="form-control" id="account-no-0" name="accounts[0][account_number]">
-</div></td>
-             <td>
-                 <div class="form-group">
-    <input type="text" class="form-control" id="ifsc-0" name="accounts[0][ifsc]">
-</div>
-             </td> 
-             <td>
-                 <div class="form-group">
-    <textarea type="text" class="form-control" id="notes-0" name="accounts[0][account_number]" rows="1"></textarea>
-</div>
-             </td>
-          </tbody>
-      </table> -->
+  
   </div>
 
 

@@ -16,7 +16,7 @@
                         <th class="col-md-1">@sortablelink('id', 'ID')</th>
                         <th class="col-md-1">@sortablelink('name', 'Name')</th>
                         <th class="col-md-1">PAN</th>
-                        <th class="col-md-1">Status</th>
+                       
                         <th class="col-md-1 text-center">actions</th>
                     </tr>
                 </thead>
@@ -27,7 +27,7 @@
                             <td class="col-md-1">{{ $company->id }}</td>
                             <td class="col-md-1">{{ $company->name }}</td>
                             <td class="col-md-1">{{ $company->pan }}</td>
-                            <td class="col-md-1">Disabled</td>
+                            
                             
                             <td class="text-center">
                                 <div class="btn-group">

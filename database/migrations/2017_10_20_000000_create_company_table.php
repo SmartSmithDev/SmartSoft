@@ -16,11 +16,12 @@ class CreateCompanyTable extends Migration
         //Create companies Table
         Schema::create('companies', function(Blueprint $table)
         {
-            $table->integer('id' , true);
+            $table->integer('id',true);
             $table->string('name', 50);
             $table->string('pan', 11);
             $table->timestamps();
             $table->softDeletes();
+
         });
     }
 

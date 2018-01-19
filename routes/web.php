@@ -29,16 +29,16 @@ Route::get('/demo','Demo@index');
 =======
 >>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
 Route::resource('sales', 'Sales\Sales');
-Route::resource('vendors','Vendors\Vendors');
+Route::resource('vendors','Purchases\Vendors');
 Route::resource('payments','Purchases\Payments');
 Route::resource('company','Companies\Companies');
 Route::resource('sales/customers','Sales\Customers');
 Route::post('/hsn','Items\Items@hsn');
 Route::get('/autofill','Sales\Sales@autoFill');
 Route::post('/vendorInfo','Sales\Sales@vendorInfo');
-Route::post('vendorajax','Vendors\Vendors@store1');
+Route::post('vendorajax','Purchases\Vendors@store1');
 Route::post('invoice_order_check','Sales\Sales@checkExist');
-
+Route::get('Payments','Purchases\Payments@show');
 Route::post('items/itemCalculate', 'Items\Items@itemCalculate');
 Route::post('items/ajaxStore','Items\Items@ajaxStore');
 Route::resource('items', 'Items\Items');

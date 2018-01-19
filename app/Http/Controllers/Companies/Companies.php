@@ -12,7 +12,11 @@ use App\Models\Company\Company;
 use App\Models\Company\CompanyBankAccount;
 use App\Models\Company\CompanyBranch;
 use App\Models\Company\CompanyGstin;
+<<<<<<< HEAD
 >>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
+=======
+use Illuminate\Support\Facades\DB;
+>>>>>>> 143ced183f1c01a32a51b2061f77843978a41f65
 
 class Companies extends Controller
 {
@@ -48,7 +52,7 @@ class Companies extends Controller
         //
         $states = State::all()->pluck('name' ,'id');
         $city=["0"=>"Mumbai"];
-        $country=["0"=>"India"];
+        $country=DB::table('countries')->get()->pluck('name','id');
         return view('company.company.create',compact('states','city','country'));
 >>>>>>> 584330e6ac067f87a67e7f3544037033f28f5bf4
     }
