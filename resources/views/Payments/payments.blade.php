@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title', 'Payments')
 @section('content')
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
@@ -8,7 +8,8 @@
 
 <div class="box-body">
   <div class="table table-responsive" style="overflow-y: hidden">
-    <table class="table table-striped table-hover"  class="ui-responsive" id="myTable">
+    <table class="table table-striped table-hover"  class="ui-responsive" id="myTable" data-role="table" data-mode="columntoggle">
+      
       <thead>
         <tr>
         {!! Form::open(['url' => 'Payments\Payments', 'role' => 'form', 'method' => 'GET']) !!}
@@ -17,22 +18,22 @@
           </div>
             {!! Form::close() !!}
           
-          <th class="col-md-1 text-center" >@sortablelink('invoice_type', 'Invoice type')</th>
-          <th class="col-md-1 text-center" >@sortablelink('order_date', 'order date')</th>
-          <!-- <th class="col-md-1 text-center" >@sortablelink('sales_type', 'sales type')</th> -->
-          <th class="col-md-1 text-center" >@sortablelink('total_taxable_value', 'Total taxable value')</th>
-          <th class="col-md-1 text-center" >@sortablelink('total_discount', 'Total discount')</th>
-          <th class="col-md-1 text-center" >@sortablelink('total_tax_amount', 'Total tax amount')</th>
-          <th class="col-md-1 text-center" >@sortablelink('shipping_cost', 'shipping cost')</th>
-          <!-- <th class="col-md-1 text-center" >@sortablelink('roundoff', 'Roundoff')</th> -->
-          <!-- <th class="col-md-1 text-center" >@sortablelink('total_amount', 'Total amount')</th> -->
-          <!-- <th class="col-md-1 text-center" >@sortablelink('reverse_charge', 'Reverse charge')</th> -->
-          <th class="col-md-1 text-center" >@sortablelink('payment_date', 'Payment date')</th>
-          <th class="col-md-1 text-center" >@sortablelink('payment_mode', 'Payment Mode')</th>
-          <!-- <th class="col-md-1 text-center" >@sortablelink('reverse_chargep', 'Reverse charge')</th> -->
-          <th class="col-md-1 text-center" >@sortablelink('paid_amount', 'Paid Amount')</th>
-          <th class="col-md-1 text-center" >@sortablelink('payment_type', 'Payment Type')</th>
-          <th class="col-md-1 text-center">@sortablelink('status', 'Status')</th>
+          <th class="col-md-1 text-center"  data-priority="1" >@sortablelink('invoice_type', 'Invoice type')</th>
+          <th class="col-md-1 text-center" data-priority="2" >@sortablelink('order_date', 'order date')</th>
+          <th class="col-md-1 text-center" data-priority="3" >@sortablelink('sales_type', 'sales type')</th>
+          <th class="col-md-1 text-center" data-priority="4">@sortablelink('total_taxable_value', 'Total taxable value')</th>
+          <th class="col-md-1 text-center" data-priority="5">@sortablelink('total_discount', 'Total discount')</th>
+          <th class="col-md-1 text-center" data-priority="6">@sortablelink('total_tax_amount', 'Total tax amount')</th>
+          <th class="col-md-1 text-center" data-priority="7">@sortablelink('shipping_cost', 'shipping cost')</th> 
+          <th class="col-md-1 text-center" data-priority="8" >@sortablelink('roundoff', 'Roundoff')</th>
+          <th class="col-md-1 text-center" data-priority="9">@sortablelink('total_amount', 'Total amount')</th>
+          <th class="col-md-1 text-center" data-priority="10">@sortablelink('reverse_charge', 'Reverse charge')</th>
+          <th class="col-md-1 text-center" data-priority="11">@sortablelink('payment_date', 'Payment date')</th>
+          <th class="col-md-1 text-center" data-priority="12">@sortablelink('payment_mode', 'Payment Mode')</th>
+          <th class="col-md-1 text-center" data-priority="13" >@sortablelink('reverse_chargep', 'Reverse charge')</th>
+          <th class="col-md-1 text-center" data-priority="14">@sortablelink('paid_amount', 'Paid Amount')</th>
+          <th class="col-md-1 text-center" data-priority="1">@sortablelink('payment_type', 'Payment Type')</th>
+          <!-- <th class="col-md-1 text-center">@sortablelink('status', 'Status')</th> -->
         </tr>
       </thead>
             	
@@ -86,21 +87,21 @@
       <tr>
         <td class="col-md-1 text-center">{{ $Sale->invoice_type }}</td>
         <td class="col-md-1 text-center">{{ $Sale->order_date }}</td>
-        <!-- <td class="col-md-1 text-center">{{ $Sale->sales_type }}</td> -->
+        <td class="col-md-1 text-center">{{ $Sale->sales_type }}</td>
         <td class="col-md-1 text-center">{{ $Sale->total_taxable_value }}</td>
         <td class="col-md-1 text-center">{{ $Sale->total_discount }}</td>
        
         <td class="col-md-1 text-center">{{ $Sale->total_tax_amount}}</td>
         <td class="col-md-1 text-center">{{ $Sale->shipping_cost}}</td>
-        <!-- <td class="col-md-1 text-center">{{ $Sale->round_off}}</td>
+        <td class="col-md-1 text-center">{{ $Sale->round_off}}</td>
         <td class="col-md-1 text-center">{{ $Sale->total_amount}}</td>
-        <td class="col-md-1 text-center">{{ $Sale->reverse_chargep}}</td> -->
+        <td class="col-md-1 text-center">{{ $Sale->reverse_chargep}}</td>
         <td class="col-md-1 text-center">{{ $Sale->payment_date}}</td>
         <td class="col-md-1 text-center">{{ $Sale->payment_mode}}</td>
-        <!-- <td class="col-md-1 text-center">{{ $Sale->reverse_charge}}</td> -->
+        <td class="col-md-1 text-center">{{ $Sale->reverse_charge}}</td>
         <td class="col-md-1 text-center">{{ $Sale->paid_amount}}</td>
         <td class="col-md-1 text-center">{{ $Sale->payment_type}}</td>
-        <td class="col-md-1 text-center">{{ $Sale->status}}</td>
+        <!-- <td class="col-md-1 text-center">{{ $Sale->status}}</td> -->
         </tr>
       @endforeach
       </tbody>
