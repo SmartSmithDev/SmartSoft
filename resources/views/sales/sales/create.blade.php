@@ -923,7 +923,7 @@ for(var i=0;i<(nrows);i++){
 
 
 
-commonDetails['vendor_id']=$('#vendor_id').val();
+commonDetails['customer_id']=$('#vendor_id').val();
 commonDetails['invoice_date']=$('#invoice_date').val();
 commonDetails['invoice_number']=$('#invoice_number').val();
 commonDetails['order_id']=$('#order_id').val();
