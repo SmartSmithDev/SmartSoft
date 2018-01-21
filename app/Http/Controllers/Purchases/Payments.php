@@ -11,6 +11,8 @@ use App\Models\Vendor\VendorAccount;
 use App\Models\Company\Company;
 use App\Models\Company\CompanyBankAccount;
 use App\Models\Sale\Sale;
+use  App\Models\Customer\Customer;
+use App\Models\Customer\CustomerAccounts;
 
 
 class Payments extends Controller
@@ -40,11 +42,13 @@ class Payments extends Controller
     public function create()
     {
         // $sales = Sale::all()->pluck('id');
+        $sales=Sale::pluck('order_id','id');
+        $customer_accounts=CustomerAccounts::all()->pluck('account_number','id');
         $vendor_accounts = VendorAccount::all()->pluck('account_number','id');
         $company_accounts=CompanyBankAccount::all()->pluck('account_number','id');
         $payment_mode=Payments::getEnumValues('sales_payments','payment_mode');
         $payment_type=Payments::getEnumValues('sales_payments','payment_type');
-        return view('Payments.create',compact('vendor_accounts','company_accounts','payment_mode','payment_type'));
+        return view('Payments.create',compact('vendor_accounts','company_accounts','payment_mode','payment_type','sales','customer_accounts'));
 
     }
 
@@ -57,7 +61,13 @@ class Payments extends Controller
     public function store(Request $request)
     {
         //
-        SalesPayment::create($request->all());
+        $sale=Sale::find($request->sales_id)->pluck('company_account_id','customer_id');
+        $company_account_id=array_values($sale)[0];
+        $customer_id=array_keys($sale)[0];
+        
+        //dd($sale);
+
+
         // $payment=SalesPayment::updateOrCreate($request->all());
         // $payment->paid_amount=$payment->paid_amount+$request->input('paid_amount');
     }
@@ -140,5 +150,10 @@ class Payments extends Controller
         $enum = array_add($enum, $v, $v);
       }
       return $enum;
+    }
+
+    public function customer_accounts(Request $req){
+        $customer_accounts=Customer::find($req->input('id'))->accounts()->pluck('account_number','id');
+        return json_encode($customer_accounts);
     }
 }

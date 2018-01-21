@@ -8,8 +8,14 @@
         {!! Form::open(['url' => '/payments','role' => 'form']) !!}
 
         <div class="box-body">
-      
+            {{ Form::selectGroup('sale_id','Sales','home', $sales) }}
             {{ Form::textGroup('payment_date', 'Payment Date', 'calendar',['id' => 'payment_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''], null) }}
+            {{ Form::selectGroup('payment_mode','Payment Mode','home', $payment_mode) }}
+            {{ Form::textGroup('paid_amount', 'Paid Amount', '') }}
+            {{ Form::selectGroup('payment_type','Payment Type','home', $payment_type) }}
+              {{ Form::selectGroup('customer_account_id','Customer Account','home', $customer_accounts) }}
+            {{ Form::textGroup('payment_terms', 'Payment Terms', '') }}
+            {{ Form::textareaGroup('payment_notes', 'Payment Notes', '') }}
 
            
         </div>
@@ -58,5 +64,27 @@
 
 @section('scripts')
 
+<script type="text/javascript">
+    $(document).ready(function){
+        $('#sale_id').onchange(function(){
+             $.ajax({
+                            url: "{{ url('/payment_accounts') }}",
+                            type: 'GET',
+                            dataType: 'JSON',
+                            data: 'id='+$('#sale_id').val(),
+                            success: function(data) {
+                                data=JSON.parse(data);
+                                var sale_select=$('#sale_id');
+                                for(var key in data){
+                                    sale_select.append('<option value='+key'>'+data.key+'</option>');
+                                }
+                                console.log(data);
 
+                            }
+                        });
+
+        });
+     
+    }
+</script>
 @endsection

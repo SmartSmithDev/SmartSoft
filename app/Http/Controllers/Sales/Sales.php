@@ -80,7 +80,7 @@ class Sales extends Controller
         $company=Company::find($bank_branch_id);
         $company_id=$company->id;
         $account_id=$company->companyBankAccount()->first()->id;
-     $items_table=json_decode($request->input('table-object'),true);
+        $items_table=json_decode($request->input('table-object'),true);
         foreach($items_table as $item_row){
              //dd($item_row);
              if(!empty($item_row)){
