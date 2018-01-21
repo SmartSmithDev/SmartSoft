@@ -44,7 +44,7 @@ class Payments extends Controller
         $company_accounts=CompanyBankAccount::all()->pluck('account_number','id');
         $payment_mode=Payments::getEnumValues('sales_payments','payment_mode');
         $payment_type=Payments::getEnumValues('sales_payments','payment_type');
-        return view('payments.payments.create',compact('vendor_accounts','company_accounts','payment_mode','payment_type'));
+        return view('Payments.create',compact('vendor_accounts','company_accounts','payment_mode','payment_type'));
 
     }
 
@@ -90,13 +90,13 @@ class Payments extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(SalesPayment $payment)
+    public function edit(Request $req,$id)
     {
         // $sales = Sale::all()->pluck('id');
-        $vendor_accounts = VendorAccount::all()->pluck('account_number','id');
-        $company_accounts=CompanyBankAccount::all()->pluck('account_number','id');
-        $payment_mode=Payments::getEnumValues('sales_payments','payment_mode');
-        $payment_type=Payments::getEnumValues('sales_payments','payment_type');
+        // $vendor_accounts = VendorAccount::all()->pluck('account_number','id');
+        // $company_accounts=CompanyBankAccount::all()->pluck('account_number','id');
+        // $payment_mode=Payments::getEnumValues('sales_payments','payment_mode');
+        // $payment_type=Payments::getEnumValues('sales_payments','payment_type');
         return view('Payments.edit',compact('vendor','vendor_accounts','company_accounts','payment_mode','payment_type'));
     }
 
