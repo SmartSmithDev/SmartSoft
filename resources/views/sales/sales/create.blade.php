@@ -418,6 +418,7 @@ color:white;
 @section('scripts')
     <script type="text/javascript">
         var item_row = '{{ $item_row }}';
+        console.log(item_row);
         var itemsArray=new Array();
 
         var ogRow;
