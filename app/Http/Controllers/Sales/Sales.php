@@ -51,16 +51,17 @@ class Sales extends Controller
         $hsn = Hsn::all()->pluck('hsn' , 'hsn');
         $units = Unit::all()->pluck ('unit' , 'id');
         $vendors = Vendor::all()->pluck ('name' , 'id');
+        $customers=Customer::all()->pluck ('name' , 'id');
         $gst = Gst::all()->pluck ('description' , 'id');
         $states = State::all()->pluck ('name' , 'id');
         $items=Item::pluck('name');
         $items=$items->toArray();
         $bank_branch=CompanyBranch::all()->pluck('branch_name','id');
-        $vendor_type= Sales::getEnumValues('vendors','vendor_type');
+        $customer_type= Sales::getEnumValues('customers','customer_type');
         $business_type= Sales::getEnumValues('vendors','business_type');
         $cess=Cess::all()->pluck ('description' , 'id');
         //dd($items);
-        return view('sales.sales.create' , compact('gst' , 'vendors' , 'hsn' , 'units' , 'states','items','bank_branch','vendor_type','business_type','cess'));
+        return view('sales.sales.create' , compact('gst' , 'customers' , 'hsn' , 'units' , 'states','items','bank_branch','customer_type','business_type','cess'));
     }
 
     /**

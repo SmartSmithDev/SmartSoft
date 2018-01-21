@@ -507,7 +507,7 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         'App\\Providers\\FormServiceProvider' => __DIR__ . '/../..' . '/app/Providers/FormServiceProvider.php',
         'App\\Providers\\GoogleDriveServiceProvider' => __DIR__ . '/../..' . '/app/Providers/GoogleDriveServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
-        'App\\User' => __DIR__ . '/../..' . '/app/User.php',
+        'App\\User' => __DIR__ . '/../..' . '/app/Models/Auth/User.php',
         'App\\libraries\\GstCalculator' => __DIR__ . '/../..' . '/app/libraries/GstCalculator.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
