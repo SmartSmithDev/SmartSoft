@@ -63,7 +63,7 @@ return array(
     'App\\Providers\\FormServiceProvider' => $baseDir . '/app/Providers/FormServiceProvider.php',
     'App\\Providers\\GoogleDriveServiceProvider' => $baseDir . '/app/Providers/GoogleDriveServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
-    'App\\User' => $baseDir . '/app/User.php',
+    'App\\User' => $baseDir . '/app/Models/Auth/User.php',
     'App\\libraries\\GstCalculator' => $baseDir . '/app/libraries/GstCalculator.php',
     'ArithmeticError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
     'AssertionError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',

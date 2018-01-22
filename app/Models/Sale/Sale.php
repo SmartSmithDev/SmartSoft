@@ -58,7 +58,7 @@ class Sale extends Model
     /**
      * @var array
      */
-    protected $fillable = ['vendor_id', 'ecommerce_vendor_id', 'supplier_state_id', 'supply_state_id', 'order_id', 'invoice_number', 'invoice_date', 'invoice_type', 'order_date', 'sales_type', 'total_taxable_value', 'total_discount', 'cgst', 'sgst', 'igst', 'ugst', 'cess', 'total_tax_amount', 'shipping_cost', 'round_off', 'total_amount', 'reverse_charge', 'notes', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['company_branch_id','company_id','company_account_id','customer_id','ecommerce_vendor_id', 'supplier_state_id', 'supply_state_id', 'order_id', 'invoice_number', 'invoice_date', 'invoice_type', 'order_date', 'sales_type', 'total_taxable_value', 'total_discount', 'cgst', 'sgst', 'igst', 'ugst', 'cess', 'total_tax_amount', 'shipping_cost', 'round_off', 'total_amount', 'reverse_charge', 'notes', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -84,9 +84,9 @@ class Sale extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function vendor()
+    public function customer()
     {
-        return $this->belongsTo('App\Models\Vendor\Vendor');
+        return $this->belongsTo('App\Models\Customer\Customer','customer_id');
     }
 
     public function company()
