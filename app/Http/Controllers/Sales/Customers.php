@@ -49,6 +49,14 @@ class Customers extends Controller
           return redirect("customers"); 
     }
 
+     public function store1(Request $request)
+    {
+        //
+          Customer::create($request->all());
+          return redirect("sales/create");
+            
+    }
+
     /**
      * Display the specified resource.
      *

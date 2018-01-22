@@ -5,25 +5,24 @@
 @section('content')
 
 <!-- Modal -->
-<div id="myModal" class="modal fade " style="z-index: 2500" tabindex="-1" role="dialog">
+<div id="customerModal" class="modal fade " style="z-index: 2500" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">New Vendor Details</h4>
+        <h4 class="modal-title">New Customer Details</h4>
           
       </div>
 
       <div class="modal-body">
          
-        <!-- {!! Form::open(array('url' => '/vendor','action' => 'Vendors@store')) !!} -->
-         {!! Form::open(array('url' => '/vendorajax','action' => 'Vendors\Vendors@store1')) !!}
+         {!! Form::open(array('url' => '/customerajax','action' => 'Sales\Customers@store1')) !!}
 
             {{ Form::textGroup('name', 'Name', 'id-card-o') }}
             
-            {{ Form::selectGroup('vendor_type','Vendor Type','id-card-o', $vendor_type) }}
+            {{ Form::selectGroup('customer_type','Customer Type','id-card-o', $customer_type) }}
 
             {{ Form::textGroup('gstin', 'GST No.', 'percent', []) }}
             
@@ -72,7 +71,7 @@
     {!! Form::open(['url' => 'sales', 'files' => true, 'role' => 'form']) !!}
 
 <div class="box-body">
-        {{ Form::selectGroup('vendor_id', 'Party Name', 'user', $vendors) }}
+        {{ Form::selectGroup('vendor_id', 'Party Name', 'user', $customers) }}
          
          {{ Form::selectGroup('bank_branch', 'Bank Branch', 'university', $bank_branch) }} 
          <!--  params(id,label,favicon-name,array for foreach)  -->
@@ -465,7 +464,7 @@ color:white;
             
             //Select2 For Vendor ID
             $('#vendor_id').select2({
-                placeholder: "{{ 'Select Vendors' }}",
+                placeholder: "{{ 'Select Customer' }}",
             })
             .on("select2:select", function(e) { 
                    // what you would like to happen
@@ -493,7 +492,7 @@ color:white;
 
             })
             .on('select2:open', () => {
-                    $(".select2-results:not(:has(a))").append('<a href="" data-toggle="modal" data-target="#myModal" style="padding: 6px;height: 20px;display: inline-table;width:100%">Add New</a>');
+                    $(".select2-results:not(:has(a))").append('<a href="" data-toggle="modal" data-target="#customerModal" style="padding: 6px;height: 20px;display: inline-table;width:100%">Add New</a>');
             });
 
 
