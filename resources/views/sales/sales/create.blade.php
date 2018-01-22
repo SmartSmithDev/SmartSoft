@@ -417,6 +417,7 @@ color:white;
 @section('scripts')
     <script type="text/javascript">
         var item_row = '{{ $item_row }}';
+        console.log(item_row);
         var itemsArray=new Array();
 
         var ogRow;
@@ -921,7 +922,7 @@ for(var i=0;i<(nrows);i++){
 
 
 
-commonDetails['vendor_id']=$('#vendor_id').val();
+commonDetails['customer_id']=$('#vendor_id').val();
 commonDetails['invoice_date']=$('#invoice_date').val();
 commonDetails['invoice_number']=$('#invoice_number').val();
 commonDetails['order_id']=$('#order_id').val();

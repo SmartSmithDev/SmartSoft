@@ -14,9 +14,10 @@
 //use App\Tax\Gst;
 
 
-Route::get('/', function () {
-    return view('dashboard.dashboard.index');
-});
+// Route::get('/', function () {
+//     return view('dashboard.dashboard.index');
+// });
+Route::resource('/','Dashboard\dashboard');
 
 Route::resource('sales', 'Sales\Sales');
 Route::resource('vendors','Purchases\Vendors');

@@ -40,13 +40,17 @@ class Customer extends Model
     /**
      * @var array
      */
-    protected $fillable = ['state_id', 'name', 'customer_type', 'gstin', 'pan', 'phone', 'email_id', 'address', 'city', 'country', 'pin_code', 'website', 'business_type', 'created_at', 'updated_at', 'deleted_at'];
-
+   // protected $fillable = ['state_id', 'name', 'customer_type', 'gstin', 'pan', 'phone', 'email_id', 'address', 'city', 'country', 'pin_code', 'website', 'business_type', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = 'id';
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function sale()
     {
         return $this->hasMany('App\Models\Sale\Sale');
+    }
+
+    public function accounts(){
+        return $this->hasMany('App\Models\Customer\CustomerAccounts','customer_id');
     }
 }
