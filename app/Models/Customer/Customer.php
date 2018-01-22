@@ -49,4 +49,8 @@ class Customer extends Model
     {
         return $this->hasMany('App\Models\Sale\Sale');
     }
+
+    public function accounts(){
+        return $this->hasMany('App\Models\Customer\CustomerAccounts','customer_id');
+    }
 }
