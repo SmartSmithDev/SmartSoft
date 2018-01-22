@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Purchases;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreGstIn;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use DB;
 use App\Models\Vendor\Vendor;
 use App\Models\Setting\State;
+
 
 class Vendors extends Controller
 {
@@ -45,15 +48,18 @@ class Vendors extends Controller
      */
     public function store(Request $request)
     {
-        //
-          Vendor::create($request->all());
-          return redirect("vendors");       
+        
+        Vendor::create($request->all());
+            return redirect("vendors"); 
     }
 
-    public function store1(Request $request)
+    public function store1(StoreGstIn $request)
     {
-        //
-          Vendor::create($request->all());
+          // $this->validate($request , [
+          //   'gstin' => 'unique:vendors|max:15|min:15'
+          //   ],['gstin.min:15' => 'The gst must have 15 characters '
+          //       ]);
+            Vendor::create($request->all());
           return redirect("sales");
             
     }
