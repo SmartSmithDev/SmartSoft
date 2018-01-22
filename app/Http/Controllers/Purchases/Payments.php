@@ -64,8 +64,7 @@ class Payments extends Controller
         $sale=Sale::find($request->sales_id)->pluck('company_account_id','customer_id');
         $company_account_id=array_values($sale)[0];
         $customer_id=array_keys($sale)[0];
-        
-        //dd($sale);
+        SalesPayment::insert(['sales_id'=>$sales_id, 'payment_date'=>$payment_date, 'payment_mode'=>$payment_mode, 'paid_amount'=>$paid_amount, 'payment_terms'=>$payment_terms, 'payment_type'=>$payment_type, 'company_account_id'=>$company_account_id, 'customer_account_id'=>$customer_id, 'payment_reference'=>$payment_reference, 'payment_notes'=>$payment_notes ]);
 
 
         // $payment=SalesPayment::updateOrCreate($request->all());

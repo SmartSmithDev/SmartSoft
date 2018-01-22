@@ -13,7 +13,8 @@
             {{ Form::selectGroup('payment_mode','Payment Mode','home', $payment_mode) }}
             {{ Form::textGroup('paid_amount', 'Paid Amount', '') }}
             {{ Form::selectGroup('payment_type','Payment Type','home', $payment_type) }}
-              {{ Form::selectGroup('customer_account_id','Customer Account','home', $customer_accounts) }}
+            {{ Form::selectGroup('customer_account_id','Customer Account','home', $customer_accounts) }}
+            {{ Form::textGroup('payment_reference', 'Payment Reference', '') }}
             {{ Form::textGroup('payment_terms', 'Payment Terms', '') }}
             {{ Form::textareaGroup('payment_notes', 'Payment Notes', '') }}
 
