@@ -10,13 +10,13 @@
         <thead>
           <tr>
                 <!--DropDown of Month-->      
-            {!! Form::open(['url' => 'purchase\purchasedis', 'role' => 'form', 'method' => 'GET']) !!}
+            {!! Form::open(['url' => 'purchase\index', 'role' => 'form', 'method' => 'GET']) !!}
               <div class="pull-right">
                   {{ Form::select('month',$month,$defaultMonth,['class'=>'display']) }}
               </div>
             {!! Form::close() !!}
                  <!--DropDown of Year-->      
-            {!! Form::open(['url' => 'purchase\purchasedis', 'role' => 'form', 'method' => 'GET']) !!}
+            {!! Form::open(['url' => 'purchases\index', 'role' => 'form', 'method' => 'GET']) !!}
               <div class="pull-right">
                 {!! Form::select('year', $years,$defaultYear,['class' => 'display']) !!}
               </div>
@@ -47,7 +47,7 @@
                 m++;
                 // document.getElementById("demo").innerHTML = "" +m+""+y;
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("GET", "purchasedis?month="+m+"&year="+y, true);   //send Request
+                xhttp.open("GET", "Purchases?month="+m+"&year="+y, true);   //send Request
                 xhttp.send();
                 xhttp.onreadystatechange = function() 
                 {
