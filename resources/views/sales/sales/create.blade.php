@@ -81,7 +81,7 @@
 
         {{ Form::textGroup('order_date', 'Order Date', 'calendar',['id' => 'order_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''], null) }}
 
-        {{ Form::textGroup('invoice_number', 'Invoice Number', 'file-text-o') }}
+        {{ Form::textGroup('invoice_number', 'Invoice Number', 'file-text-o',[],$new_invoice_id) }}
 
         {{ Form::textGroup('order_id', 'Order ID', 'shopping-cart',[]) }}
 
