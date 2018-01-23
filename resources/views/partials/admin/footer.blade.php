@@ -4,5 +4,5 @@
         Be Smart! Be You!
     </div>
     <!-- Default to the left -->
-    <strong>Copyright © 2017 <a href="smartsmith.in">SMART SMITH</a>.</strong> All rights reserved.
+    <strong>Copyright © 2018 <a href="http://www.smartsmith.tech">SMART SMITH</a>.</strong> All rights reserved.
 </footer>

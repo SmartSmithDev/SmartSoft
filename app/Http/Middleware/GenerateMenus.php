@@ -103,6 +103,21 @@ class GenerateMenus
             $menu->get('sales')->add('Customers' , ['action'  => 'Sales\Customers@index'])
                 ->prepend('<i class="fa fa-circle-o"></i>');
 
+            //Sales Payments
+
+            $menu->get('sales')->add('Sales Payments', ['class' => 'treeview'])
+                ->prepend('<i class="fa fa-money"></i>')
+                ->append('<span class="pull-right-container">')
+                ->append('<i class="fa fa-angle-left pull-right"></i>')
+                ->append('</span>');
+
+            $menu->get('salesPayments')->add('All Payments' , ['action'  => 'Purchases\Payments@index'])
+                ->prepend('<i class="fa fa-circle-o"></i>');
+
+            $menu->get('salesPayments')->add('Add Payment' , ['action'  => 'Purchases\Payments@create'])
+                ->prepend('<i class="fa fa-circle-o"></i>');
+
+
 
             $menu->add('Purchases', ['class' => 'treeview', 'id' => 'purchases'])
                 ->prepend('<span>')
@@ -112,38 +127,39 @@ class GenerateMenus
                 ->append('<i class="fa fa-angle-left pull-right"></i>')
                 ->append('</span>');
 
-            // $menu->get('purchases')->add('New Entry' , ['action'  => 'Purchase\Purchase@create'])
-            //     ->prepend('<i class="fa fa-circle-o"></i>');
+            //$menu->get('purchases')->add('New Entry' , ['action'  => 'Purchase\Purchase@create'])
+            //   ->prepend('<i class="fa fa-circle-o"></i>');
 
-            // $menu->get('purchases')->add('Purchase Invoices' , ['action'  => 'Purchase\Purchase@index'])
-            //     ->prepend('<i class="fa fa-circle-o"></i>');
+            //$menu->get('purchases')->add('All Purchases' , ['action'  => 'Purchase\Purchase@index'])
+            //    ->prepend('<i class="fa fa-circle-o"></i>');
 
-            $menu->get('purchases')->add('Purchase Payments' , ['action'  => 'Purchases\Payments@index'])
+            $menu->get('purchases')->add('Vendors' , ['action'  => 'Purchases\Vendors@index'])
                  ->prepend('<i class="fa fa-circle-o"></i>');
 
-            // $menu->get('purchases')->add('Vendors' , ['action'  => 'Purchases\Vendors@index'])
-            //      ->prepend('<i class="fa fa-circle-o"></i>');
 
+            //Purchase Payments
 
-            $menu->add('Payments', ['class' => 'treeview', 'id' => 'payments'])
-                ->prepend('<span>')
+            $menu->get('purchases')->add('Purchase Payments', ['class' => 'treeview'])
                 ->prepend('<i class="fa fa-money"></i>')
-                ->append('</span>')
                 ->append('<span class="pull-right-container">')
                 ->append('<i class="fa fa-angle-left pull-right"></i>')
                 ->append('</span>');
 
-            $menu->get('payments')->add('Payments' , ['action'  => 'Purchases\Payments@index'])
+            $menu->get('purchasePayments')->add('All Payments' , ['action'  => 'Purchases\Payments@index'])
                 ->prepend('<i class="fa fa-circle-o"></i>');
 
-            $menu->get('payments')->add('Add Payment' , ['action'  => 'Purchases\Payments@create'])
+            $menu->get('purchasePayments')->add('Add Payment' , ['action'  => 'Purchases\Payments@create'])
                 ->prepend('<i class="fa fa-circle-o"></i>');
 
-            //$menu->get('payments')->add('Payments' , ['action'  => 'Payments\Payments@index'])
-            //    ->prepend('<i class="fa fa-circle-o"></i>');
 
-            //$menu->get('payments')->add('Add Payments' , ['action'  => 'Payments\Payments@create'])
-            //    ->prepend('<i class="fa fa-circle-o"></i>');
+            // $menu->add('Payments', ['class' => 'treeview', 'id' => 'payments'])
+            //     ->prepend('<span>')
+            //     ->prepend('<i class="fa fa-money"></i>')
+            //     ->append('</span>')
+            //     ->append('<span class="pull-right-container">')
+            //     ->append('<i class="fa fa-angle-left pull-right"></i>')
+            //     ->append('</span>');
+
 
 
             $menu->add('Reports', ['class' => 'treeview', 'id' => 'reports'])
@@ -163,6 +179,12 @@ class GenerateMenus
                 ->append('<span class="pull-right-container">')
                 ->append('<i class="fa fa-angle-left pull-right"></i>')
                 ->append('</span>');
+
+            $menu->get('tax')->add('GST' , ['action'  => 'Taxes\Gst@index'])
+                ->prepend('<i class="fa fa-circle-o"></i>');
+
+            $menu->get('tax')->add('HSN' , ['action'  => 'Taxes\Hsn@index'])
+                ->prepend('<i class="fa fa-circle-o"></i>');
 
 
         });
