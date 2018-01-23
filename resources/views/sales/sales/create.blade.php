@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.entry')
 
 @section('title', trans('general.title.new', ['type' => trans_choice('general.sales', 1)]))
 
