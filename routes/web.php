@@ -36,6 +36,7 @@ Route::get('Payments','Purchases\Payments@show');
 Route::post('items/itemCalculate', 'Items\Items@itemCalculate');
 Route::post('items/ajaxStore','Items\Items@ajaxStore');
 Route::resource('items', 'Items\Items');
+Route::get('download/{id}','Sales\Sales@download');
 
 Route::get('test', function () {
     $GstRate = App\Models\Tax\Cess::find(0)->rate;

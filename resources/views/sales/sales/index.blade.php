@@ -39,7 +39,7 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right">
                                        <li><a href="{{ url('sales/' . $sale->id . '/edit') }}">{{ 'Edit' }}</a></li>
-                                        
+                                        <li><a href="{{  url('download/'.$sale->id)  }}">{{ 'Download Invoice' }}</a></li>
                                         <li>{!! Form::deleteLink($sale, '/sales') !!}</li>
                                     </ul>
                                 </div>
