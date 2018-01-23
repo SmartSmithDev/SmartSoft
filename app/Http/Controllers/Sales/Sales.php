@@ -192,6 +192,52 @@ class Sales extends Controller
     {
         //
         Sale::find($id)->delete();
+
+        try {
+          $file=$request->file('attachment'); 
+            
+          $sale_table=json_decode($request->input('common-object'),true);
+          $bank_branch_id=$request->input('bank_branch');
+          $user_id=0; 
+            
+          $company=Company::find($bank_branch_id);
+          $company_id=$company->id;
+          $account_id=$request->input('bank_account');
+            
+          $sale_table["company_branch_id"]=$bank_branch_id;
+          $sale_table["company_id"]=$company_id;
+          $sale_table["company_account_id"]=$account_id;
+
+          $sale_table=Sale::create($sale_table);
+          $sale_id=$sale_table->id;
+            
+          $items_table=json_decode($request->input('table-object'),true);
+          $file_table=DB::table('sales_files')->insert(['user_id'=>$user_id,'sales_id'=>$sale_id,'path'=>$file->storeAs('files','sales_files'.$user_id.$sale_id)]);
+
+          foreach($items_table as $item_row){
+             //dd($item_row);
+               if(!empty($item_row)){
+                   SalesItem::insert(['sales_id'=>$sale_id,'item_id'=>$item_row['id'],'hsn'=>$item_row['hsn'],'item_type'=>$item_row['type'],'unit_price'=>$item_row['unit_price'],'quantity'=>$item_row['quantity'],'unit_id'=>$item_row['unit_id'],'discount'=>$item_row['discount'],'taxable_value'=>$item_row['taxable_value'],'gst_id'=>$item_row['gst'],'cgst'=>$item_row['cgst'],'sgst'=>$item_row['sgst'],'igst'=>$item_row['igst'],'ugst'=>$item_row['ugst'],'cess_id'=>$item_row['cess'],'tax_amount'=>$item_row['tax_amount'],'total_product_amount'=>$item_row['total_amount'],'cess_amount'=>$item_row['cess_amount']]);
+               }
+           }
+
+           $customer=$sale_table->customer()->pluck('address','gstin')->toArray();
+           $state=$sale_table->supplyState()->pluck('state_tax_code')->toArray()[0];
+           $sale_table["gstin"]=array_keys($customer)[0];
+           $sale_table["address"]=array_values($customer)[0];
+           $sale_table["state"]=$state;
+           $pdf = PDF::loadView("sales.invoice.invoice",["sale"=>$sale_table,"items"=>$items_table]);
+
+           DB::table('sales_invoices')->insert(['user_id'=>$user_id,'sales_id'=>$sale_id,'path'=>'invoices/invoice'.$user_id.$sale_id.'.pdf']);
+
+           Storage::put('invoices/invoice'.$user_id.$sale_id.'.pdf', $pdf->output());
+           return redirect("sales/sales");
+
+       }
+       catch (Exception $e) {
+        $errorCode = $e->errorInfo[1];          
+        return "Some error occured : " .$e ;
+    }
     }
 
     /**
