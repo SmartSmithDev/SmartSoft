@@ -30,7 +30,7 @@ class Customers extends Controller
     public function create()
     {
         //
-        $states = State::all()->pluck ('name' , 'id');
+        $states = State::all()->pluck('name' , 'id');
         $customer_type= Customers::getEnumValues('customers','customer_type');
         $business_type= Customers::getEnumValues('customers','business_type');
         return view('customers.customers.create',compact('customer_type','business_type','states'));
@@ -74,7 +74,7 @@ class Customers extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Customer $customer)
     {
         //
         $states = State::all()->pluck ('name' , 'id');
