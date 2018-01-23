@@ -108,7 +108,7 @@ class Sale extends Model
      */
     public function salesItems()
     {
-        return $this->hasMany('App\Models\Sales\SalesItem', 'sales_id');
+        return $this->hasMany('App\Models\Sale\SalesItem', 'sales_id');
     }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

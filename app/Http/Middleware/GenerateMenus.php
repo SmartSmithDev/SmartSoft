@@ -111,10 +111,10 @@ class GenerateMenus
                 ->append('<i class="fa fa-angle-left pull-right"></i>')
                 ->append('</span>');
 
-            $menu->get('salesPayments')->add('All Payments' , ['action'  => 'Purchases\Payments@index'])
+            $menu->get('salesPayments')->add('All Payments' , ['action'  => 'Sales\Payments@index'])
                 ->prepend('<i class="fa fa-circle-o"></i>');
 
-            $menu->get('salesPayments')->add('Add Payment' , ['action'  => 'Purchases\Payments@create'])
+            $menu->get('salesPayments')->add('Add Payment' , ['action'  => 'Sales\Payments@create'])
                 ->prepend('<i class="fa fa-circle-o"></i>');
 
 

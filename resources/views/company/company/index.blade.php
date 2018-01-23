@@ -5,7 +5,7 @@
 @section('content')
 
 @section('new_button')
-<span class="new-button"><a href="{{ url('company/create') }}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
+<span class="new-button"><a href="{{ url('companies/companies/create') }}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
 @endsection
 
     <div class="box-body">
@@ -35,8 +35,8 @@
                                         <i class="fa fa-ellipsis-h"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right">
-                                        <li><a href="{{ url('company/' . $company->id . '/edit') }}">{{ 'Edit' }}</a></li>
-                                        <li>{!! Form::deleteLink($company, '/company') !!}</li>
+                                        <li><a href="{{ url('companies/companies' . $company->id . '/edit') }}">{{ 'Edit' }}</a></li>
+                                        <li>{!! Form::deleteLink($company, '/companies/companies') !!}</li>
                                     </ul>
                                 </div>
                             </td>

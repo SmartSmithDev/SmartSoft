@@ -30,7 +30,7 @@ class Customers extends Controller
     public function create()
     {
         //
-        $states = State::all()->pluck ('name' , 'id');
+        $states = State::all()->pluck('name' , 'id');
         $customer_type= Customers::getEnumValues('customers','customer_type');
         $business_type= Customers::getEnumValues('customers','business_type');
         return view('customers.customers.create',compact('customer_type','business_type','states'));
@@ -46,14 +46,14 @@ class Customers extends Controller
     {
         //
         Customer::create($request->all());
-          return redirect("customers"); 
+          return redirect("sales/customers"); 
     }
 
      public function store1(Request $request)
     {
         //
           Customer::create($request->all());
-          return redirect("sales/create");
+          return redirect("sales/sales/create");
             
     }
 
@@ -74,7 +74,7 @@ class Customers extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Customer $customer)
     {
         //
         $states = State::all()->pluck ('name' , 'id');
@@ -96,7 +96,7 @@ class Customers extends Controller
         $customer->update($request->input());
         $message = trans('messages.success.updated', ['type' => trans_choice('general.customers', 1)]);
         flash($message)->success();
-        return redirect('customers');
+        return redirect('sales/customers');
     }
 
     /**
@@ -112,7 +112,7 @@ class Customers extends Controller
         $message = trans('messages.success.deleted', ['type' => trans_choice('general.customers', 1)]);
 
             flash($message)->success();
-        return redirect('customers');
+        return redirect('sales/customers');
     }
 
     //to retrieve enum values from  database as an array
