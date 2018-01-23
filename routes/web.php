@@ -14,9 +14,9 @@
 //use App\Tax\Gst;
 
 
-// Route::get('/', function () {
-//     return view('dashboard.dashboard.index');
-// });
+Route::get('/', function () {
+    return view('dashboard.dashboard.index');
+});
 Route::resource('/','Dashboard\dashboard');
 
 Route::resource('sales', 'Sales\Sales');
@@ -37,7 +37,10 @@ Route::post('items/itemCalculate', 'Items\Items@itemCalculate');
 Route::post('items/ajaxStore','Items\Items@ajaxStore');
 Route::resource('items', 'Items\Items');
 
-Route::get('test', function () {
+Route::get('/report',function() {
+ 	return view('reports.reports.income');
+ });
+ Route::get('test', function () {
     $GstRate = App\Models\Tax\Cess::find(0)->rate;
     echo($GstRate);
 });

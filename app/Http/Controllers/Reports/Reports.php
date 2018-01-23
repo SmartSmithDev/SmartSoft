@@ -14,7 +14,7 @@ class Reports extends Controller
      */
     public function index()
     {
-        //
+        return view('reports.reports.income');
     }
 
     /**
