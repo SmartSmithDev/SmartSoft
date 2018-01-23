@@ -134,7 +134,7 @@ class Companies extends Controller
         $message = trans('messages.success.deleted', ['type' => trans_choice('general.company', 1)]);
 
             flash($message)->success();
-        return redirect('company');
+        return redirect('companies/companies');
     }
 
     public function insert($cname,$pan,$branches,$accounts){
@@ -149,6 +149,6 @@ class Companies extends Controller
         foreach($accounts as $account){
             $account_row=CompanyBankAccount::create(["company_id"=>$cid,"account_identifier"=>$account["account_identifier"],"entity_name"=>$account["entity_name"],"holder_name"=>$account["holder_name"],"bank_name"=>$account["bank_name"],"account_number"=>$account["account_number"],"ifsc_code"=>$account["ifsc_code"],"notes"=>$account["notes"]]);
         }
-        return redirect("/company");
+        return redirect("/companies/companies");
     }
 }

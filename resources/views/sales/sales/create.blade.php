@@ -71,7 +71,7 @@
     {!! Form::open(['url' => 'sales', 'files' => true, 'role' => 'form']) !!}
 
 <div class="box-body">
-        {{ Form::selectGroup('vendor_id', 'Party Name', 'user', $customers) }}
+        {{ Form::selectGroup('customer_id', 'Party Name', 'user', $customers) }}
          
          {{ Form::selectGroup('bank_branch', 'Bank Branch', 'university', $bank_branch) }} 
          <!--  params(id,label,favicon-name,array for foreach)  -->
@@ -463,7 +463,7 @@ color:white;
 
             
             //Select2 For Vendor ID
-            $('#vendor_id').select2({
+            $('#customer_id').select2({
                 placeholder: "{{ 'Select Customer' }}",
             })
             .on("select2:select", function(e) { 
@@ -472,7 +472,7 @@ color:white;
                       alert("Here it IS!");
 
                   $.ajax({
-                url: '{{ url("vendorInfo") }}',
+                url: '{{ url("sales/customerInfo") }}',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {'vendor_id':$(this).val()},
@@ -559,9 +559,9 @@ color:white;
 
           
 
-            $(document).on('change', '#vendor_id', function (e) {
+            $(document).on('change', '#customer_id', function (e) {
                 $.ajax({
-                    url: '{{ url("vendor") }}',
+                    url: '{{ url("sales/customers") }}',
                     type: 'GET',
                     dataType: 'JSON',
                     data: 'customer_id=' + $(this).val(),
@@ -583,7 +583,7 @@ color:white;
        function itemCalculate() {
         var row;
             $.ajax({
-                url: '{{ url("items/itemCalculate") }}',
+                url: '{{ url("items/items/itemCalculate") }}',
                 type: 'POST',
                 dataType: 'JSON',
                 data: $('#supply_state_id, input[name=\'discountType\']:checked, #items input[type=\'text\'],#items input[type=\'hidden\'], #items textarea,input[name=\'rateType\']:checked'),
@@ -922,7 +922,7 @@ for(var i=0;i<(nrows);i++){
 
 
 
-commonDetails['customer_id']=$('#vendor_id').val();
+commonDetails['customer_id']=$('#customer_id').val();
 commonDetails['invoice_date']=$('#invoice_date').val();
 commonDetails['invoice_number']=$('#invoice_number').val();
 commonDetails['order_id']=$('#order_id').val();

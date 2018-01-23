@@ -8,7 +8,7 @@
     {!! Form::model($item, [
         'method' => 'PATCH',
         'files' => true,
-        'url' => ['items', $item->id],
+        'url' => ['items/items', $item->id],
         'role' => 'form'
     ]) !!}
 

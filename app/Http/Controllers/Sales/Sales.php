@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Tax\Hsn;
 use App\Models\Setting\Unit;
 use App\Models\Setting\State;
-use App\Models\Vendor\Vendor;
 use App\Models\Tax\Gst;
 use App\Models\Tax\Cess;
 use App\Models\Item\Item;
@@ -53,7 +52,7 @@ class Sales extends Controller
         //
         $hsn = Hsn::all()->pluck('hsn' , 'hsn');
         $units = Unit::all()->pluck ('unit' , 'id');
-        $vendors = Vendor::all()->pluck ('name' , 'id');
+        $customers = Customer::all()->pluck ('name' , 'id');
         $customers=Customer::all()->pluck ('name' , 'id');
         $gst = Gst::all()->pluck ('description' , 'id');
         $states = State::all()->pluck ('name' , 'id');
@@ -61,7 +60,7 @@ class Sales extends Controller
         $items=$items->toArray();
         $bank_branch=CompanyBranch::all()->pluck('branch_name','id');
         $customer_type= Sales::getEnumValues('customers','customer_type');
-        $business_type= Sales::getEnumValues('vendors','business_type');
+        $business_type= Sales::getEnumValues('customers','business_type');
         $cess=Cess::all()->pluck ('description' , 'id');
         //dd($items);
 
@@ -106,22 +105,22 @@ class Sales extends Controller
                }
            }
 
-           $vendor=$sale_table->customer()->pluck('address','gstin')->toArray();
+           $customer=$sale_table->customer()->pluck('address','gstin')->toArray();
            $state=$sale_table->supplyState()->pluck('state_tax_code')->toArray()[0];
-           $sale_table["gstin"]=array_keys($vendor)[0];
-           $sale_table["address"]=array_values($vendor)[0];
+           $sale_table["gstin"]=array_keys($customer)[0];
+           $sale_table["address"]=array_values($customer)[0];
            $sale_table["state"]=$state;
            $pdf = PDF::loadView("sales.invoice.invoice",["sale"=>$sale_table,"items"=>$items_table]);
 
            DB::table('sales_invoices')->insert(['user_id'=>$user_id,'sales_id'=>$sale_id,'path'=>'invoices/invoice'.$user_id.$sale_id.'.pdf']);
 
            Storage::put('invoices/invoice'.$user_id.$sale_id.'.pdf', $pdf->output());
-           return redirect("/sales");
+           return redirect("sales/sales");
 
        }
        catch (Exception $e) {
         $errorCode = $e->errorInfo[1];          
-        return "Some error occured";
+        return "Some error occured : " .$e ;
     }
     }
 
@@ -152,14 +151,14 @@ class Sales extends Controller
     {
         $hsn = Hsn::all()->pluck('hsn' , 'hsn');
         $units = Unit::all()->pluck ('unit' , 'id');
-        $vendors = Vendor::all()->pluck ('name' , 'id');
+        $customers = Customer::all()->pluck ('name' , 'id');
         $gst = Gst::all()->pluck ('description' , 'id');
         $states = State::all()->pluck ('name' , 'id');
         $items=Item::pluck('name');
         $items=$items->toArray();
         $bank_branch=CompanyBranch::all()->pluck('branch_name','id');
-        $vendor_type= Sales::getEnumValues('vendors','vendor_type');
-        $business_type= Sales::getEnumValues('vendors','business_type');
+        $customer_type= Sales::getEnumValues('customers','customer_type');
+        $business_type= Sales::getEnumValues('customers','business_type');
         $cess=Cess::all()->pluck ('description' , 'id');
         $sale=Sale::find($id);
         $sales_items=$sale->salesItems()->get();
@@ -176,7 +175,7 @@ class Sales extends Controller
         $newRowDetails=json_encode($newRowDetails);
         
 
-        return view('sales.sales.edit',compact('sale','sales_items','items','hsn','units','vendors','gst','states','bank_branch','vendor_type','business_type','cess','newRowDetails'));
+        return view('sales.sales.edit',compact('sale','sales_items','items','hsn','units','customer','gst','states','bank_branch','customer_type','business_type','cess','newRowDetails'));
     }
 
     /**
@@ -221,10 +220,10 @@ class Sales extends Controller
        
     }
 
-    public function vendorInfo(Request $req){
-        $vendor_id=$req->input('vendor_id');
-        $vendor_state=Vendor::where('id',$vendor_id)->pluck('state_id')->toArray();
-        return json_encode($vendor_state);
+    public function customerInfo(Request $req){
+        $customer_id=$req->input('customer_id');
+        $customer_state=Customer::where('id',$customer_id)->pluck('state_id')->toArray();
+        return json_encode($customer_state);
     }
 
     //to retrieve enum values from  database as an array

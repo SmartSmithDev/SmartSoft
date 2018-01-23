@@ -19,23 +19,38 @@
 // });
 Route::resource('/','Dashboard\dashboard');
 
+Route::resource('companies/companies','Companies\Companies');
+
+Route::group(['prefix' => 'taxes'], function () {
+	Route::resource('gst','Taxes\Gst');
+	Route::resource('hsn','Taxes\Hsn');
+});
+
+Route::group(['prefix' => 'sales'], function () {
 Route::resource('sales', 'Sales\Sales');
-Route::resource('vendors','Purchases\Vendors');
-Route::resource('payments','Purchases\Payments');
-Route::resource('company','Companies\Companies');
-Route::resource('sales/customers','Sales\Customers');
-Route::resource('Gst','Taxes\Gst');
-Route::resource('Hsn','Taxes\Hsn');
-Route::resource('Purchases','Purchases\Purchases');
-Route::post('/hsn','Items\Items@hsn');
 Route::get('/autofill','Sales\Sales@autoFill');
-Route::post('/vendorInfo','Sales\Sales@vendorInfo');
+Route::resource('customers','Sales\Customers');
+Route::post('/customerInfo','Sales\Sales@customerInfo');
 Route::post('customerajax','Sales\Customers@store1');
 Route::post('invoice_order_check','Sales\Sales@checkExist');
-Route::get('Payments','Purchases\Payments@show');
-Route::post('items/itemCalculate', 'Items\Items@itemCalculate');
-Route::post('items/ajaxStore','Items\Items@ajaxStore');
-Route::resource('items', 'Items\Items');
+Route::resource('sales/payments','Sales\Payments');
+});
+
+
+Route::group(['prefix' => 'purchases'], function () {
+Route::resource('vendors','Purchases\Vendors');
+Route::resource('payments','Purchases\Payments');
+Route::resource('Purchases','Purchases\Purchases');
+});
+
+Route::group(['prefix' => 'items'], function () {
+	Route::post('items/itemCalculate', 'Items\Items@itemCalculate');
+	Route::post('items/ajaxStore','Items\Items@ajaxStore');
+	Route::resource('items', 'Items\Items');
+	Route::post('/hsn','Items\Items@hsn');
+});
+
+
 Route::get('download/{id}','Sales\Sales@download');
 
 Route::get('test', function () {

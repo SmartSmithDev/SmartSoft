@@ -47,7 +47,7 @@ class Items extends Controller
     public function store(Request $request)
     {  
         Item::create($request->all());
-        return redirect('items');
+        return redirect('items/items');
     }
 
     /**
@@ -92,7 +92,7 @@ class Items extends Controller
         $message = trans('messages.success.updated', ['type' => trans_choice('general.items', 1)]);
         
         flash($message)->success();
-        return redirect('items');
+        return redirect('items/items');
     }
 
     /**
@@ -108,7 +108,7 @@ class Items extends Controller
         $message = trans('messages.success.deleted', ['type' => trans_choice('general.items', 1)]);
 
             flash($message)->success();
-        return redirect('items');
+        return redirect('items/items');
     }
 
 

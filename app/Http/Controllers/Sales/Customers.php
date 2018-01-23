@@ -46,14 +46,14 @@ class Customers extends Controller
     {
         //
         Customer::create($request->all());
-          return redirect("customers"); 
+          return redirect("sales/customers"); 
     }
 
      public function store1(Request $request)
     {
         //
           Customer::create($request->all());
-          return redirect("sales/create");
+          return redirect("sales/sales/create");
             
     }
 
@@ -96,7 +96,7 @@ class Customers extends Controller
         $customer->update($request->input());
         $message = trans('messages.success.updated', ['type' => trans_choice('general.customers', 1)]);
         flash($message)->success();
-        return redirect('customers');
+        return redirect('sales/customers');
     }
 
     /**
@@ -112,7 +112,7 @@ class Customers extends Controller
         $message = trans('messages.success.deleted', ['type' => trans_choice('general.customers', 1)]);
 
             flash($message)->success();
-        return redirect('customers');
+        return redirect('sales/customers');
     }
 
     //to retrieve enum values from  database as an array

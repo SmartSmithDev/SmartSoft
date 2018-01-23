@@ -23,8 +23,8 @@ class Payments extends Controller
     public function index()
     {
         //
-        $vendors=DB::table('vendors')->get();
-        return view('payments.payments.index',compact('vendors'));
+        $customers=DB::table('customers')->get();
+        return view('payments.payments.index',compact('customers'));
     }
 
     /**
@@ -96,7 +96,7 @@ class Payments extends Controller
         $payment->update($request->input());
         $message = trans('messages.success.updated', ['type' => trans_choice('general.payments', 1)]);
         flash($message)->success();
-        return redirect('payments');
+        return redirect('sales/payments');
     }
 
     /**
@@ -110,7 +110,7 @@ class Payments extends Controller
         $payment->delete();
         $message = trans('messages.success.deleted', ['type' => trans_choice('general.payments', 1)]);
         flash($message)->success();
-        return redirect('payments');
+        return redirect('sales/payments');
     }
 
      //to retrieve enum values from  database as an array
