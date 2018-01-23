@@ -5,7 +5,7 @@
 @section('content')
     <!-- Default box -->
     <div class="box box-success">
-        {!! Form::open(['url' => '/payments','role' => 'form']) !!}
+        {!! Form::open(['url' => '/purchases/payments','role' => 'form']) !!}
 
         <div class="box-body">
             {{ Form::selectGroup('sale_id','Sales','home', $sales) }}
@@ -23,7 +23,7 @@
         <!-- /.box-body -->
 
         <div class="box-footer">
-            {{ Form::saveButtons('/payments') }}
+            {{ Form::saveButtons('/purchases/payments') }}
         </div>
         <!-- /.box-footer -->
 
