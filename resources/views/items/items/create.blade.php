@@ -19,6 +19,12 @@
                 {{ Form::itemTypeGroup('type', 'Item Type' ) }}
 
                 {{ Form::textareaGroup('details', 'Item Details') }}
+                 
+                 <div class="col-md-6">
+                 <input type="checkbox" name="manage_inventory" value="1" />&nbsp;<label>Manage Inventory</label>
+                     
+                 </div>
+                
             </div>
         <!-- /.box-body -->
 

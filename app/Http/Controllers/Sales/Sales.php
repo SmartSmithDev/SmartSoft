@@ -14,6 +14,7 @@ use App\Models\Sale\SalesItem;
 use App\Models\Customer\Customer;
 use App\Models\Company\Company;
 use App\Models\Company\CompanyBranch;
+use App\Models\Company\CompanyBankAccount;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use PDF;
@@ -62,10 +63,11 @@ class Sales extends Controller
         $customer_type= Sales::getEnumValues('customers','customer_type');
         $business_type= Sales::getEnumValues('customers','business_type');
         $cess=Cess::all()->pluck ('description' , 'id');
+        $bank_accounts=CompanyBankAccount::all()->pluck('account_number','id');
         //dd($items);
 
         $new_invoice_id=Sale::max('id')+1;
-        return view('sales.sales.create' , compact('gst' , 'customers' , 'hsn' , 'units' , 'states','items','bank_branch','customer_type','business_type','cess','new_invoice_id'));
+        return view('sales.sales.create' , compact('gst' , 'customers' , 'hsn' , 'units' , 'states','items','bank_branch','customer_type','business_type','cess','new_invoice_id','bank_accounts'));
     }
 
     /**
@@ -86,7 +88,7 @@ class Sales extends Controller
             
           $company=Company::find($bank_branch_id);
           $company_id=$company->id;
-          $account_id=$company->companyBankAccount()->first()->id;
+          $account_id=$request->input('bank_account');
             
           $sale_table["company_branch_id"]=$bank_branch_id;
           $sale_table["company_id"]=$company_id;
@@ -156,6 +158,7 @@ class Sales extends Controller
         $states = State::all()->pluck ('name' , 'id');
         $items=Item::pluck('name');
         $items=$items->toArray();
+        $bank_accounts=CompanyBankAccount::all()->pluck('account_number','id');
         $bank_branch=CompanyBranch::all()->pluck('branch_name','id');
         $customer_type= Sales::getEnumValues('customers','customer_type');
         $business_type= Sales::getEnumValues('customers','business_type');
@@ -175,7 +178,7 @@ class Sales extends Controller
         $newRowDetails=json_encode($newRowDetails);
         
 
-        return view('sales.sales.edit',compact('sale','sales_items','items','hsn','units','customer','gst','states','bank_branch','customer_type','business_type','cess','newRowDetails'));
+        return view('sales.sales.edit',compact('sale','sales_items','items','hsn','units','customers','gst','states','bank_branch','customer_type','business_type','cess','newRowDetails','bank_accounts'));
     }
 
     /**
@@ -188,6 +191,7 @@ class Sales extends Controller
     public function update(Request $request, $id)
     {
         //
+        Sale::find($id)->delete();
     }
 
     /**
@@ -198,7 +202,8 @@ class Sales extends Controller
      */
     public function destroy($id)
     {
-        //
+        Sale::find($id)->delete();
+        return redirect("sales/sales");
     }
 
     //autoFill() returns the item details using item name
@@ -259,5 +264,20 @@ class Sales extends Controller
         return response()->download(storage_path('app/'.$path[0]),explode('/',$path[0])[1]);
     }
         return "Some Error Occured";
+    }
+
+
+    public function quantity(Request $req){
+        $quantity=$req->input('quantity');
+        $sku=$req->input('sku');
+        $inventory=DB::table('inventory')->where('sku','=',$sku);
+        if($inventory->count()>0){
+            if($inventory->pluck('quantity')[0]>=$quantity)
+                return "Ok";
+            else
+                return "0";
+        }
+        else
+            return "-1";
     }
 }
