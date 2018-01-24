@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Taxes;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use App\Models\Tax\Hsn as hsns;
 
 class Hsn extends Controller
 {
@@ -15,8 +17,12 @@ class Hsn extends Controller
     public function index()
     {
         //
-        $hsn = DB::table('hsn')->get();
-        return view('tax.hsn.index' , compact('hsn'));
+         $hsns = hsns::
+        select('hsn.hsn as hsn','hsn.item_type as item','hsn.description as hsn_d','gst.rate as gst_rate','gst.description as gst_d','cess.rate as cess_rate','cess.description as cess_d')
+          ->join('gst', 'hsn.gst_id', '=', 'gst.id')
+          ->join('cess', 'hsn.cess_id', '=', 'cess.id')
+          ->get();
+        return view('tax.hsn.index' , compact('hsns'));
     }
 
     /**

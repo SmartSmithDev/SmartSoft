@@ -14,6 +14,7 @@ use App\Models\Sale\SalesItem;
 use App\Models\Customer\Customer;
 use App\Models\Company\Company;
 use App\Models\Company\CompanyBranch;
+use App\Models\Company\CompanyBankAccount;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use PDF;
@@ -62,10 +63,11 @@ class Sales extends Controller
         $customer_type= Sales::getEnumValues('customers','customer_type');
         $business_type= Sales::getEnumValues('customers','business_type');
         $cess=Cess::all()->pluck ('description' , 'id');
+        $bank_accounts=CompanyBankAccount::all()->pluck('account_number','id');
         //dd($items);
 
         $new_invoice_id=Sale::max('id')+1;
-        return view('sales.sales.create' , compact('gst' , 'customers' , 'hsn' , 'units' , 'states','items','bank_branch','customer_type','business_type','cess','new_invoice_id'));
+        return view('sales.sales.create' , compact('gst' , 'customers' , 'hsn' , 'units' , 'states','items','bank_branch','customer_type','business_type','cess','new_invoice_id','bank_accounts'));
     }
 
     /**
@@ -86,7 +88,7 @@ class Sales extends Controller
             
           $company=Company::find($bank_branch_id);
           $company_id=$company->id;
-          $account_id=$company->companyBankAccount()->first()->id;
+          $account_id=$request->input('bank_account');
             
           $sale_table["company_branch_id"]=$bank_branch_id;
           $sale_table["company_id"]=$company_id;
@@ -156,6 +158,7 @@ class Sales extends Controller
         $states = State::all()->pluck ('name' , 'id');
         $items=Item::pluck('name');
         $items=$items->toArray();
+        $bank_accounts=CompanyBankAccount::all()->pluck('account_number','id');
         $bank_branch=CompanyBranch::all()->pluck('branch_name','id');
         $customer_type= Sales::getEnumValues('customers','customer_type');
         $business_type= Sales::getEnumValues('customers','business_type');
@@ -175,7 +178,7 @@ class Sales extends Controller
         $newRowDetails=json_encode($newRowDetails);
         
 
-        return view('sales.sales.edit',compact('sale','sales_items','items','hsn','units','customer','gst','states','bank_branch','customer_type','business_type','cess','newRowDetails'));
+        return view('sales.sales.edit',compact('sale','sales_items','items','hsn','units','customers','gst','states','bank_branch','customer_type','business_type','cess','newRowDetails','bank_accounts'));
     }
 
     /**
@@ -188,6 +191,53 @@ class Sales extends Controller
     public function update(Request $request, $id)
     {
         //
+        Sale::find($id)->delete();
+
+        try {
+          $file=$request->file('attachment'); 
+            
+          $sale_table=json_decode($request->input('common-object'),true);
+          $bank_branch_id=$request->input('bank_branch');
+          $user_id=0; 
+            
+          $company=Company::find($bank_branch_id);
+          $company_id=$company->id;
+          $account_id=$request->input('bank_account');
+            
+          $sale_table["company_branch_id"]=$bank_branch_id;
+          $sale_table["company_id"]=$company_id;
+          $sale_table["company_account_id"]=$account_id;
+
+          $sale_table=Sale::create($sale_table);
+          $sale_id=$sale_table->id;
+            
+          $items_table=json_decode($request->input('table-object'),true);
+          $file_table=DB::table('sales_files')->insert(['user_id'=>$user_id,'sales_id'=>$sale_id,'path'=>$file->storeAs('files','sales_files'.$user_id.$sale_id)]);
+
+          foreach($items_table as $item_row){
+             //dd($item_row);
+               if(!empty($item_row)){
+                   SalesItem::insert(['sales_id'=>$sale_id,'item_id'=>$item_row['id'],'hsn'=>$item_row['hsn'],'item_type'=>$item_row['type'],'unit_price'=>$item_row['unit_price'],'quantity'=>$item_row['quantity'],'unit_id'=>$item_row['unit_id'],'discount'=>$item_row['discount'],'taxable_value'=>$item_row['taxable_value'],'gst_id'=>$item_row['gst'],'cgst'=>$item_row['cgst'],'sgst'=>$item_row['sgst'],'igst'=>$item_row['igst'],'ugst'=>$item_row['ugst'],'cess_id'=>$item_row['cess'],'tax_amount'=>$item_row['tax_amount'],'total_product_amount'=>$item_row['total_amount'],'cess_amount'=>$item_row['cess_amount']]);
+               }
+           }
+
+           $customer=$sale_table->customer()->pluck('address','gstin')->toArray();
+           $state=$sale_table->supplyState()->pluck('state_tax_code')->toArray()[0];
+           $sale_table["gstin"]=array_keys($customer)[0];
+           $sale_table["address"]=array_values($customer)[0];
+           $sale_table["state"]=$state;
+           $pdf = PDF::loadView("sales.invoice.invoice",["sale"=>$sale_table,"items"=>$items_table]);
+
+           DB::table('sales_invoices')->insert(['user_id'=>$user_id,'sales_id'=>$sale_id,'path'=>'invoices/invoice'.$user_id.$sale_id.'.pdf']);
+
+           Storage::put('invoices/invoice'.$user_id.$sale_id.'.pdf', $pdf->output());
+           return redirect("sales/sales");
+
+       }
+       catch (Exception $e) {
+        $errorCode = $e->errorInfo[1];          
+        return "Some error occured : " .$e ;
+    }
     }
 
     /**
@@ -198,7 +248,8 @@ class Sales extends Controller
      */
     public function destroy($id)
     {
-        //
+        Sale::find($id)->delete();
+        return redirect("sales/sales");
     }
 
     //autoFill() returns the item details using item name
@@ -259,5 +310,20 @@ class Sales extends Controller
         return response()->download(storage_path('app/'.$path[0]),explode('/',$path[0])[1]);
     }
         return "Some Error Occured";
+    }
+
+
+    public function quantity(Request $req){
+        $quantity=$req->input('quantity');
+        $sku=$req->input('sku');
+        $inventory=DB::table('inventory')->where('sku','=',$sku);
+        if($inventory->count()>0){
+            if($inventory->pluck('quantity')[0]>=$quantity)
+                return "Ok";
+            else
+                return "0";
+        }
+        else
+            return "-1";
     }
 }

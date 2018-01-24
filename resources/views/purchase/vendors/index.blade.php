@@ -5,7 +5,7 @@
 @section('content')
 
 @section('new_button')
-<span class="new-button"><a href="{{url('vendors/create')}}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
+<span class="new-button"><a href="{{url('purchases/vendors/create')}}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
 @endsection
 
     <div class="box-body">

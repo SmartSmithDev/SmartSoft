@@ -47,6 +47,9 @@ class Items extends Controller
     public function store(Request $request)
     {  
         Item::create($request->all());
+          if(!empty($request->input('manage_inventory'))){
+          DB::table('inventory')->insert(['name'=>$request->input('name'),'sku'=>$request->input('sku'),'qunatity'=>0]);    
+          }
         return redirect('items/items');
     }
 
