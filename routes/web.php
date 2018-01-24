@@ -34,6 +34,7 @@ Route::post('/customerInfo','Sales\Sales@customerInfo');
 Route::post('customerajax','Sales\Customers@store1');
 Route::post('invoice_order_check','Sales\Sales@checkExist');
 Route::resource('sales/payments','Sales\Payments');
+Route::get('/quantity','Sales\Sales@quantity');
 });
 
 
@@ -45,7 +46,7 @@ Route::resource('Purchases','Purchases\Purchases');
 
 Route::group(['prefix' => 'items'], function () {
 	Route::post('items/itemCalculate', 'Items\Items@itemCalculate');
-	Route::post('items/ajaxStore','Items\Items@ajaxStore');
+	Route::post('/ajaxStore','Items\Items@ajaxStore');
 	Route::resource('items', 'Items\Items');
 	Route::post('/hsn','Items\Items@hsn');
 });

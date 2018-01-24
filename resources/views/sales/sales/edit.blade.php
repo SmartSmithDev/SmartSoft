@@ -32,7 +32,7 @@ $item_row=0;
 
             {{ Form::textGroup('name', 'Name', 'id-card-o') }}
             
-            {{ Form::selectGroup('vendor_type','Vendor Type','id-card-o', $vendor_type) }}
+            {{ Form::selectGroup('vendor_type','Vendor Type','id-card-o', $customer_type) }}
 
             {{ Form::textGroup('gstin', 'GST No.', 'percent', []) }}
             
@@ -78,13 +78,15 @@ $item_row=0;
 
 <!-- Default box -->
   <div class="box box-success">
-    {!! Form::open(['url' => 'sales', 'files' => true, 'role' => 'form']) !!}
+    {!! Form::open(['url' => 'sales/sales/'.$sale->id, 'files' => true, 'role' => 'form','method'=>'PUT']) !!}
 
 <div class="box-body">
-        {{ Form::selectGroup('vendor_id', 'Party Name', 'user', $vendors,$sale->customer_id) }}
+        {{ Form::selectGroup('vendor_id', 'Party Name', 'user', $customers,$sale->customer_id) }}
          
          {{ Form::selectGroup('bank_branch', 'Bank Branch', 'university', $bank_branch,$sale->company_branch_id) }} 
          <!--  params(id,label,favicon-name,array for foreach)  -->
+
+         {{ Form::selectGroup('bank_account', 'Bank Account', 'university', $bank_accounts) }}
         
         {{ Form::textGroup('invoice_date', 'Invoice Date', 'calendar',['id' => 'invoice_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''],$sale->invoice_date) }}
 
@@ -175,7 +177,7 @@ $item_row=0;
 
                             <!-- Quantity -->
                             <td>
-                                <input class="form-control text-center" required="required" name="item[{{ $item_row }}][quantity]" type="text" id="item-quantity-{{ $item_row }}" value="{{ $item->quantity }}">
+                                <input class="form-control text-center quantity-class" required="required" name="item[{{ $item_row }}][quantity]" type="text" id="item-quantity-{{ $item_row }}" value="{{ $item->quantity }}">
                             </td>
 
 
@@ -442,7 +444,7 @@ color:white;
 //console.log(rowsDetails);
 
         function addItem() {
-            html  = '<tr id="item-row-'+item_row+'" class="item-row"><td class="text-center" style="vertical-align: middle;"><button type="button" onclick="$(this).tooltip(\'destroy\'); $(\'#item-row-'+item_row+'\').remove();rowsDetails['+item_row+']=null;itemCalculate();" data-toggle="tooltip" title=\'{{ trans("general.delete") }}\' class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td><td><select id="item-name-'+item_row+'"  name="item['+item_row+'][name]"  id="item-name-'+item_row+'" class="select2 items-dropdown"><option disabled selected>Select Item</option></select></td><td class="text-center"><span id="item-extra-info-'+item_row+'" class="extra-info-popup" data-toggle="popover" data-trigger="click" tabindex="0" data-placement="bottom" data-content=\'<button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row="'+item_row+'">Edit</button><br><br>\' data-html="true"><i style="font-size:1.5vw;color:blue" class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i></span></td><td><input class="form-control text-center" required="required" name="item['+item_row+'][quantity]" type="text" id="item-quantity-'+item_row+'"></td><td><input class="form-control text-right" required="required" name="item['+item_row+'][price]" type="text" id="item-price-'+item_row+'"></td><td><input class="form-control typeahead" required="required" placeholder=\'{{ "Discount" }}\' name="item['+item_row+'][discount]" type="text" id="item-discount-'+item_row+'"><input name="item['+item_row+'][item_id]" type="hidden" id="item-id-'+item_row+'"></td><td class="text-right" style="vertical-align: middle;"><span id="item-tax-info-'+item_row+'" class="item_tax-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Please Select All Options First" data-html="true" style="float:left"><i style="font-size:1.5vw;color:blue" class="fa">&#xf129;</i></span><span id="item-total-tax-'+item_row+'">0</span></td><td class="text-right" style="vertical-align: middle;"><span id="item-total-'+item_row+'">0</span><input type="hidden" name="item['+item_row+'][gst_id]" class="hidden-gst-id"/><input type="hidden" name="item['+item_row+'][cess_id]" class="hidden-cess-id"/></td></tr>';
+            html  = '<tr id="item-row-'+item_row+'" class="item-row"><td class="text-center" style="vertical-align: middle;"><button type="button" onclick="$(this).tooltip(\'destroy\'); $(\'#item-row-'+item_row+'\').remove();rowsDetails['+item_row+']=null;itemCalculate();" data-toggle="tooltip" title=\'{{ trans("general.delete") }}\' class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td><td><select id="item-name-'+item_row+'"  name="item['+item_row+'][name]"  id="item-name-'+item_row+'" class="select2 items-dropdown"><option disabled selected>Select Item</option></select></td><td class="text-center"><span id="item-extra-info-'+item_row+'" class="extra-info-popup" data-toggle="popover" data-trigger="click" tabindex="0" data-placement="bottom" data-content=\'<button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row="'+item_row+'">Edit</button><br><br>\' data-html="true"><i style="font-size:1.5vw;color:blue" class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i></span></td><td><input class="form-control text-center quantity-class" required="required" name="item['+item_row+'][quantity]" type="text" id="item-quantity-'+item_row+'"></td><td><input class="form-control text-right" required="required" name="item['+item_row+'][price]" type="text" id="item-price-'+item_row+'"></td><td><input class="form-control typeahead" required="required" placeholder=\'{{ "Discount" }}\' name="item['+item_row+'][discount]" type="text" id="item-discount-'+item_row+'"><input name="item['+item_row+'][item_id]" type="hidden" id="item-id-'+item_row+'"></td><td class="text-right" style="vertical-align: middle;"><span id="item-tax-info-'+item_row+'" class="item_tax-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Please Select All Options First" data-html="true" style="float:left"><i style="font-size:1.5vw;color:blue" class="fa">&#xf129;</i></span><span id="item-total-tax-'+item_row+'">0</span></td><td class="text-right" style="vertical-align: middle;"><span id="item-total-'+item_row+'">0</span><input type="hidden" name="item['+item_row+'][gst_id]" class="hidden-gst-id"/><input type="hidden" name="item['+item_row+'][cess_id]" class="hidden-cess-id"/></td></tr>';
             $('#items tbody #addItem').before(html);
 
                        $(document).ready(function() {
@@ -486,14 +488,14 @@ color:white;
             })
             .on("select2:select", function(e) { 
                    // what you would like to happen
-                   if($(this).val() == "add_item")
-                      alert("Here it IS!");
+                   // if($(this).val() == "add_item")
+                   //    alert("Here it IS!");
 
                   $.ajax({
                 url: '{{ url("vendorInfo") }}',
                 type: 'POST',
                 dataType: 'JSON',
-                data: {'vendor_id':$(this).val()},
+                data: {'customer_id':$(this).val()},
                 headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 success: function(data) {
                      
@@ -601,7 +603,7 @@ color:white;
        function itemCalculate() {
         var row;
             $.ajax({
-                url: '{{ url("items/itemCalculate") }}',
+                url: '{{ url("items/items/itemCalculate") }}',
                 type: 'POST',
                 dataType: 'JSON',
                 data: $('#supply_state_id, input[name=\'discountType\']:checked, #items input[type=\'text\'],#items input[type=\'hidden\'], #items textarea,input[name=\'rateType\']:checked'),
@@ -660,7 +662,7 @@ rowsDetails[ogRow].hsn=$(this).val();
 
 
 $.ajax({
-                url: '{{ url("/hsn") }}',
+                url: '{{ url("items/hsn") }}',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {'hsn_code':$(this).val()},
@@ -726,7 +728,7 @@ $(document).ready(function() {
       }
       }        
      };
-     xml.open("GET","{{  url('/autofill')  }}?item="+itemName,true);
+     xml.open("GET","{{  url('sales/autofill')  }}?item="+itemName,true);
      xml.send();
 
 
@@ -987,7 +989,7 @@ $('input[name="invoice_number"],input[name="order_id"]').blur(function(){
   var id=$(this).attr('id');
   var val=$(this).val();
 $.ajax({
-  url:'{{ url("/invoice_order_check")  }}',
+  url:'{{ url("sales/invoice_order_check")  }}',
   type:"POST",
   data:{'id':id,'val':val},
   dataType:"text",
@@ -1019,25 +1021,48 @@ setTimeout(update,500);
 
 function update(){
   var newRowDetails=document.getElementById('newRowDetails').value;
-newRowDetails=JSON.parse(newRowDetails);
-console.log(Object.keys(newRowDetails).length);
+  console.log(newRowDetails);
+  newRowDetails=JSON.parse(newRowDetails);
+  console.log(Object.keys(newRowDetails).length);
 
-                            
 
-for(var i=0;i<Object.keys(newRowDetails).length;i++){
-  rowsDetails[i]['hsn']=newRowDetails[i]['hsn'];
-  rowsDetails[i]['gst']=newRowDetails[i]['gst'];
-  rowsDetails[i]['cess']=newRowDetails[i]['cess'];
-  rowsDetails[i]['type']=newRowDetails[i]['type'];
-  $('input[name="item['+i+'][gst_id]"]').val(rowsDetails[i]['gst']);
-  $('input[name="item['+i+'][cess_id]"]').val(rowsDetails[i]['cess']);
-  itemCalculate(); 
 
+  for(var i=0;i<Object.keys(newRowDetails).length;i++){
+    rowsDetails[i]['hsn']=newRowDetails[i]['hsn'];
+    rowsDetails[i]['gst']=newRowDetails[i]['gst'];
+    rowsDetails[i]['cess']=newRowDetails[i]['cess'];
+    rowsDetails[i]['type']=newRowDetails[i]['type'];
+    $('input[name="item['+i+'][gst_id]"]').val(rowsDetails[i]['gst']);
+    $('input[name="item['+i+'][cess_id]"]').val(rowsDetails[i]['cess']);
+    itemCalculate(); 
+
+  }
+  console.log(rowsDetails);
 }
-console.log(rowsDetails);
+
+$('#items').on('blur','.quantity-class',function(){
+  var elem=$(this);
+  var quantity=$(this).val();
+  var row=$(this).parent().parent().attr('id').split('-')[2];
+$.ajax({
+url:'{{ url("sales/quantity") }}',
+type:'GET',
+dataType:"text",
+data:{'quantity':quantity,'sku':rowsDetails[row].sku},
+success:function(data){
+if(data=='-1'){
+  elem.val("");
+  alert("Item Does Not Exist In Inventory!");
 }
+else if(data!='Ok'){
+  elem.val("");
+  alert("Only "+data+" Units Remaining!");
+}
+}
+});
 
 
+});
 
     </script>
 @endsection

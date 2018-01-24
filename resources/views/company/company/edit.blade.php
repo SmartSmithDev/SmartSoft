@@ -24,22 +24,7 @@ $branch_row=0;
       {{ Form::textGroup('pan', 'PAN' , 'key',['required'=>'required'],$company->pan) }}
 
 
-      <div class="form-group col-md-6  ">
-    <label for="type" class="control-label">Enabled</label>
-    <div class="input-group">
-        <div class="btn-group radio-inline" data-toggle="buttons">
-            <label id="type_0" class="btn btn-default active">
-                <input name="type" type="radio" value="yes" id="type">
-                <span class="radiotext">Yes</span>
-            </label>
-            <label id="type_1" class="btn btn-default">
-                <input name="type" type="radio" value="no" id="type">
-                <span class="radiotext">No</span>
-            </label>
-        </div>
-    </div>
-    
-</div>
+   
   </div>
   <div id="company-bank-accounts" class="parts">
     <br>

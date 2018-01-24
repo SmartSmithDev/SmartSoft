@@ -5,7 +5,7 @@
 @section('content')
 
 @section('new_button')
-<span class="new-button"><a href="{{url('sales/create')}}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
+<span class="new-button"><a href="{{url('sales/sales/create')}}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
 @endsection
 
     <div class="box-body">
@@ -38,9 +38,9 @@
                                         <i class="fa fa-ellipsis-h"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right">
-                                       <li><a href="{{ url('sales/' . $sale->id . '/edit') }}">{{ 'Edit' }}</a></li>
+                                       <li><a href="{{ url('sales/sales/' . $sale->id . '/edit') }}">{{ 'Edit' }}</a></li>
                                         <li><a href="{{  url('download/'.$sale->id)  }}">{{ 'Download Invoice' }}</a></li>
-                                        <li>{!! Form::deleteLink($sale, '/sales') !!}</li>
+                                        <li>{!! Form::deleteLink($sale, 'sales/sales') !!}</li>
                                     </ul>
                                 </div>
                             </td>
