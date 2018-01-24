@@ -5,10 +5,10 @@
 @section('content')
     <!-- Default box -->
     <div class="box box-success">
-        {!! Form::open(['url' => '/payments','role' => 'form']) !!}
+        {!! Form::open(['url' => '/purchases/payments','role' => 'form']) !!}
 
         <div class="box-body">
-            {{ Form::selectGroup('sale_id','Sales','home', $sales) }}
+            {{ Form::selectGroup('sales_id','Sales','home', $sales) }}
             {{ Form::textGroup('payment_date', 'Payment Date', 'calendar',['id' => 'payment_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''], null) }}
             {{ Form::selectGroup('payment_mode','Payment Mode','home', $payment_mode) }}
             {{ Form::textGroup('paid_amount', 'Paid Amount', '') }}
@@ -23,7 +23,7 @@
         <!-- /.box-body -->
 
         <div class="box-footer">
-            {{ Form::saveButtons('/payments') }}
+            {{ Form::saveButtons('/purchases/payments') }}
         </div>
         <!-- /.box-footer -->
 
