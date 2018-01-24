@@ -14,9 +14,9 @@
 //use App\Tax\Gst;
 
 
-// Route::get('/', function () {
-//     return view('dashboard.dashboard.index');
-// });
+Route::get('/', function () {
+    return view('dashboard.dashboard.index');
+});
 Route::resource('/','Dashboard\dashboard');
 
 Route::resource('companies/companies','Companies\Companies');
@@ -54,7 +54,10 @@ Route::group(['prefix' => 'items'], function () {
 
 Route::get('download/{id}','Sales\Sales@download');
 
-Route::get('test', function () {
+Route::get('/report',function() {
+ 	return view('reports.reports.income');
+ });
+ Route::get('test', function () {
     $GstRate = App\Models\Tax\Cess::find(0)->rate;
     echo($GstRate);
 });
