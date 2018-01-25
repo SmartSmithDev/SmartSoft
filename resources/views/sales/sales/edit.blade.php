@@ -86,7 +86,7 @@ $item_row=0;
          {{ Form::selectGroup('bank_branch', 'Bank Branch', 'university', $bank_branch,$sale->company_branch_id) }} 
          <!--  params(id,label,favicon-name,array for foreach)  -->
 
-         {{ Form::selectGroup('bank_account', 'Bank Account', 'university', $bank_accounts) }}
+         {{ Form::selectGroup('bank_account', 'Bank Account', 'university', $bank_accounts,$sale->company_account_id) }}
         
         {{ Form::textGroup('invoice_date', 'Invoice Date', 'calendar',['id' => 'invoice_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''],$sale->invoice_date) }}
 
@@ -1013,32 +1013,6 @@ $('.items-dropdown').trigger('select2:select');
 setTimeout(update,500);
 
   
-                                 
-            
-
-
-  });
-
-function update(){
-  var newRowDetails=document.getElementById('newRowDetails').value;
-  console.log(newRowDetails);
-  newRowDetails=JSON.parse(newRowDetails);
-  console.log(Object.keys(newRowDetails).length);
-
-
-
-  for(var i=0;i<Object.keys(newRowDetails).length;i++){
-    rowsDetails[i]['hsn']=newRowDetails[i]['hsn'];
-    rowsDetails[i]['gst']=newRowDetails[i]['gst'];
-    rowsDetails[i]['cess']=newRowDetails[i]['cess'];
-    rowsDetails[i]['type']=newRowDetails[i]['type'];
-    $('input[name="item['+i+'][gst_id]"]').val(rowsDetails[i]['gst']);
-    $('input[name="item['+i+'][cess_id]"]').val(rowsDetails[i]['cess']);
-    itemCalculate(); 
-
-  }
-  console.log(rowsDetails);
-}
 
 $('#items').on('blur','.quantity-class',function(){
   var elem=$(this);
@@ -1062,7 +1036,34 @@ else if(data!='Ok'){
 });
 
 
+
 });
+
+});
+
+
+function update(){
+  var newRowDetails=document.getElementById('newRowDetails').value;
+  console.log(newRowDetails);
+  newRowDetails=JSON.parse(newRowDetails);
+  console.log(Object.keys(newRowDetails).length);
+
+
+
+  for(var i=0;i<Object.keys(newRowDetails).length;i++){
+    rowsDetails[i]['hsn']=newRowDetails[i]['hsn'];
+    rowsDetails[i]['gst']=newRowDetails[i]['gst'];
+    rowsDetails[i]['cess']=newRowDetails[i]['cess'];
+    rowsDetails[i]['type']=newRowDetails[i]['type'];
+    $('input[name="item['+i+'][gst_id]"]').val(rowsDetails[i]['gst']);
+    $('input[name="item['+i+'][cess_id]"]').val(rowsDetails[i]['cess']);
+    itemCalculate(); 
+
+  }
+  console.log(rowsDetails);
+}
+
+
 
     </script>
 @endsection
