@@ -16,5 +16,13 @@ class PermissionSeed extends Seeder
         app()['cache']->forget('spatie.permission.cache');
         
         Permission::create(['name' => 'users_manage']);
+        Permission::create(['name' => 'payments_manage']);
+        Permission::create(['name' => 'create_sales_purchase']);
+        Permission::create(['name' => 'manage_tax']);
+        Permission::create(['name' => 'view_reports']);
+        Permission::create(['name' => 'companies_manage']);
+        Permission::create(['name' => 'vendors_manage']);
+        Permission::create(['name' => 'customers_manage']);
+
     }
 }
