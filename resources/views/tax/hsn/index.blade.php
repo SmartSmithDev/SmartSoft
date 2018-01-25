@@ -1,55 +1,116 @@
 @extends('layouts.admin')
 
+@section('title','Hsn')
+
 @section('content')
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
-<div class="box-body">
-        <div class="table table-responsive">
-            <table class="table table-striped table-hover" data-role="table" data-mode="columntoggle" class="ui-responsive" id="myTable">
-      <thead>
-        <tr>
-       
-          <th class="col-md-1 text-center">@sortablelink('hsn', 'Hsn')</th>
-    <th class="col-md-1 text-center" data-priority="1">@sortablelink('hsn->item_type', 'Item type')</th>
-          <th class="col-md-1 text-center" data-priority="2">@sortablelink('hsn->description', 'Hsn Description')</th>
-          <th class="col-md-1 text-center" data-priority="3">@sortablelink('gst_rate', 'Gst Rate')</th>
-          <th class="col-md-1 text-center" data-priority="4">@sortablelink('gst_d','Gst Description')</th>
-          <th class="col-md-1 text-center" data-priority="5">@sortablelink('cess_rate', 'Cess Rate')</th>
-          <th class="col-md-1 text-center" data-priority="6">@sortablelink('cess_d', 'Cess Description')</th>
-          
+@section('new_button')
+<span class="new-button"><a href="{{url('hsn/create')}}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
+@endsection
+
+    <div class="box-body">
         
-        </tr>
-      </thead>
-            	
-              
-<tbody>
-                   @foreach($hsns as $Hsn)
-                        <tr>
-                            <td class="col-md-1 text-center">{{ $Hsn->hsn}}</td>
-                            <td class="col-md-1 text-center">{{ $Hsn->item}}</td>
-                            <td class="col-md-1 text-center">{{ $Hsn->hsn_d }}</td>
-                            <td class="col-md-1 text-center">{{ $Hsn->gst_rate}}</td>
-                            <td class="col-md-1 text-center">{{ $Hsn->gst_d}}</td>
-                            <td class="col-md-1 text-center">{{ $Hsn->cess_rate}}</td>
-                            <td class="col-md-1 text-center">{{ $Hsn->cess_d}}</td>
-                           
-                            </tr>
-                    @endforeach
+      <table class="table table-striped table-hover" id="tbl-hsn">
+        <thead>
+          <tr>
+            <th class="col-md-2">@sortablelink('hsn', 'Hsn')</th>
+            <th class="col-md-2">@sortablelink('hsn->item_type', 'Item type')</th>
+            <th class="col-md-2">@sortablelink('hsn->description', 'Hsn Description')</th>
+            <th class="col-md-2">@sortablelink('gst_rate', 'Gst Rate')</th>
+            <th class="col-md-2">@sortablelink('gst_d','Gst Description')</th>
+            <th class="col-md-2">@sortablelink('cess_rate', 'Cess Rate')</th>
+            <th class="col-md-2">@sortablelink('cess_d', 'Cess Description')</th>
+            <th class="col-md-1 text-center">{{ trans('general.actions') }}</th>
+          </tr>
+        </thead>
 
+        <tbody>
+          @foreach($hsns as $Hsn)
 
-                
-                </tbody>
-            </table>
-        </div>
+            <tr>
+              <td class="col-md-2">{{ $Hsn->hsn}}</td>
+              <td class="col-md-2">{{ $Hsn->item}}</td>
+              <td class="col-md-2">{{ $Hsn->hsn_d }}</td>
+              <td class="col-md-2">{{ $Hsn->gst_rate}}</td>
+              <td class="col-md-2">{{ $Hsn->gst_d}}</td>
+              <td class="col-md-2">{{ $Hsn->cess_rate}}</td>
+              <td class="col-md-2">{{ $Hsn->cess_d}}</td>
+              <td class="text-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false">
+                    <i class="fa fa-ellipsis-h"></i>
+                  </button>
+
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="{{ url('hsn/' . $Hsn->hsn . '/edit') }}">{{ 'Edit' }}</a></li>
+                    
+                    <li>{!! Form::deleteLink($Hsn, '/hsn') !!}</li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          @endforeach
+                            
+                    
+        </tbody>
+      </table>
+        
     </div>
 
-
-
- 
-
-
-
 @endsection
+
+@section('css')
+<style type="text/css">
+    button[title="Delete"]{
+        border:none;
+        background:none;
+        width:100%;
+        color:grey;
+    }
+
+    button[title="Delete"]:hover{
+        background-color:#E1E3E9;
+        color:black;
+    }
+
+    .dropdown-menu >li >a{
+        text-align: center;
+    }
+
+    .dropdown-menu li{
+        z-index: 50;
+    }
+
+    
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
