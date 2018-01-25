@@ -42,6 +42,7 @@ class CreateSalesTable extends Migration
             $table->decimal('round_off', 15 , 2);
             $table->decimal('total_amount', 15 , 2);
             $table->enum('reverse_charge', array('N','Y'))->default('N');
+            $table->enum('payment_status', array('Completed', 'Pending'))->default('Pending');
             $table->text('notes');
             $table->timestamps();
             $table->softDeletes();
