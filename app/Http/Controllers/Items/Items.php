@@ -46,9 +46,9 @@ class Items extends Controller
      */
     public function store(Request $request)
     {  
-        Item::create($request->all());
+        Item::create($request->except(['manage_inventory']));
           if(!empty($request->input('manage_inventory'))){
-          DB::table('inventory')->insert(['name'=>$request->input('name'),'sku'=>$request->input('sku'),'qunatity'=>0]);    
+          DB::table('inventory')->insert(['name'=>$request->input('name'),'sku'=>$request->input('sku'),'quantity'=>0]);    
           }
         return redirect('items/items');
     }
@@ -244,8 +244,11 @@ class Items extends Controller
     }
 
     public function ajaxStore(Request $req){
-        $item=Item::create($req->all());
+        $item=Item::create($req->except(['manage_inventory']));
         $hsn_row=HSN::where('hsn','=',$item->hsn)->pluck('gst_id','cess_id')->toArray();
+         if(!empty($req->input('manage_inventory'))){
+          DB::table('inventory')->insert(['name'=>$req->input('name'),'sku'=>$req->input('sku'),'quantity'=>0]);    
+          }
         $gst_id=array_values($hsn_row);
          $cess_id=array_keys($hsn_row);
         $item->gst=$gst_id[0];

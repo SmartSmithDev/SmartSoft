@@ -16,7 +16,7 @@ $branch_row=0;
   <br>
   {!! Form::open(array('url' => '/company/companies'.$company->id,'method'=>'PUT')) !!}  
 <button type="submit" name="submit" class="btn btn-success"><i class="fa fa-save"></i>Save</button>&nbsp;
-<a href="{{ url('/company') }}" class="btn btn-default"><i class="fa fa-times-circle"></i>Cancel</a>
+<a href="{{ url('/companies/companies/') }}" class="btn btn-default"><i class="fa fa-times-circle"></i>Cancel</a>
   <div id="company"  class="parts">
      <br>
   <br>

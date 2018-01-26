@@ -270,6 +270,11 @@
 
                 {{ Form::itemTypeGroup('type', 'Item Type' ) }}
 
+                 <div class="col-md-6">
+                 <input type="checkbox" name="manage_inventory" value="1" />&nbsp;<label>Manage Inventory</label>
+                     
+                 </div>
+
                 {{ Form::textareaGroup('details', 'Item Details') }}
                 <div style="float:right">
              <input type="submit" name="submit" value="Save" class="btn btn-success"/>
@@ -717,18 +722,17 @@ $.ajax({
                 url: '{{ url("/items/ajaxStore") }}',
                 type: 'POST',
                 dataType: 'JSON',
-                data: $('input[name="name"],input[name="sku"],#hsn,#unit_id,input[name="type"]:checked,#details'),
+                data: $('input[name="name"],input[name="sku"],#hsn,#unit_id,input[name="type"]:checked,#details,input[name="manage_inventory"]'),
                 headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 success: function(data) {
                      
                     if (data) {
+                      //console.log(data);
 
                     rowsDetails[ogRow]=data;
                
           itemsArray.push(data.name);         
-        // document.getElementById('item-type-'+globalRow).value=data['type'];
-        // document.getElementById('item-tax-'+globalRow).value=data['unit_id'];
-        //  document.getElementById('item-gst-'+globalRow).value=data['gst'];
+        
          var option = new Option(data.name,data.name, true, true);  // Option(innerHTML,value,selected,actual Selection)
          $('#item-name-'+globalRow).append(option);
 

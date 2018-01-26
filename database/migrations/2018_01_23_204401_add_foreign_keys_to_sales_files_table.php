@@ -16,8 +16,8 @@ class AddForeignKeysToSalesFilesTable extends Migration
         //
         Schema::table('sales_files', function(Blueprint $table)
         {
-           $table->foreign('user_id','fk_sales_files_user_id')->references('id')->on('users')->onDelete('CASCADE');
-            $table->foreign('sales_id','fk_sales_files_sales_id')->references('id')->on('sales')->onDelete('CASCADE');
+           $table->foreign('user_id','fk_sales_files_user_id')->references('id')->on('users');
+            $table->foreign('sales_id','fk_sales_files_sales_id')->references('id')->on('sales');
         });
     }
 
