@@ -127,11 +127,11 @@ class GenerateMenus
                 ->append('<i class="fa fa-angle-left pull-right"></i>')
                 ->append('</span>');
 
-            //$menu->get('purchases')->add('New Entry' , ['action'  => 'Purchase\Purchase@create'])
-            //   ->prepend('<i class="fa fa-circle-o"></i>');
+            $menu->get('purchases')->add('New Entry' , ['action'  => 'Purchases\Purchases@create'])
+               ->prepend('<i class="fa fa-circle-o"></i>');
 
-            //$menu->get('purchases')->add('All Purchases' , ['action'  => 'Purchase\Purchase@index'])
-            //    ->prepend('<i class="fa fa-circle-o"></i>');
+            $menu->get('purchases')->add('All Purchases' , ['action'  => 'Purchases\Purchases@index'])
+               ->prepend('<i class="fa fa-circle-o"></i>');
 
             $menu->get('purchases')->add('Vendors' , ['action'  => 'Purchases\Vendors@index'])
                  ->prepend('<i class="fa fa-circle-o"></i>');
