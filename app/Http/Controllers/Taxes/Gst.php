@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Taxes;
 
 use Illuminate\Http\Request;
+use App\Models\Tax\Gst as gsts;
 use App\Http\Controllers\Controller;
 
 class Gst extends Controller
@@ -14,7 +15,8 @@ class Gst extends Controller
      */
     public function index()
     {
-        //
+    $gsts = gsts::get();
+        return view('tax.gst.index' , compact('gsts'));
     }
 
     /**

@@ -73,6 +73,13 @@ You can publish [the migration](https://github.com/spatie/laravel-permission/blo
 php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"
 ```
 
+If you're using UUIDs or GUIDs for your `User` models you can update the `create_permission_tables.php` migration and replace `$table->morphs('model')` with:
+
+```php
+$table->uuid('model_id');
+$table->string('model_type');
+```
+
 After the migration has been published you can create the role- and permission-tables by running the migrations:
 
 ```bash
@@ -165,6 +172,14 @@ return [
      */
 
     'cache_expiration_time' => 60 * 24,
+    
+    /*
+     * When set to true, the required permission/role names are added to the exception
+     * message. This could be considered an information leak in some contexts, so
+     * the default setting is false here for optimum safety.
+     */
+
+    'display_permission_in_exception' => false,
 ];
 ```
 
@@ -622,7 +637,7 @@ php artisan permission:create-role writer
 ```
 
 ```bash
-php artisan permission:create-permission 'edit articles'
+php artisan permission:create-permission "edit articles"
 ```
 
 When creating permissions and roles for specific guards you can specify the guard names as a second argument:
@@ -632,7 +647,7 @@ php artisan permission:create-role writer web
 ```
 
 ```bash
-php artisan permission:create-permission 'edit articles' web
+php artisan permission:create-permission "edit articles" web
 ```
 
 ## Unit Testing
@@ -703,7 +718,6 @@ php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvid
 ```
   
   And update the `models.role` and `models.permission` values
-
 
 ## Cache
 

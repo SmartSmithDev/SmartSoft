@@ -98,8 +98,9 @@ class Sales extends Controller
           $sale_id=$sale_table->id;
             
           $items_table=json_decode($request->input('table-object'),true);
+          if(!empty($file)){
           $file_table=DB::table('sales_files')->insert(['user_id'=>$user_id,'sales_id'=>$sale_id,'path'=>$file->storeAs('files','sales_files'.$user_id.$sale_id)]);
-
+           }
           foreach($items_table as $item_row){
              //dd($item_row);
                if(!empty($item_row)){
@@ -212,7 +213,10 @@ class Sales extends Controller
           $sale_id=$sale_table->id;
             
           $items_table=json_decode($request->input('table-object'),true);
-          $file_table=DB::table('sales_files')->insert(['user_id'=>$user_id,'sales_id'=>$sale_id,'path'=>$file->storeAs('files','sales_files'.$user_id.$sale_id)]);
+          if(!empty($file)){
+          $count=DB::table('sales_files')->where('sales_id',$sale_id)->where('user_id',$user_id)->count();
+          $file_table=DB::table('sales_files')->insert(['user_id'=>$user_id,'sales_id'=>$sale_id,'path'=>$file->storeAs('files','sales_files'.$count.$user_id.$sale_id)]);
+        }
 
           foreach($items_table as $item_row){
              //dd($item_row);
@@ -321,7 +325,7 @@ class Sales extends Controller
             if($inventory->pluck('quantity')[0]>=$quantity)
                 return "Ok";
             else
-                return "0";
+                return $inventory->pluck('quantity')[0];
         }
         else
             return "-1";

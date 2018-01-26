@@ -32,7 +32,7 @@
           <!-- <th class="col-md-1 text-center" >@sortablelink('reverse_chargep', 'Reverse charge')</th> -->
           <th class="col-md-1 text-center" >@sortablelink('paid_amount', 'Paid Amount')</th>
           <th class="col-md-1 text-center" >@sortablelink('payment_type', 'Payment Type')</th>
-          <th class="col-md-1 text-center">@sortablelink('status', 'Status')</th>
+          <th class="col-md-1 text-center">@sortablelink('payment_status', 'Status')</th>
         </tr>
       </thead>
             	
@@ -71,7 +71,7 @@
                 // tr.append("<td>" + json[i].reverse_charge+ "</td>");
                 tr.append("<td>" + json[i].paid_amount + "</td>");
                 tr.append("<td>" + json[i].payment_type + "</td>");
-                tr.append("<td>" + json[i].status + "</td>");
+                tr.append("<td>" + json[i].payment_status + "</td>");
                 //tr.append('</tr>'
                 $('table tbody').append(tr);
               }
@@ -100,7 +100,7 @@
         <!-- <td class="col-md-1 text-center">{{ $Sale->reverse_charge}}</td> -->
         <td class="col-md-1 text-center">{{ $Sale->paid_amount}}</td>
         <td class="col-md-1 text-center">{{ $Sale->payment_type}}</td>
-        <td class="col-md-1 text-center">{{ $Sale->status}}</td>
+        <td class="col-md-1 text-center">{{ $Sale->payment_status}}</td>
         </tr>
       @endforeach
       </tbody>
