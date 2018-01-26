@@ -41,7 +41,7 @@ Route::group(['prefix' => 'sales'], function () {
 Route::group(['prefix' => 'purchases'], function () {
 	Route::resource('vendors','Purchases\Vendors');
 	Route::resource('payments','Purchases\Payments');
-	Route::resource('Purchases','Purchases\Purchases');
+	Route::resource('purchases','Purchases\Purchases');
 });
 
 Route::group(['prefix' => 'items'], function () {
