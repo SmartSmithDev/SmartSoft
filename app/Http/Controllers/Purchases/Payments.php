@@ -84,14 +84,14 @@ class Payments extends Controller
         $status = $req->input('status');
         if($status == 0) {
         //if status is complete
-            $d =Sale::select('sales.invoice_type as invoice_type','sales.order_date as order_date','sales.total_taxable_value as total_taxable_value','sales.total_discount as total_discount ','sales.total_tax_amount as total_tax_amount','sales.shipping_cost as shipping_cost','sales.round_off as round_off','sales.total_amount as total_amount','sales.reverse_charge as reverse_chargep','sales.status as status','sales_payments.payment_date as payment_date','sales_payments.payment_mode as payment_mode','sales_payments.paid_amount as paid_amount','sales_payments.payment_type as payment_type')
-          ->join('sales_payments', 'sales.id', '=', 'sales_payments.sales_id')->where('status','=','complete')
+            $d =Sale::select('sales.invoice_type as invoice_type','sales.order_date as order_date','sales.total_taxable_value as total_taxable_value','sales.total_discount as total_discount ','sales.total_tax_amount as total_tax_amount','sales.shipping_cost as shipping_cost','sales.round_off as round_off','sales.total_amount as total_amount','sales.reverse_charge as reverse_chargep','sales.payment_status as status','sales_payments.payment_date as payment_date','sales_payments.payment_mode as payment_mode','sales_payments.paid_amount as paid_amount','sales_payments.payment_type as payment_type')
+          ->join('sales_payments', 'sales.id', '=', 'sales_payments.sales_id')->where('status','=','Completed')
           ->get();
         }
        else {
         //if status is incomplete
-            $d =Sale::select('sales.invoice_type as invoice_type','sales.order_date as order_date','sales.total_taxable_value as total_taxable_value','sales.total_discount as total_discount ','sales.total_tax_amount as total_tax_amount','sales.shipping_cost as shipping_cost','sales.round_off as round_off','sales.total_amount as total_amount','sales.reverse_charge as reverse_chargep','sales.status as status','sales_payments.payment_date as payment_date','sales_payments.payment_mode as payment_mode','sales_payments.paid_amount as paid_amount','sales_payments.payment_type as payment_type')
-          ->join('sales_payments', 'sales.id', '=', 'sales_payments.sales_id')->where('status','=','incomplete')
+            $d =Sale::select('sales.invoice_type as invoice_type','sales.order_date as order_date','sales.total_taxable_value as total_taxable_value','sales.total_discount as total_discount ','sales.total_tax_amount as total_tax_amount','sales.shipping_cost as shipping_cost','sales.round_off as round_off','sales.total_amount as total_amount','sales.reverse_charge as reverse_chargep','sales.payment_status as status','sales_payments.payment_date as payment_date','sales_payments.payment_mode as payment_mode','sales_payments.paid_amount as paid_amount','sales_payments.payment_type as payment_type')
+          ->join('sales_payments', 'sales.id', '=', 'sales_payments.sales_id')->where('status','=','Pending')
           ->get();
         }
         return json_encode($d);
