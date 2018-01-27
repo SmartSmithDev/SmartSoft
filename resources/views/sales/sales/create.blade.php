@@ -18,7 +18,7 @@
 
       <div class="modal-body">
          
-         {!! Form::open(array('url' => '/customerajax','action' => 'Sales\Customers@store1')) !!}
+         {!! Form::open(array('url' => 'sales/customerajax','action' => 'Sales\Customers@store1')) !!}
 
             {{ Form::textGroup('name', 'Name', 'id-card-o') }}
             
