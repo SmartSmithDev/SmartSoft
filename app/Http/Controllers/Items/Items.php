@@ -21,7 +21,7 @@ class Items extends Controller
      */
     public function index()
     {
-        $items = DB::table('items')->get();
+        $items = Item::get();
         return view('items.items.index' , compact('items'));
     }
 
