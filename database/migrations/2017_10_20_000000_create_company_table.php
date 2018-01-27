@@ -23,17 +23,6 @@ class CreateCompanyTable extends Migration
             $table->softDeletes();
 
         });
-
-        DB::table('companies')->insert(
-            array(
-                array(
-                    'id' => '0',
-                    'name' => 'NA',
-                    'pan' => 'NA',
-                )
-            )
-
-        );
     }
 
 

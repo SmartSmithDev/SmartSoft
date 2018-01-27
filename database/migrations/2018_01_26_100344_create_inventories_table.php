@@ -18,8 +18,7 @@ class CreateInventoriesTable extends Migration
             $table->string('sku',30)->unique('unique_sku');
             $table->integer('company_id');
             $table->integer('company_branch_id');
-            $table->string('ref');
-            $table->string('reason');
+            $table->string('state');
             $table->integer('quantity');
             $table->timestamps();
         });

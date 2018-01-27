@@ -16,7 +16,7 @@ class AddForeignKeyToUsersTable extends Migration
         //
           Schema::table('users', function(Blueprint $table)
           {
-               $table->foreign('company_selected', 'fk_users_company_selected')->references('id')->on('companies')->onUpdate('CASCADE')->onDelete('CASCADE');
+               //$table->foreign('company_selected', 'fk_users_company_selected')->references('id')->on('companies')->onUpdate('CASCADE')->onDelete('CASCADE');
           });
     }
 
@@ -30,7 +30,7 @@ class AddForeignKeyToUsersTable extends Migration
         //
          Schema::table('users', function(Blueprint $table)
         {
-             $table->dropForeign('fk_users_company_selected');
+             //$table->dropForeign('fk_users_company_selected');
         });
     }
 }
