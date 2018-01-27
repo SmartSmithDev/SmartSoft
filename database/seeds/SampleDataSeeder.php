@@ -147,6 +147,136 @@ class SampleDataSeeder extends Seeder
 		    )
         );
 
+		//vendors
+		DB::table('vendors')->insert(
+            array(
+        		array(
+				  'id'=>'2' , 
+				  'name'=>'somevendor' , 
+				  'vendor_type'=>'GST Registered' , 
+				  'gstin'=>'27dasjbnasdcsad' , 
+				  'pan'=>'dcvadsv' , 
+				  'phone'=>'328302830280' , 
+				  'email_id'=>'dfvkadfs@fdsv.cd' , 
+				  'address'=>'Any Address' , 
+				  'city'=>'mumbai' , 
+				  'state_id'=>'27' , 
+				  'country'=>'india' , 
+				  'pin_code'=>'400310' , 
+				  'website'=>'google.com' , 
+				  'business_type'=>'Manufacturer and Trader' , 
+				  'created_at'=>'2018-01-27 03:17:23' , 
+				  'updated_at'=>'2018-01-27 03:27:19' , 
+				  'deleted_at'=>'' , 
+				),
+
+				array(
+				  'id'=>'3' , 
+				  'name'=>'avendor' , 
+				  'vendor_type'=>'GST Registered' , 
+				  'gstin'=>'27dfvdfvdsfvsdt' , 
+				  'pan'=>'dvasvcds' , 
+				  'phone'=>'dfvadxvasv' , 
+				  'email_id'=>'mail@example.com' , 
+				  'address'=>'earth' , 
+				  'city'=>'mumbai' , 
+				  'state_id'=>'27' , 
+				  'country'=>'India' , 
+				  'pin_code'=>'400610' , 
+				  'website'=>'google.com' , 
+				  'business_type'=>'Manufacturer and Trader' , 
+				  'created_at'=>'2018-01-27 03:18:55' , 
+				  'updated_at'=>'2018-01-27 03:18:55' , 
+				  'deleted_at'=>'' , 
+				),
+
+				array(
+				  'id'=>'4' , 
+				  'name'=>'another vendor' , 
+				  'vendor_type'=>'GST Unregistered' , 
+				  'gstin'=>'' , 
+				  'pan'=>'basdbcasbcdi' , 
+				  'phone'=>'232323' , 
+				  'email_id'=>'dfvdfvdasvadsv@dva.aedv' , 
+				  'address'=>'' , 
+				  'city'=>'thane' , 
+				  'state_id'=>'27' , 
+				  'country'=>'india' , 
+				  'pin_code'=>'400510' , 
+				  'website'=>'google.com' , 
+				  'business_type'=>'Trader' , 
+				  'created_at'=>'2018-01-27 04:47:28' , 
+				  'updated_at'=>'2018-01-27 04:47:28' , 
+				  'deleted_at'=>'' , 
+				)
+		    )
+        );
+
+        //vendor_accounts
+        DB::table('vendor_accounts')->insert(
+            array(
+        		array(
+				  'id'=>'1' , 
+				  'vendor_id'=>'2' , 
+				  'beneficiary_name'=>'somevendor' , 
+				  'account_number'=>'11000111000111000' , 
+				  'beneficiary_address'=>'vendor lives here' , 
+				  'beneficiary_bank'=>'icici' , 
+				  'beneficiary_bank_address'=>'icici mumbai' , 
+				  'ifsc_Code'=>'icici00011' , 
+				  'bank_code'=>'0101' , 
+				  'branch_code'=>'1010' , 
+				  'account_type'=>'Current Account' , 
+				  'created_at'=>'' , 
+				  'updated_at'=>'' , 
+				  'deleted_at'=>'' , 
+				),
+
+				array(
+				  'id'=>'2' , 
+				  'vendor_id'=>'3' , 
+				  'beneficiary_name'=>'someothervendor' , 
+				  'account_number'=>'0111000111000' , 
+				  'beneficiary_address'=>'other vendor lives here' , 
+				  'beneficiary_bank'=>'icici' , 
+				  'beneficiary_bank_address'=>'icici mumbai' , 
+				  'ifsc_Code'=>'icici00011' , 
+				  'bank_code'=>'0101' , 
+				  'branch_code'=>'1010' , 
+				  'account_type'=>'Current Account' , 
+				  'created_at'=>'' , 
+				  'updated_at'=>'' , 
+				  'deleted_at'=>'' , 
+				)
+	    	)
+    	);    
+
+
+    	//vendor_ecommerce
+		DB::table('vendor_ecommerce')->insert(
+            array(
+            	array(
+				  'id'=>'1' , 
+				  'gstin'=>'27XYZYS4559A1ZG' , 
+				  'name'=>'Amazon' , 
+				  'created_at'=>'' , 
+				  'updated_at'=>'' , 
+				  'deleted_at'=>'' , 
+				),
+
+				array(
+				  'id'=>'2' , 
+				  'gstin'=>'01AABBM3992A1ZG' , 
+				  'name'=>'Flipkart' , 
+				  'created_at'=>'' , 
+				  'updated_at'=>'' , 
+				  'deleted_at'=>'' , 
+				)
+	    	)
+    	);    
+        	
+
+
         //hsn
 		DB::table('hsn')->insert(
             array(
