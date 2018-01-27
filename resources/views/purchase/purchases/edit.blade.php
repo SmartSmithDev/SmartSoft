@@ -21,18 +21,18 @@ $item_row=0;
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">New Customer Details</h4>
+        <h4 class="modal-title">New Vendor Details</h4>
           
       </div>
 
       <div class="modal-body">
          
         <!-- {!! Form::open(array('url' => '/vendor','action' => 'Vendors@store')) !!} -->
-         {!! Form::open(array('action' => 'Sales\Customers@store1')) !!}
+         {!! Form::open(array('action' => 'Purchases\Vendors@store1')) !!}
 
             {{ Form::textGroup('name', 'Name', 'id-card-o') }}
             
-            {{ Form::selectGroup('vendor_type','Vendor Type','id-card-o', $customer_type) }}
+            {{ Form::selectGroup('vendor_type','Vendor Type','id-card-o', $vendor_type) }}
 
             {{ Form::textGroup('gstin', 'GST No.', 'percent', []) }}
             
@@ -78,25 +78,25 @@ $item_row=0;
 
 <!-- Default box -->
   <div class="box box-success">
-    {!! Form::open(['url' => 'sales/sales/'.$sale->id, 'files' => true, 'role' => 'form','method'=>'PUT']) !!}
+    {!! Form::open(['url' => 'purchases/purchases/'.$purchase->id, 'files' => true, 'role' => 'form','method'=>'PUT']) !!}
 
 <div class="box-body">
-        {{ Form::selectGroup('vendor_id', 'Party Name', 'user', $customers,$sale->customer_id) }}
+        {{ Form::selectGroup('vendor_id', 'Vendor Name', 'user', $vendors,$purchase->vendor_id) }}
          
-         {{ Form::selectGroup('bank_branch', 'Bank Branch', 'university', $bank_branch,$sale->company_branch_id) }} 
+         {{ Form::selectGroup('bank_branch', 'Bank Branch', 'university', $bank_branch,$purchase->company_branch_id) }} 
          <!--  params(id,label,favicon-name,array for foreach)  -->
 
-         {{ Form::selectGroup('bank_account', 'Bank Account', 'university', $bank_accounts,$sale->company_account_id) }}
+         {{ Form::selectGroup('bank_account', 'Bank Account', 'university', $bank_accounts,$purchase->company_account_id) }}
         
-        {{ Form::textGroup('invoice_date', 'Invoice Date', 'calendar',['id' => 'invoice_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''],$sale->invoice_date) }}
+        {{ Form::textGroup('invoice_date', 'Invoice Date', 'calendar',['id' => 'invoice_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''],$purchase->invoice_date) }}
 
-        {{ Form::textGroup('order_date', 'Order Date', 'calendar',['id' => 'order_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''],$sale->order_date) }}
+      
 
-        {{ Form::textGroup('invoice_number', 'Invoice Number', 'file-text-o',[],$sale->invoice_number) }}
+        {{ Form::textGroup('invoice_number', 'Invoice Number', 'file-text-o',[],$purchase->invoice_number) }}
 
-        {{ Form::textGroup('order_id', 'Order ID', 'shopping-cart',[],$sale->order_id) }}
+       
 
-        {{ Form::selectGroup('supply_state_id', 'Place of Supply', 'user', $states,$sale->supply_state_id) }}
+        {{ Form::selectGroup('supply_state_id', 'Place of Supply', 'user', $states,$purchase->supply_state_id) }}
        
 
         <div class="form-group col-md-12">
@@ -134,7 +134,7 @@ $item_row=0;
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($sales_items as $item)
+                        @foreach($purchase_items as $item)
                         <tr id="item-row-{{ $item_row }}" class="item-row">
 
                             <!-- Delete Button -->
@@ -248,7 +248,7 @@ $item_row=0;
                 </table>
             </div>
         </div>
-        {{ Form::textareaGroup('notes', trans_choice('general.notes', 2), $sale->notes) }}
+        {{ Form::textareaGroup('notes', trans_choice('general.notes', 2), $purchase->notes) }}
 
         {{ Form::fileGroup('attachment', trans('general.attachment')) }}
         <input type="hidden" name="table-object" id="table-object">
@@ -260,7 +260,7 @@ $item_row=0;
     <div class="box-footer">
         &nbsp; &nbsp; &nbsp;<input type="checkbox" name="payment_status" value="1" />
       <label>Payment Complete</label><br><br>
-        {{ Form::saveButtons('sales/sales') }}
+        {{ Form::saveButtons('purchases/purchases') }}
     </div>
     <!-- /.box-footer -->
 
@@ -492,10 +492,10 @@ color:white;
                    //    alert("Here it IS!");
 
                   $.ajax({
-                url: '{{ url("sales/customerInfo") }}',
+                url: '{{ url("purchases/customerInfo") }}',
                 type: 'POST',
                 dataType: 'JSON',
-                data: {'customer_id':$(this).val()},
+                data: {'vendor_id':$(this).val()},
                 headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 success: function(data) {
                      
@@ -935,7 +935,7 @@ for(var i=0;i<(nrows);i++){
   commonDetails['sgst']+=parseInt(rowsDetails[i+""].sgst);
   commonDetails['igst']+=parseInt(rowsDetails[i+""].igst);
   commonDetails['cess']+=parseInt(rowsDetails[i+""].cess_amount);
-  commonDetails['ecommerce_vendor_id']=0;
+
 }
 
 //console.log(rowsDetails);
@@ -945,7 +945,7 @@ for(var i=0;i<(nrows);i++){
 commonDetails['customer_id']=$('#vendor_id').val();
 commonDetails['invoice_date']=$('#invoice_date').val();
 commonDetails['invoice_number']=$('#invoice_number').val();
-commonDetails['order_id']=$('#order_id').val();
+
 commonDetails['supply_state_id']=$('#supply_state_id').val();
 commonDetails['total_taxable_value']=$('#sub-total').text();
 commonDetails['total_tax_amount']=$('#tax-total').text();
@@ -953,7 +953,7 @@ commonDetails['total_amount']=$('#grand-total').text();
 commonDetails['notes']=$('#notes').val();
 commonDetails['round_off']=Math.round(parseFloat($('#grand-total').text()));
 commonDetails['shipping_cost']=0;
-commonDetails['order_date']=$('#order_date').val();
+
 //console.log(commonDetails);
 //console.log(rowsDetails);
 $('#common-object').val(JSON.stringify(commonDetails));
@@ -1014,30 +1014,7 @@ setTimeout(update,500);
 
   
 
-$('#items').on('blur','.quantity-class',function(){
-  var elem=$(this);
-  var quantity=$(this).val();
-  var row=$(this).parent().parent().attr('id').split('-')[2];
-$.ajax({
-url:'{{ url("sales/quantity") }}',
-type:'GET',
-dataType:"text",
-data:{'quantity':quantity,'sku':rowsDetails[row].sku},
-success:function(data){
-if(data=='-1'){
-  elem.val("");
-  alert("Item Does Not Exist In Inventory!");
-}
-else if(data!='Ok'){
-  elem.val("");
-  alert("Only "+data+" Units Remaining!");
-}
-}
-});
 
-
-
-});
 
 });
 

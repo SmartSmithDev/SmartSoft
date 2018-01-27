@@ -83,11 +83,15 @@ class Sales extends Controller
           $file=$request->file('attachment'); 
             
           $sale_table=json_decode($request->input('common-object'),true);
+          $sale_table['payment_status']="Pending";
+          if($request->input('payment_status')){
+            $sale_table['payment_status']="Completed";
+          }
           $bank_branch_id=$request->input('bank_branch');
           $user_id=0; 
             
-          $company=Company::find($bank_branch_id);
-          $company_id=$company->id;
+          $company=CompanyBranch::find($bank_branch_id);
+          $company_id=$company->company_id;
           $account_id=$request->input('bank_account');
             
           $sale_table["company_branch_id"]=$bank_branch_id;
@@ -105,6 +109,8 @@ class Sales extends Controller
              //dd($item_row);
                if(!empty($item_row)){
                    SalesItem::insert(['sales_id'=>$sale_id,'item_id'=>$item_row['id'],'hsn'=>$item_row['hsn'],'item_type'=>$item_row['type'],'unit_price'=>$item_row['unit_price'],'quantity'=>$item_row['quantity'],'unit_id'=>$item_row['unit_id'],'discount'=>$item_row['discount'],'taxable_value'=>$item_row['taxable_value'],'gst_id'=>$item_row['gst'],'cgst'=>$item_row['cgst'],'sgst'=>$item_row['sgst'],'igst'=>$item_row['igst'],'ugst'=>$item_row['ugst'],'cess_id'=>$item_row['cess'],'tax_amount'=>$item_row['tax_amount'],'total_product_amount'=>$item_row['total_amount'],'cess_amount'=>$item_row['cess_amount']]);
+
+                    DB::table('inventory')->decrement('quantity',$item_row['quantity'],['sku'=>$item_row['sku']]);
                }
            }
 

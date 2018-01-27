@@ -50,17 +50,17 @@ class Vendors extends Controller
     {
         
         Vendor::create($request->all());
-            return redirect("vendors"); 
+            return redirect("/vendors/vendors"); 
     }
 
-    public function store1(StoreGstIn $request)
+    public function store1(Request $request)
     {
           // $this->validate($request , [
           //   'gstin' => 'unique:vendors|max:15|min:15'
           //   ],['gstin.min:15' => 'The gst must have 15 characters '
           //       ]);
             Vendor::create($request->all());
-          return redirect("sales");
+          return redirect("purchases/purchases/create");
             
     }
 

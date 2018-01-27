@@ -44,7 +44,6 @@ class CreateSalesTable extends Migration
             $table->enum('reverse_charge', array('N','Y'))->default('N');
             $table->enum('payment_status', array('Completed', 'Pending'))->default('Pending');
             $table->text('notes');
-            $table->enum('status',array('complete','incomplete'))->default('complete');
             $table->timestamps();
             $table->softDeletes();
         });

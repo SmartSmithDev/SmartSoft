@@ -33,6 +33,7 @@ return [
     'payment_notes'         => 'Payment Notes',
     'payment_mode'          => 'Payment Mode',
     'reference'             => 'Reference',
+    'purchases'             =>  'Purchases',
 
     'title' => [
         'new'               => 'New :type',

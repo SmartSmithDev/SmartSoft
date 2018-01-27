@@ -42,6 +42,8 @@ Route::group(['prefix' => 'purchases'], function () {
 	Route::resource('vendors','Purchases\Vendors');
 	Route::resource('payments','Purchases\Payments');
 	Route::resource('purchases','Purchases\Purchases');
+	Route::post('vendorajax','Purchases\Vendors@store1');
+	Route::post('/vendorInfo','Purchases\Purchases@vendorInfo');
 });
 
 Route::group(['prefix' => 'items'], function () {
