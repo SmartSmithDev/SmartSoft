@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Reports;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Customer\Customer;
+use App\Models\Sale\Sale;
 
 class Reports extends Controller
 {
@@ -12,10 +14,20 @@ class Reports extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('reports.reports.income');
+    public function index(Request $r) {
+//       $name = $r->input('Customer_Name');
+//         $fromDate = $r->input('invoice1');
+//         $toDate = $r->input('invoice2');
+//         $ss =Customer::where('name','=',$name)->get();
+// foreach($ss as $sale){
+
+//             $sale->customer=Sale::find($sale->id)->whereBetween('invoice_date', array($fromDate, $toDate))->get();
+//             // dd($sale->customer);
+//         }
+//         $incomes = $sale->customer;
+    return view('reports.reports.income');
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -44,9 +56,32 @@ class Reports extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $req)
     {
-        //
+        $pname = $req->input('party_name');
+        $fromDate = $req->input('invoice1');
+        $toDate = $req->input('invoice2');
+
+        //return json_encode($pname);
+        if( empty($fromDate) && empty($toDate)){
+        $ss =Customer::where('name','=',$pname)->get();
+        foreach($ss as $sale){
+            $sale->customer=Sale::where('customer_id','=',$sale->id)->get();
+            // dd($sale->customer);
+        }
+    return json_encode($sale->customer);
+    }
+        else
+        {
+           $ss =Customer::where('name','=',$pname)->get();
+            foreach($ss as $sale){
+
+            $sale->customer=Sale::where('customer_id','=',$sale->id)->whereBetween('invoice_date', array($fromDate, $toDate))->get();
+            // dd($sale->customer);
+        }
+    
+        return json_encode($sale->customer);
+        }
     }
 
     /**
@@ -79,7 +114,9 @@ class Reports extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+
     {
         //
     }
+
 }
