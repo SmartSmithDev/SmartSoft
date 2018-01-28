@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
 use App\Models\Sale\Sale;
+use App\Models\Vendor\Vendor;
+use App\Models\Sale\SalesPayment;
 
 class Reports extends Controller
 {
@@ -83,6 +85,8 @@ class Reports extends Controller
         return json_encode($sale->customer);
         }
     }
+
+ 
 
     /**
      * Show the form for editing the specified resource.
