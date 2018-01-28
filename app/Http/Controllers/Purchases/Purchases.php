@@ -81,7 +81,7 @@ class Purchases extends Controller
             $purchase_table['payment_status']="Completed";
           }
           $bank_branch_id=$request->input('bank_branch');
-          $user_id=0; 
+          $user_id=1; 
             
           $company=CompanyBranch::find($bank_branch_id);
           $company_id=$company->company_id;
@@ -198,7 +198,7 @@ class Purchases extends Controller
             $purchase_table['payment_status']="Completed";
           }
           $bank_branch_id=$request->input('bank_branch');
-          $user_id=0; 
+          $user_id=1; 
             
           $company=CompanyBranch::find($bank_branch_id);
           $company_id=$company->company_id;

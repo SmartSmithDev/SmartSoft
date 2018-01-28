@@ -258,7 +258,7 @@ $item_row=0;
     <!-- /.box-body -->
      
     <div class="box-footer">
-        &nbsp; &nbsp; &nbsp;<input type="checkbox" name="payment_status" value="1" />
+        &nbsp; &nbsp; &nbsp;<input type="checkbox" name="payment_status" value="1" <?php if($sale->payment_status=="Completed"){ echo "checked"; }  ?> />
       <label>Payment Complete</label><br><br>
         {{ Form::saveButtons('sales/sales') }}
     </div>
@@ -935,7 +935,7 @@ for(var i=0;i<(nrows);i++){
   commonDetails['sgst']+=parseInt(rowsDetails[i+""].sgst);
   commonDetails['igst']+=parseInt(rowsDetails[i+""].igst);
   commonDetails['cess']+=parseInt(rowsDetails[i+""].cess_amount);
-  commonDetails['ecommerce_vendor_id']=0;
+  //commonDetails['ecommerce_vendor_id']=0;
 }
 
 //console.log(rowsDetails);
@@ -1014,30 +1014,30 @@ setTimeout(update,500);
 
   
 
-$('#items').on('blur','.quantity-class',function(){
-  var elem=$(this);
-  var quantity=$(this).val();
-  var row=$(this).parent().parent().attr('id').split('-')[2];
-$.ajax({
-url:'{{ url("sales/quantity") }}',
-type:'GET',
-dataType:"text",
-data:{'quantity':quantity,'sku':rowsDetails[row].sku},
-success:function(data){
-if(data=='-1'){
-  elem.val("");
-  alert("Item Does Not Exist In Inventory!");
-}
-else if(data!='Ok'){
-  elem.val("");
-  alert("Only "+data+" Units Remaining!");
-}
-}
-});
+// $('#items').on('blur','.quantity-class',function(){
+//   var elem=$(this);
+//   var quantity=$(this).val();
+//   var row=$(this).parent().parent().attr('id').split('-')[2];
+// $.ajax({
+// url:'{{ url("sales/quantity") }}',
+// type:'GET',
+// dataType:"text",
+// data:{'quantity':quantity,'sku':rowsDetails[row].sku},
+// success:function(data){
+// if(data=='-1'){
+//   elem.val("");
+//   alert("Item Does Not Exist In Inventory!");
+// }
+// else if(data!='Ok'){
+//   elem.val("");
+//   alert("Only "+data+" Units Remaining!");
+// }
+// }
+// });
 
 
 
-});
+// });
 
 });
 
