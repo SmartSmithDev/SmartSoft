@@ -3,6 +3,10 @@
 @section('title', trans_choice('general.vendors',2))
 
 @section('content')
+    <!-- <ul class="nav nav-tabs">
+        <li class="active"><a href="#">Vendors</a></li>
+        <li><a href="#">Vendor Accounts</a></li>
+    </ul> -->
 
 @section('new_button')
 <span class="new-button"><a href="{{url('purchases/vendors/create')}}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
@@ -49,6 +53,48 @@
             </table>
         
     </div>
+
+    <div class="box-body">
+        
+            <table class="table table-striped table-hover" id="tbl-vendors">
+                <thead>
+                    <tr>
+                        <th class="col-md-3">@sortablelink('beneficiary_name', trans('general.beneficiary_name'))</th>
+                        <th class="col-md-3 hidden-xs">@sortablelink('account_number', trans('general.account_number'))</th>
+                        <th class="col-md-2">@sortablelink('address', trans('general.address'))</th>
+                        <th class="col-md-2">@sortablelink('beneficiary_bank', trans('general.beneficiary_bank'))</th>
+                        <th class="col-md-1 text-center">{{ trans('general.actions') }}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach($vendorAccounts as $vendorAccount)
+                        <tr>
+                            <td class="col-md-3">{{ $vendorAccount->beneficiary_name }}</td>
+                            <td class="col-md-3">{{ $vendorAccount->account_number }}</td>
+                            <td class="col-md-2">{{ $vendorAccount->beneficiary_address }}</td>
+                            <td class="col-md-2">{{ $vendorAccount->beneficiary_bank }}</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                       <li><a href="{{ url('purchases/vendors/' . $vendorAccount->id . '/edit') }}">{{ 'Edit' }}</a></li>
+                                        
+                                        <li>{!! Form::deleteLink($vendor, '/purchases/vendors') !!}</li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+        
+    </div>
+
+
 
 @endsection
 
