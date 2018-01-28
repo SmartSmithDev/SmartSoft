@@ -1014,30 +1014,30 @@ setTimeout(update,500);
 
   
 
-$('#items').on('blur','.quantity-class',function(){
-  var elem=$(this);
-  var quantity=$(this).val();
-  var row=$(this).parent().parent().attr('id').split('-')[2];
-$.ajax({
-url:'{{ url("sales/quantity") }}',
-type:'GET',
-dataType:"text",
-data:{'quantity':quantity,'sku':rowsDetails[row].sku},
-success:function(data){
-if(data=='-1'){
-  elem.val("");
-  alert("Item Does Not Exist In Inventory!");
-}
-else if(data!='Ok'){
-  elem.val("");
-  alert("Only "+data+" Units Remaining!");
-}
-}
-});
+// $('#items').on('blur','.quantity-class',function(){
+//   var elem=$(this);
+//   var quantity=$(this).val();
+//   var row=$(this).parent().parent().attr('id').split('-')[2];
+// $.ajax({
+// url:'{{ url("sales/quantity") }}',
+// type:'GET',
+// dataType:"text",
+// data:{'quantity':quantity,'sku':rowsDetails[row].sku},
+// success:function(data){
+// if(data=='-1'){
+//   elem.val("");
+//   alert("Item Does Not Exist In Inventory!");
+// }
+// else if(data!='Ok'){
+//   elem.val("");
+//   alert("Only "+data+" Units Remaining!");
+// }
+// }
+// });
 
 
 
-});
+// });
 
 });
 
