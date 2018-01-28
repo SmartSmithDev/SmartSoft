@@ -258,7 +258,7 @@ $item_row=0;
     <!-- /.box-body -->
      
     <div class="box-footer">
-        &nbsp; &nbsp; &nbsp;<input type="checkbox" name="payment_status" value="1" />
+        &nbsp; &nbsp; &nbsp;<input type="checkbox" name="payment_status" value="1" <?php if($sale->payment_status=="Completed"){ echo "checked"; }  ?> />
       <label>Payment Complete</label><br><br>
         {{ Form::saveButtons('sales/sales') }}
     </div>
@@ -935,7 +935,7 @@ for(var i=0;i<(nrows);i++){
   commonDetails['sgst']+=parseInt(rowsDetails[i+""].sgst);
   commonDetails['igst']+=parseInt(rowsDetails[i+""].igst);
   commonDetails['cess']+=parseInt(rowsDetails[i+""].cess_amount);
-  commonDetails['ecommerce_vendor_id']=0;
+  //commonDetails['ecommerce_vendor_id']=0;
 }
 
 //console.log(rowsDetails);
