@@ -129,61 +129,16 @@
 @endsection
 
 @section('scripts')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
 
-        // $(document).ready(function(){
-        //     $('#name').focus();
-        // });
-        var tabno=0;
-    var accountrow=0;
-    var branch_row=0;
-     var branch_edit_row=-1;
-        var account_edit_row=-1;
-        var text_yes = '{{ trans('general.goods') }}';
-        var text_no = '{{ trans('general.service') }}';
-
         $(document).ready(function(){
-            $('#type_0').trigger('click');
+            alert("clicked");
 
-            $('#name').focus();
-
-            $("#unit_id").select2({
-                placeholder: "{{ trans('general.form.select.field', ['field' => trans_choice('general.unit' , 2)]) }}"
-            });
-
-            $("#hsn").select2({
-                placeholder: "{{ trans('general.form.select.field', ['field' => trans('general.hsn')]) }}"
-            });
 
         });
-
-
-$(document).ready(function(){
-$('.radio-inline label').removeClass('active');
-$('.radio-inline').on('click','label',function(){
-if($(this).attr('id')=="type_0"){
-  $(this).css({"background-color":"#398439","color":"white"});
-  $('#type_1').css({"background-color":"#E7E7E7","color":"black"});
-}
-else{
-$(this).css({"background-color":"red","color":"white"});
-  $('#type_0').css({"background-color":"#E7E7E7","color":"black"});
-}
-});
-
-$('.nav-tabs').on('click','li',function(){
-
-$(this).addClass('active');
-$('.parts').eq(tabno).css({display:"none"});
-$('.nav-tabs li').eq(tabno).removeClass('active');
-tabno=$(this).index();
-$('.parts').eq(tabno).css({display:"block"});
-
-
-});
-
-        $('#account_save').click(function(){
+    </script>
+@endsection
+$('#account_save').click(function(){
             alert("clicked");
             // var beneficiary_name=$('#beneficiary_name').val();
             // var account_number=$('#account_number').val();
@@ -195,5 +150,3 @@ $('.parts').eq(tabno).css({display:"block"});
             // var account_type=$('#account_type').val();
             // alert("test");
         });
-    </script>
-@endsection
