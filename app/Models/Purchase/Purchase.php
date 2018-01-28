@@ -52,7 +52,7 @@ class Purchase extends Model
     /**
      * @var array
      */
-    protected $fillable = ['vendor_id', 'supply_state_id', 'supplier_state_id', 'invoice_number', 'invoice_date', 'company_gstin', 'total_taxable_value', 'total_discount', 'cgst', 'sgst', 'igst', 'ugst', 'cess', 'total_tax_amount', 'round_off', 'total_amount', 'reverse_charge', 'notes', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['vendor_id', 'supply_state_id', 'supplier_state_id', 'invoice_number', 'invoice_date', 'company_gstin', 'total_taxable_value', 'total_discount', 'cgst', 'sgst', 'igst', 'ugst', 'cess', 'total_tax_amount', 'round_off', 'total_amount', 'reverse_charge', 'notes', 'created_at', 'updated_at', 'deleted_at','payment_status','company_id','company_branch_id','company_account_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

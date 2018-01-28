@@ -5,7 +5,7 @@
 @section('content')
 
 @section('new_button')
-<span class="new-button"><a href="{{url('hsn/create')}}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
+<span class="new-button"><a href="{{url('taxes/hsn/create')}}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
 @endsection
 
     <div class="box-body">
@@ -13,13 +13,13 @@
       <table class="table table-striped table-hover" id="tbl-hsn">
         <thead>
           <tr>
-            <th class="col-md-2">@sortablelink('hsn', 'Hsn')</th>
-            <th class="col-md-2">@sortablelink('hsn->item_type', 'Item type')</th>
-            <th class="col-md-2">@sortablelink('hsn->description', 'Hsn Description')</th>
-            <th class="col-md-2">@sortablelink('gst_rate', 'Gst Rate')</th>
-            <th class="col-md-2">@sortablelink('gst_d','Gst Description')</th>
-            <th class="col-md-2">@sortablelink('cess_rate', 'Cess Rate')</th>
-            <th class="col-md-2">@sortablelink('cess_d', 'Cess Description')</th>
+            <th class="col-md-1">@sortablelink('hsn', 'Hsn')</th>
+            <th class="col-md-1">@sortablelink('hsn->item_type', 'Item type')</th>
+            <th class="col-md-1">@sortablelink('hsn->description', 'Hsn Description')</th>
+            <th class="col-md-1">@sortablelink('gst_rate', 'Gst Rate')</th>
+            <th class="col-md-1">@sortablelink('gst_d','Gst Description')</th>
+            <th class="col-md-1">@sortablelink('cess_rate', 'Cess Rate')</th>
+            <th class="col-md-1">@sortablelink('cess_d', 'Cess Description')</th>
             <th class="col-md-1 text-center">{{ trans('general.actions') }}</th>
           </tr>
         </thead>
@@ -28,13 +28,13 @@
           @foreach($hsns as $Hsn)
 
             <tr>
-              <td class="col-md-2">{{ $Hsn->hsn}}</td>
-              <td class="col-md-2">{{ $Hsn->item}}</td>
-              <td class="col-md-2">{{ $Hsn->hsn_d }}</td>
-              <td class="col-md-2">{{ $Hsn->gst_rate}}</td>
-              <td class="col-md-2">{{ $Hsn->gst_d}}</td>
-              <td class="col-md-2">{{ $Hsn->cess_rate}}</td>
-              <td class="col-md-2">{{ $Hsn->cess_d}}</td>
+              <td class="col-md-1">{{ $Hsn->hsn}}</td>
+              <td class="col-md-1">{{ $Hsn->item}}</td>
+              <td class="col-md-1">{{ $Hsn->hsn_d }}</td>
+              <td class="col-md-1">{{ $Hsn->gst_rate}}</td>
+              <td class="col-md-1">{{ $Hsn->gst_d}}</td>
+              <td class="col-md-1">{{ $Hsn->cess_rate}}</td>
+              <td class="col-md-1">{{ $Hsn->cess_d}}</td>
               <td class="text-center">
                 <div class="btn-group">
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false">

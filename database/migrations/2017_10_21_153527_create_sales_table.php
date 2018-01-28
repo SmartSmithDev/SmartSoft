@@ -27,7 +27,7 @@ class CreateSalesTable extends Migration
             $table->date('order_date');
             $table->integer('customer_id');
             $table->enum('sales_type', array('E','OE'))->default('E');
-            $table->integer('ecommerce_vendor_id');
+            $table->integer('ecommerce_vendor_id')->nullable();
             $table->integer('supplier_state_id')->default(27);
             $table->integer('supply_state_id')->default(0);
             $table->decimal('total_taxable_value', 15 , 2);
@@ -44,7 +44,6 @@ class CreateSalesTable extends Migration
             $table->enum('reverse_charge', array('N','Y'))->default('N');
             $table->enum('payment_status', array('Completed', 'Pending'))->default('Pending');
             $table->text('notes');
-            $table->enum('status',array('complete','incomplete'))->default('complete');
             $table->timestamps();
             $table->softDeletes();
         });
