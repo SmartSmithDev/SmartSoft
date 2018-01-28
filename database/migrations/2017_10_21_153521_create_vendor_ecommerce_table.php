@@ -16,7 +16,7 @@ class CreateVendorEcommerceTable extends Migration
         //Create vendor_ecommerce Table
         Schema::create('vendor_ecommerce', function(Blueprint $table)
         {
-            $table->integer('id')->primary();
+            $table->integer('id', true);
             $table->string('gstin', 20)->unique('uk_vendor_ecom_gstin');
             $table->string('name', 50);
             $table->timestamps();

@@ -25,6 +25,8 @@ class CreateCompanyTable extends Migration
         });
     }
 
+
+
     /**
      * Reverse the migrations.
      *

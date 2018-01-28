@@ -131,13 +131,13 @@ class Purchases extends Controller
         $i = $req->input('month');
                 $sales=array();
 
-$start=Carbon::create($yr,$i,1);
-$end = Carbon::create($yr,$i,31);
-$qq=Purchase::whereBetween('invoice_date',array($start->toDateTimeString(),$end->toDateTimeString()))
-->get();
-//$sales[$i]=$qq;
-//$items = collect($qq)->groupBy('invoice_date')->toArray();
-return json_encode($qq);
+        $start=Carbon::create($yr,$i,1);
+        $end = Carbon::create($yr,$i,31);
+        $qq=Purchase::whereBetween('invoice_date',array($start->toDateTimeString(),$end->toDateTimeString()))
+        ->get();
+        //$sales[$i]=$qq;
+        //$items = collect($qq)->groupBy('invoice_date')->toArray();
+        return json_encode($qq);
     }
     /**
      * Show the form for editing the specified resource.

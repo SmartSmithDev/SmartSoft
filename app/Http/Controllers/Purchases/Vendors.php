@@ -50,7 +50,7 @@ class Vendors extends Controller
     {
         
         Vendor::create($request->all());
-            return redirect("/vendors/vendors"); 
+            return redirect("/purchases/vendors"); 
     }
 
     public function store1(Request $request)
@@ -103,7 +103,7 @@ class Vendors extends Controller
         $vendor->update($request->input());
         $message = trans('messages.success.updated', ['type' => trans_choice('general.vendors', 1)]);
         flash($message)->success();
-        return redirect('vendors');
+        return redirect('purchases/vendors');
     }
 
     /**
@@ -119,7 +119,7 @@ class Vendors extends Controller
         $message = trans('messages.success.deleted', ['type' => trans_choice('general.vendors', 1)]);
 
             flash($message)->success();
-        return redirect('vendors');
+        return redirect('purchases/vendors');
     }
 
     //to retrieve enum values from  database as an array

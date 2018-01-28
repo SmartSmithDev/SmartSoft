@@ -23,6 +23,5 @@ class PermissionSeed extends Seeder
         Permission::create(['name' => 'companies_manage']);
         Permission::create(['name' => 'vendors_manage']);
         Permission::create(['name' => 'customers_manage']);
-
     }
 }

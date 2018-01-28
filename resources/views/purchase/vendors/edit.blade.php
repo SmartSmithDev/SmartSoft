@@ -8,7 +8,7 @@
     {!! Form::model($vendor, [
         'method' => 'PATCH',
         'files' => true,
-        'url' => ['vendors', $vendor->id],
+        'url' => ['purchases/vendors', $vendor->id],
         'role' => 'form'
     ]) !!}
 
@@ -43,7 +43,7 @@
     <!-- /.box-body -->
 
     <div class="box-footer">
-        {{ Form::saveButtons('vendors') }}
+        {{ Form::saveButtons('purchases/vendors') }}
     </div>
     <!-- /.box-footer -->
     {!! Form::close() !!}
