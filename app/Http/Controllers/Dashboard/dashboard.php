@@ -17,11 +17,4 @@ class dashboard extends Controller
 		return view('dashboard.dashboard.index',compact('total'));
 	}
 }
-
-
-
-
-
-
-
 ?>

@@ -42,7 +42,7 @@ class SalesPayment extends Model
     /**
      * @var array
      */
-    protected $fillable = ['sales_id', 'company_account_id', 'vendor_account_id', 'payment_date', 'payment_mode', 'paid_amount', 'payment_terms', 'payment_type', 'payment_reference', 'payment_notes', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['sales_id', 'company_account_id', 'customer_account_id', 'payment_date', 'payment_mode', 'paid_amount', 'payment_terms', 'payment_type', 'payment_reference', 'payment_notes', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -63,7 +63,7 @@ class Reports extends Controller
         $toDate = $req->input('invoice2');
 
         //return json_encode($pname);
-        if($fromDate = "" && $toDate = ""){
+        if( empty($fromDate) && empty($toDate)){
         $ss =Customer::where('name','=',$pname)->get();
         foreach($ss as $sale){
             $sale->customer=Sale::where('customer_id','=',$sale->id)->get();
@@ -83,6 +83,20 @@ class Reports extends Controller
         return json_encode($sale->customer);
         }
     }
+        else
+        {
+           $ss =Customer::where('name','=',$pname)->get();
+            foreach($ss as $sale){
+
+            $sale->customer=Sale::where('customer_id','=',$sale->id)->whereBetween('invoice_date', array($fromDate, $toDate))->get();
+            // dd($sale->customer);
+        }
+    
+        return json_encode($sale->customer);
+        }
+    }
+
+ 
 
     /**
      * Show the form for editing the specified resource.
