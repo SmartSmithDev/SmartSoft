@@ -1,20 +1,11 @@
-@extends('layouts.admin')
+@extends('layouts.entry')
 
-@section('title', trans('general.title.edit', ['type' => trans_choice('general.sales', 1)]))
+@section('title', trans('general.title.new', ['type' => trans_choice('general.purchases', 1)]))
 
 @section('content')
 
-<?php 
-
-$item_row=0;
-
-
-?>
-
-
-
 <!-- Modal -->
-<div id="myModal" class="modal fade " style="z-index: 2500" tabindex="-1" role="dialog">
+<div id="customerModal" class="modal fade " style="z-index: 2500" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
 
     <!-- Modal content-->
@@ -27,12 +18,11 @@ $item_row=0;
 
       <div class="modal-body">
          
-        <!-- {!! Form::open(array('url' => '/vendor','action' => 'Vendors@store')) !!} -->
-         {!! Form::open(array('action' => 'Sales\Customers@store1')) !!}
+         {!! Form::open(array('action' => 'Purchases\Vendors@store1')) !!}
 
             {{ Form::textGroup('name', 'Name', 'id-card-o') }}
             
-            {{ Form::selectGroup('vendor_type','Vendor Type','id-card-o', $customer_type) }}
+            {{ Form::selectGroup('customer_type','Vendor Type','id-card-o', $customer_type) }}
 
             {{ Form::textGroup('gstin', 'GST No.', 'percent', []) }}
             
@@ -46,7 +36,7 @@ $item_row=0;
 
             {{ Form::textGroup('city', 'City', 'home') }}
 
-            {{ Form::selectGroup('state','State','home', $states) }}
+            {{ Form::selectGroup('state_id','State','home', $states) }}
 
             {{ Form::textGroup('country', 'Country', 'plane') }}
 
@@ -78,25 +68,24 @@ $item_row=0;
 
 <!-- Default box -->
   <div class="box box-success">
-    {!! Form::open(['url' => 'sales/sales/'.$sale->id, 'files' => true, 'role' => 'form','method'=>'PUT']) !!}
+    {!! Form::open(['url' => 'purchases/purchases', 'files' => true, 'role' => 'form']) !!}
 
 <div class="box-body">
-        {{ Form::selectGroup('vendor_id', 'Party Name', 'user', $customers,$sale->customer_id) }}
+        {{ Form::selectGroup('vendor_id', 'Vendor Name', 'user', $vendors) }}
          
-         {{ Form::selectGroup('bank_branch', 'Bank Branch', 'university', $bank_branch,$sale->company_branch_id) }} 
+         {{ Form::selectGroup('bank_branch', 'Bank Branch', 'university', $bank_branch) }} 
          <!--  params(id,label,favicon-name,array for foreach)  -->
+        {{ Form::selectGroup('bank_account', 'Bank Account', 'university', $bank_accounts) }}
 
-         {{ Form::selectGroup('bank_account', 'Bank Account', 'university', $bank_accounts,$sale->company_account_id) }}
+        {{ Form::textGroup('invoice_date', 'Invoice Date', 'calendar',['id' => 'invoice_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''], null) }}
+
         
-        {{ Form::textGroup('invoice_date', 'Invoice Date', 'calendar',['id' => 'invoice_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''],$sale->invoice_date) }}
 
-        {{ Form::textGroup('order_date', 'Order Date', 'calendar',['id' => 'order_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''],$sale->order_date) }}
+        {{ Form::textGroup('invoice_number', 'Invoice Number', 'file-text-o',[],$new_invoice_id) }}
 
-        {{ Form::textGroup('invoice_number', 'Invoice Number', 'file-text-o',[],$sale->invoice_number) }}
+    
 
-        {{ Form::textGroup('order_id', 'Order ID', 'shopping-cart',[],$sale->order_id) }}
-
-        {{ Form::selectGroup('supply_state_id', 'Place of Supply', 'user', $states,$sale->supply_state_id) }}
+        {{ Form::selectGroup('supply_state_id', 'Place of Supply', 'user', $states) }}
        
 
         <div class="form-group col-md-12">
@@ -134,7 +123,7 @@ $item_row=0;
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($sales_items as $item)
+                        <?php $item_row = 0; ?>
                         <tr id="item-row-{{ $item_row }}" class="item-row">
 
                             <!-- Delete Button -->
@@ -147,22 +136,18 @@ $item_row=0;
                                 <!-- <input class="form-control typeahead" required="required" placeholder="{{ 'Enter Item Name' }}" name="item[{{ $item_row }}][name]" type="text" id="item-name-{{ $item_row }}">
                                 <input name="item[{{ $item_row }}][item_id]" type="hidden" id="item-id-{{ $item_row }}"> -->
                               <select id="item-name-{{ $item_row }}"  name="item[{{ $item_row }}][name]"  id="item-name-{{ $item_row }}" class="select2 items-dropdown">
-                                <option disabled>Select Item</option>
+                                <option disabled selected>Select Item</option>
                                  <?php
-                                 foreach($items as $item_name){
-                                   if($item_name==$item->item_name){
-                                    echo "<option value='".$item_name."' selected>".$item_name."</option>";
-                                   } 
-                                   else{
-                                   echo "<option value='".$item_name."'>".$item_name."</option>";
-                                    }
+                                 foreach($items as $item){
+                                    
+                                   echo "<option value='".$item."'>".$item."</option>";
                                  }
                                  ?>
                                  
                                 </select>
                                 
-                              
-                               
+
+                             
                             </td>
 
                             <!-- HSN Code -->
@@ -177,7 +162,7 @@ $item_row=0;
 
                             <!-- Quantity -->
                             <td>
-                                <input class="form-control text-center quantity-class" required="required" name="item[{{ $item_row }}][quantity]" type="text" id="item-quantity-{{ $item_row }}" value="{{ $item->quantity }}">
+                                <input class="form-control text-center quantity-class" required="required" name="item[{{ $item_row }}][quantity]" type="text" id="item-quantity-{{ $item_row }}">
                             </td>
 
 
@@ -186,13 +171,12 @@ $item_row=0;
 
                             <!-- Rate -->
                             <td>
-                                <input class="form-control text-right" required="required" name="item[{{ $item_row }}][price]" type="text" id="item-price-{{ $item_row }}"
-                                value="{{ $item->unit_price }}">
+                                <input class="form-control text-right" required="required" name="item[{{ $item_row }}][price]" type="text" id="item-price-{{ $item_row }}">
                             </td>
 
                             <!-- Discount -->
                             <td>
-                                <input class="form-control typeahead" required="required" placeholder="{{ 'Discount' }}" name="item[{{ $item_row }}][discount]" type="text" id="item-discount-{{ $item_row }}" value="{{ $item->discount }}" >
+                                <input class="form-control typeahead" required="required" placeholder="{{ 'Discount' }}" name="item[{{ $item_row }}][discount]" type="text" id="item-discount-{{ $item_row }}">
                                 <input name="item[{{ $item_row }}][item_id]" type="hidden" id="item-id-{{ $item_row }}">
                             </td>
                             
@@ -208,20 +192,16 @@ $item_row=0;
                             <!-- Product Total -->
                             <td class="text-right" style="vertical-align: middle;">
                                 <span id="item-total-{{ $item_row }}">0</span>
-                                <input type="hidden" name="item[{{ $item_row }}][gst_id]" class="hidden-gst-id" value="{{ $item->gst_id }}" />
-                                <input type="hidden" name="item[{{ $item_row++ }}][cess_id]" class="hidden-cess-id" value="{{ $item->cess_id }}"/>
+                                <input type="hidden" name="item[{{ $item_row }}][gst_id]" class="hidden-gst-id"/>
+                                <input type="hidden" name="item[{{ $item_row }}][cess_id]" class="hidden-cess-id"/>
                             </td>
 
                        
 
                         </tr>
-                         
-                       
 
-                         
-                         @endforeach
+                        <?php $item_row++; ?>
                         <!-- Add Item Button -->
-                      
                         <tr id="addItem">
                             <td class="text-center"><button type="button" onclick="addItem();" data-toggle="tooltip" title="{{ trans('general.add') }}" class="btn btn-xs btn-primary" data-original-title="{{ trans('general.add') }}"><i class="fa fa-plus"></i></button></td>
 
@@ -248,7 +228,7 @@ $item_row=0;
                 </table>
             </div>
         </div>
-        {{ Form::textareaGroup('notes', trans_choice('general.notes', 2), $sale->notes) }}
+        {{ Form::textareaGroup('notes', trans_choice('general.notes', 2)) }}
 
         {{ Form::fileGroup('attachment', trans('general.attachment')) }}
         <input type="hidden" name="table-object" id="table-object">
@@ -289,6 +269,11 @@ $item_row=0;
                 {{ Form::selectGroup('unit_id', 'Unit' , 'balance-scale', $units, '59', []) }}
 
                 {{ Form::itemTypeGroup('type', 'Item Type' ) }}
+
+                 <div class="col-md-6">
+                 <input type="checkbox" name="manage_inventory" value="1" />&nbsp;<label>Manage Inventory</label>
+                     
+                 </div>
 
                 {{ Form::textareaGroup('details', 'Item Details') }}
                 <div style="float:right">
@@ -352,8 +337,6 @@ $item_row=0;
 
   </div>
 </div>
-
-<input type="hidden" id="newRowDetails" value=<?php echo $newRowDetails; ?> />
 
 
    
@@ -434,9 +417,8 @@ color:white;
 @section('scripts')
     <script type="text/javascript">
         var item_row = '{{ $item_row }}';
-        console.log(item_row+"second");
+        console.log(item_row);
         var itemsArray=new Array();
-        
 
         var ogRow;
         var visible=-1;
@@ -461,9 +443,7 @@ color:white;
 
        $(document).ready(function(){
             //Date picker
-   
 
-      
      var initialLength=$('#item-name-0')[0].options.length;
     for(var i=0;i<initialLength;i++){
       itemsArray.push($('#item-name-0')[0].options[i].value);
@@ -484,7 +464,7 @@ color:white;
             
             //Select2 For Vendor ID
             $('#vendor_id').select2({
-                placeholder: "{{ 'Select Vendors' }}",
+                placeholder: "{{ 'Select Vendor' }}",
             })
             .on("select2:select", function(e) { 
                    // what you would like to happen
@@ -492,17 +472,17 @@ color:white;
                    //    alert("Here it IS!");
 
                   $.ajax({
-                url: '{{ url("sales/customerInfo") }}',
+                url: '{{ url("purchases/vendorInfo") }}',
                 type: 'POST',
                 dataType: 'JSON',
-                data: {'customer_id':$(this).val()},
+                data: {'vendor_id':$(this).val()},
                 headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 success: function(data) {
                      
                     if (data) {
                         //$('#supply_state_id').select2("val", data[0]);
                         $('#supply_state_id').val(data[0]).trigger('change.select2');// for changing the values in select2 tag
-                        //console.log(state);
+                        //console.log(data[0]);
 
                        itemCalculate();
                     }
@@ -512,7 +492,7 @@ color:white;
 
             })
             .on('select2:open', () => {
-                    $(".select2-results:not(:has(a))").append('<a href="" data-toggle="modal" data-target="#myModal" style="padding: 6px;height: 20px;display: inline-table;width:100%">Add New</a>');
+                    $(".select2-results:not(:has(a))").append('<a href="" data-toggle="modal" data-target="#customerModal" style="padding: 6px;height: 20px;display: inline-table;width:100%">Add New</a>');
             });
 
 
@@ -581,10 +561,10 @@ color:white;
 
             $(document).on('change', '#vendor_id', function (e) {
                 $.ajax({
-                    url: '{{ url("vendor") }}',
+                    url: '{{ url("sales/customers") }}',
                     type: 'GET',
                     dataType: 'JSON',
-                    data: 'customer_id=' + $(this).val(),
+                    data: 'vendor_id=' + $(this).val(),
                     success: function(data) {
                         $('#currency_code').val(data.currency_code);
 
@@ -695,14 +675,14 @@ $.ajax({
 $(document).ready(function() {
     $('#item-details-Modal .select2').select2();
     $('td .select2').select2();
-    $('#bank_branch,#company_name').select2();
-    
+    $('#bank_branch,#company_name,#bank_account').select2();
 });
 
 
 
 $(document).ready(function() {
     $('#items').on('select2:select','.items-dropdown',function(){
+  
    var row = $(this).parent().parent().attr('id').split("-");
    row=row[row.length-1];
     
@@ -742,18 +722,17 @@ $.ajax({
                 url: '{{ url("/items/ajaxStore") }}',
                 type: 'POST',
                 dataType: 'JSON',
-                data: $('input[name="name"],input[name="sku"],#hsn,#unit_id,input[name="type"]:checked,#details'),
+                data: $('input[name="name"],input[name="sku"],#hsn,#unit_id,input[name="type"]:checked,#details,input[name="manage_inventory"]'),
                 headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 success: function(data) {
                      
                     if (data) {
+                      //console.log(data);
 
                     rowsDetails[ogRow]=data;
                
           itemsArray.push(data.name);         
-        // document.getElementById('item-type-'+globalRow).value=data['type'];
-        // document.getElementById('item-tax-'+globalRow).value=data['unit_id'];
-        //  document.getElementById('item-gst-'+globalRow).value=data['gst'];
+        
          var option = new Option(data.name,data.name, true, true);  // Option(innerHTML,value,selected,actual Selection)
          $('#item-name-'+globalRow).append(option);
 
@@ -935,17 +914,16 @@ for(var i=0;i<(nrows);i++){
   commonDetails['sgst']+=parseInt(rowsDetails[i+""].sgst);
   commonDetails['igst']+=parseInt(rowsDetails[i+""].igst);
   commonDetails['cess']+=parseInt(rowsDetails[i+""].cess_amount);
-  commonDetails['ecommerce_vendor_id']=0;
+ 
 }
 
 //console.log(rowsDetails);
 
 
 
-commonDetails['customer_id']=$('#vendor_id').val();
+commonDetails['vendor_id']=$('#vendor_id').val();
 commonDetails['invoice_date']=$('#invoice_date').val();
 commonDetails['invoice_number']=$('#invoice_number').val();
-commonDetails['order_id']=$('#order_id').val();
 commonDetails['supply_state_id']=$('#supply_state_id').val();
 commonDetails['total_taxable_value']=$('#sub-total').text();
 commonDetails['total_tax_amount']=$('#tax-total').text();
@@ -953,7 +931,7 @@ commonDetails['total_amount']=$('#grand-total').text();
 commonDetails['notes']=$('#notes').val();
 commonDetails['round_off']=Math.round(parseFloat($('#grand-total').text()));
 commonDetails['shipping_cost']=0;
-commonDetails['order_date']=$('#order_date').val();
+
 //console.log(commonDetails);
 //console.log(rowsDetails);
 $('#common-object').val(JSON.stringify(commonDetails));
@@ -1007,61 +985,10 @@ $.ajax({
 });
 
 
- 
-$('.items-dropdown').trigger('select2:select');
- 
-setTimeout(update,500);
-
-  
-
-$('#items').on('blur','.quantity-class',function(){
-  var elem=$(this);
-  var quantity=$(this).val();
-  var row=$(this).parent().parent().attr('id').split('-')[2];
-$.ajax({
-url:'{{ url("sales/quantity") }}',
-type:'GET',
-dataType:"text",
-data:{'quantity':quantity,'sku':rowsDetails[row].sku},
-success:function(data){
-if(data=='-1'){
-  elem.val("");
-  alert("Item Does Not Exist In Inventory!");
-}
-else if(data!='Ok'){
-  elem.val("");
-  alert("Only "+data+" Units Remaining!");
-}
-}
-});
 
 
 
-});
-
-});
-
-
-function update(){
-  var newRowDetails=document.getElementById('newRowDetails').value;
-  console.log(newRowDetails);
-  newRowDetails=JSON.parse(newRowDetails);
-  console.log(Object.keys(newRowDetails).length);
-
-
-
-  for(var i=0;i<Object.keys(newRowDetails).length;i++){
-    rowsDetails[i]['hsn']=newRowDetails[i]['hsn'];
-    rowsDetails[i]['gst']=newRowDetails[i]['gst'];
-    rowsDetails[i]['cess']=newRowDetails[i]['cess'];
-    rowsDetails[i]['type']=newRowDetails[i]['type'];
-    $('input[name="item['+i+'][gst_id]"]').val(rowsDetails[i]['gst']);
-    $('input[name="item['+i+'][cess_id]"]').val(rowsDetails[i]['cess']);
-    itemCalculate(); 
-
-  }
-  console.log(rowsDetails);
-}
+  });
 
 
 

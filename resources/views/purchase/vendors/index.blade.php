@@ -36,9 +36,9 @@
                                         <i class="fa fa-ellipsis-h"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right">
-                                       <li><a href="{{ url('vendors/' . $vendor->id . '/edit') }}">{{ 'Edit' }}</a></li>
+                                       <li><a href="{{ url('purchases/vendors/' . $vendor->id . '/edit') }}">{{ 'Edit' }}</a></li>
                                         
-                                        <li>{!! Form::deleteLink($vendor, '/vendors') !!}</li>
+                                        <li>{!! Form::deleteLink($vendor, '/purchases/vendors') !!}</li>
                                     </ul>
                                 </div>
                             </td>

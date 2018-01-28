@@ -22,5 +22,11 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeed::class);
         $this->call(RoleSeed::class);
         $this->call(UserSeed::class);
+
+        // Ask for adding test data, default is no
+        if ($this->command->confirm('Do you wish to add test data ?')) {
+            // test data seeder
+            $this->call(SampleDataSeeder::class);
+        }
     }
 }
