@@ -79,7 +79,7 @@ class Sales extends Controller
 
     public function store(Request $request)
     {  
-      
+      try{
           $file=$request->file('attachment'); 
             
           $sale_table=json_decode($request->input('common-object'),true);
@@ -127,12 +127,12 @@ class Sales extends Controller
 
            Storage::put('invoices/invoice'.$user_id.$sale_id.'.pdf', $pdf->output());
            return redirect("sales/sales");
-
+         }
        
-    //    catch (Exception $e) {
-    //     $errorCode = $e->errorInfo[1];          
-    //     return "Some error occured : " .$e ;
-    // }
+       catch (Exception $e) {
+        $errorCode = $e->errorInfo[1];          
+        return "Some error occured : " .$e ;
+    }
     }
 
 
