@@ -25,22 +25,24 @@
           <h2 class="modal-title ">Sales Report</h2>
         </div>
         <div class="modal-body">
-          {!! Form::open(['url' => 'Reports\Reports', 'role' => 'form', 'method' => 'GET']) !!}
-          <!--  <p id = "demo">11</p> -->
+          {!! Form::open(['url' => 'Reports\Reports@index', 'role' => 'form', 'method' => 'GET']) !!}
+           <p id = "demo">11</p>
               <div class="pull-left">
                   {{ Form::label('name','Party Name :') }}
                   {{ Form::text('Customer_Name',"SmartSmith",["id" => "customer"])}}
-                  {{ Form::button('Search',["class" => "search"])}}
+                 
                   <br> <br> <br>
                   {{ Form::label('invoice','Invoice Date :')}}
                   <br>
                   {{ Form::label('from','From :')}}
-                  {{ Form::text('invoice1')}}
+                  {{ Form::text('invoice1',"2018-01-15",["id" => "invoice1"])}}
                   {{ Form::label('to','To :')}}
-                  {{ Form::text('invoice2')}}
+                  {{ Form::text('invoice2',"2018-01-20",["id" => "invoice2"])}}
                   <br>
                   <div class = "pull-right">
-                   {{ Form::Submit('Search')}}
+                  <!--  {{ Form::Submit('Search')}} -->
+                  {{ Form::button('Search',["class" => "search"])}}
+                  
                  </div>
               </div>
               
@@ -85,15 +87,18 @@
               $(".search").click(function()
               { //alert("The paragraph was clicked.");
                 var t = document.getElementById('customer').value; 
-               // document.getElementById("demo").innerHTML = ""+t;
+                var in1 = document.getElementById('invoice1').value; 
+                var in2 = document.getElementById('invoice2').value; 
+                document.getElementById("demo").innerHTML = ""+t+""+in1+""+in2;
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("GET", "Purchases?month="+m+"&year="+y, true);   //send Request
+                xhttp.open("GET", "{{ url('Reports') }}?party_name="+t+"&invoice1="+in1+"&invoice2="+in2, true);   //send Request
                 xhttp.send();
                 xhttp.onreadystatechange = function() 
                 {
                   if (this.readyState == 4 && this.status == 200) 
                   {
                     var json=JSON.parse(this.responseText);
+                    console.log(json);
                       $("#table").empty();
                       var tr;
                       for (var i = 0; i < json.length; i++) 
@@ -121,9 +126,9 @@
 
             });
           </script> 
-        </tbody>
-        @foreach($incomes as $income)
-        <td class="col-md-1">{{ $income->company_id}}</td>
+
+      </tbody>
+       
     </table>
   </div>
 </div>

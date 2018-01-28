@@ -59,6 +59,9 @@ Route::get('download/{id}','Sales\Sales@download');
 Route::get('/report',function() {
  	return view('reports.reports.income');
  });
+// Route::get('reports','Reports\Reports@index');
+
+Route::get('Reports','Reports\Reports@show');
  Route::get('test', function () {
     $GstRate = App\Models\Tax\Cess::find(0)->rate;
     echo($GstRate);
