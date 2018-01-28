@@ -129,8 +129,7 @@ class Sales extends Controller
            return redirect("sales/sales");
          }
        
-       catch (Exception $e) {
-        $errorCode = $e->errorInfo[1];          
+       catch (Exception $e) {         
         return "Some error occured : " .$e ;
     }
     }
