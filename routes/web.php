@@ -62,7 +62,10 @@ Route::get('/report',function() {
  	return view('reports.reports.income');
  });
 // Route::get('reports','Reports\Reports@index');
-
+Route::get('/expense',function() {
+ 	return view('reports.reports.expenses');
+});
+Route::get('Expenses','Reports\expenses@show');
 Route::get('Reports','Reports\Reports@show');
  Route::get('test', function () {
     $GstRate = App\Models\Tax\Cess::find(0)->rate;
