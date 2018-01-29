@@ -200,6 +200,8 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         //Inventory Management
         //'Stevebauman\Inventory\InventoryServiceProvider'
+        //laravel-user-settings
+        'Grimthorr\LaravelUserSettings\ServiceProvider'
     ],
 
     /*
@@ -261,6 +263,8 @@ return [
         'Menu'      => Lavary\Menu\Facade::class,
         //DomPDF
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        //laravel-user-settings
+        'Setting' => 'Grimthorr\LaravelUserSettings\Facade'
 
 
 

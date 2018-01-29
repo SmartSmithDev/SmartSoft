@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1331320307447b6591a83b358eadebca",
+    "content-hash": "7d71bb35ec3deeb8a9df666c32467675",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -665,6 +665,50 @@
                 "oauth2"
             ],
             "time": "2017-12-06T21:27:53+00:00"
+        },
+        {
+            "name": "grimthorr/laravel-user-settings",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Grimthorr/laravel-user-settings.git",
+                "reference": "c0d51b698887c1a9014dd77fdd3c92263eb19bff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Grimthorr/laravel-user-settings/zipball/c0d51b698887c1a9014dd77fdd3c92263eb19bff",
+                "reference": "c0d51b698887c1a9014dd77fdd3c92263eb19bff",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "5.*",
+                "illuminate/database": "5.*",
+                "illuminate/support": "5.*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Grimthorr\\LaravelUserSettings\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grimthorr",
+                    "email": "phil@hughesbox.co.uk",
+                    "homepage": "http://hughesbox.co.uk"
+                }
+            ],
+            "description": "Simple user settings facade for Laravel 5.",
+            "homepage": "https://github.com/Grimthorr/laravel-user-settings",
+            "time": "2016-11-08T15:09:52+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

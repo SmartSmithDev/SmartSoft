@@ -19,6 +19,7 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
+        '4db33613fce4c89aa2457a348853af0a' => __DIR__ . '/..' . '/grimthorr/laravel-user-settings/src/helpers.php',
         'e23faeee409e941dc9b4c80386209c39' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
@@ -107,6 +108,7 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+            'Grimthorr\\LaravelUserSettings\\' => 30,
             'Google\\Auth\\' => 12,
         ),
         'F' => 
@@ -311,6 +313,10 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'Grimthorr\\LaravelUserSettings\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/grimthorr/laravel-user-settings/src',
+        ),
         'Google\\Auth\\' => 
         array (
             0 => __DIR__ . '/..' . '/google/auth/src',
@@ -512,6 +518,7 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         'App\\Providers\\FormServiceProvider' => __DIR__ . '/../..' . '/app/Providers/FormServiceProvider.php',
         'App\\Providers\\GoogleDriveServiceProvider' => __DIR__ . '/../..' . '/app/Providers/GoogleDriveServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Traits\\Inventory' => __DIR__ . '/../..' . '/app/Traits/Inventory.php',
         'App\\libraries\\GstCalculator' => __DIR__ . '/../..' . '/app/libraries/GstCalculator.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
@@ -8025,6 +8032,9 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         'Google_Task_Retryable' => __DIR__ . '/..' . '/google/apiclient/src/Google/Task/Retryable.php',
         'Google_Task_Runner' => __DIR__ . '/..' . '/google/apiclient/src/Google/Task/Runner.php',
         'Google_Utils_UriTemplate' => __DIR__ . '/..' . '/google/apiclient/src/Google/Utils/UriTemplate.php',
+        'Grimthorr\\LaravelUserSettings\\Facade' => __DIR__ . '/..' . '/grimthorr/laravel-user-settings/src/Facade.php',
+        'Grimthorr\\LaravelUserSettings\\ServiceProvider' => __DIR__ . '/..' . '/grimthorr/laravel-user-settings/src/ServiceProvider.php',
+        'Grimthorr\\LaravelUserSettings\\Setting' => __DIR__ . '/..' . '/grimthorr/laravel-user-settings/src/Setting.php',
         'GuzzleHttp\\Client' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Client.php',
         'GuzzleHttp\\ClientInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/ClientInterface.php',
         'GuzzleHttp\\Cookie\\CookieJar' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Cookie/CookieJar.php',

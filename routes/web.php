@@ -19,7 +19,9 @@ Route::get('/', function () {
 });
 Route::resource('/','Dashboard\dashboard');
 
-Route::resource('companies/companies','Companies\Companies');
+Route::group(['prefix' => 'companies'], function () {
+	Route::resource('companies','Companies\Companies');
+});
 
 Route::group(['prefix' => 'taxes'], function () {
 	Route::resource('gst','Taxes\Gst');
