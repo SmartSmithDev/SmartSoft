@@ -22,7 +22,9 @@ class Vendors extends Controller
     {
         //
         $vendors=DB::table('vendors')->get();
-        return view('purchase.vendors.index',compact('vendors'));
+        $vendorAccounts=DB::table('vendor_accounts')->get();
+        //dd($vendorAccounts);
+        return view('purchase.vendors.index',compact('vendors','vendorAccounts'));
     }
 
     /**

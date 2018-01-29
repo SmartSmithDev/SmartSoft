@@ -3,6 +3,10 @@
 @section('title', 'Create Vendor')
 
 @section('content')
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#">Vendors</a></li>
+        <li><a href="#">Vendor Accounts</a></li>
+    </ul>
     <!-- Default box -->
         <div class="box box-success">
             {!! Form::open(['action' => 'Purchases\Vendors@store']) !!}
@@ -38,13 +42,78 @@
             </div>
         <!-- /.box-body -->
 
+
         <div class="box-footer">
             {{ Form::saveButtons('vendors') }}
         </div>
         <!-- /.box-footer -->
 
+
+
+
         {!! Form::close() !!}
     </div>
+
+    <div id="company-bank-accounts" class="parts">
+        <br>
+        <span class="new-button"><a href="#vendorAccountModal" class="btn btn-success btn-sm"  data-toggle="modal"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
+        <table class="table table-striped table-hover" id="tbl-items">
+            <thead>
+                <tr>
+                    <th class="col-md-1 hidden">Account Identifier</th>
+                    <th class="col-md-1 hidden">Entity Name</th>
+                    <th class="col-md-1">Beneficiary Name</th>
+                    <th class="col-md-1">Account Number</th>
+                    <th class="col-md-1">Address</th>
+                    <th class="col-md-1">Beneficiary Bank</th>                
+                    <th class="col-md-1 text-center">actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                   
+                    
+            </tbody>
+        </table>
+    </div>
+
+    <div id="vendorAccountModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add New Vendor Account</h4>
+                </div>
+                <div class="modal-body" style="overflow-y: hidden">
+         
+                    {{ Form::textGroup('beneficiary_name', 'Beneficiary Name') }}
+
+                    {{ Form::textGroup('account_number', 'Account Number') }}
+
+                    {{ Form::textGroup('beneficiary_address', 'Beneficiary Address') }}
+
+                    {{ Form::textGroup('beneficiary_bank', 'Beneficiary Bank') }}
+
+                    {{ Form::textGroup('beneficiary_bank_address', 'Beneficiary Bank Address') }}
+
+                    {{ Form::textGroup('ifsc_code', 'Ifsc Code') }}
+
+                    {{ Form::textGroup('bank_code', 'Bank Code') }}
+
+                    {{ Form::textGroup('branch_code', 'Branch Code') }}
+
+                    {{ Form::textGroup('account_type', 'Account Type') }}
+                </div>
+                <div class="modal-footer">
+                    <button  class="btn btn-success" id="account_save">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 @endsection
 
 
@@ -63,8 +132,21 @@
     <script type="text/javascript">
 
         $(document).ready(function(){
-            $('#name').focus();
-        });
+            alert("clicked");
 
+
+        });
     </script>
 @endsection
+$('#account_save').click(function(){
+            alert("clicked");
+            // var beneficiary_name=$('#beneficiary_name').val();
+            // var account_number=$('#account_number').val();
+            // var beneficiary_address=$('#beneficiary_address').val();
+            // var beneficiary_bank_address=$('#beneficiary_bank_address').val();
+            // var ifsc_code=$('#ifsc_code').val();
+            // var bank_code=$('#bank_code').val();
+            // var branch_code=$('#branch_code').val();
+            // var account_type=$('#account_type').val();
+            // alert("test");
+        });
