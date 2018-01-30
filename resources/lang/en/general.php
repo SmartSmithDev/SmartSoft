@@ -28,11 +28,14 @@ return [
     'date'                  => 'Date',
     'amount'                => 'Amount',
     'payment_terms'         => 'Payment Terms',
-    'company'               => 'Company',
+    'companies'               => 'Company|Companies',
     'payment_types'         => 'Payment Type|Payment Types',
     'payment_notes'         => 'Payment Notes',
     'payment_mode'          => 'Payment Mode',
     'reference'             => 'Reference',
+    'switch'                => 'Switch',
+    'manage_companies'      => 'Manage Companies',
+    'users'                 => 'User|Users',
 
     'title' => [
         'new'               => 'New :type',

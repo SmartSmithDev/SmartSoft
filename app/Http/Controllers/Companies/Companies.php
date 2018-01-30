@@ -33,10 +33,11 @@ class Companies extends Controller
     public function create()
     {
         //
+        $companies=Company::all();
         $states = State::all()->pluck('name' ,'id');
         $city=["0"=>"Mumbai"];
         $country=DB::table('countries')->get()->pluck('name','id');
-        return view('company.company.create',compact('states','city','country'));
+        return view('company.company.create',compact('companies','states','city','country'));
     }
 
     /**
