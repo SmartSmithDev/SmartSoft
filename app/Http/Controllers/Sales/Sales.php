@@ -35,10 +35,10 @@ class Sales extends Controller
     {
         //
         $sales=Sale::all(); 
-        foreach($sales as $sale){
+     /*   foreach($sales as $sale){
             $sale->customer=Customer::find($sale->customer_id)->name;
             $sale->company=Company::find($sale->company_id)->name;
-        }
+        }*/
         return view('sales.sales.index',compact('sales'));
 
     }
@@ -183,7 +183,7 @@ class Sales extends Controller
         }
 
 
-        $newRowDetails=json_encode($newRowDetails);
+       // $newRowDetails=json_encode($newRowDetails);
         
 
         return view('sales.sales.edit',compact('sale','sales_items','items','hsn','units','customers','gst','states','bank_branch','customer_type','business_type','cess','newRowDetails','bank_accounts'));

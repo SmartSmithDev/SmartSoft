@@ -81,11 +81,11 @@
 
    {!! Form::close() !!}
 
-  <!-- Modal -->
+  
 <div id="accountModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
-    <!-- Modal content-->
+
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -120,11 +120,11 @@
 </div>
 
 
-<!-- Modal -->
+
 <div id="branchesModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
-    <!-- Modal content-->
+   
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -170,7 +170,7 @@
 
 @section('js')
     <script src="{{ asset('js/bootstrap-fancyfile.js') }}"></script>
-    <!-- Select2 -->
+    
     <link rel="stylesheet" href="{{ asset('dist/css/select2.min.css') }}">
     <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
 @endsection

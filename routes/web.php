@@ -14,9 +14,9 @@
 //use App\Tax\Gst;
 
 
-Route::get('/', function () {
-    return view('dashboard.dashboard.index');
-});
+//Route::get('/', function () {
+ //   return view('dashboard.dashboard.index');
+//});
 Route::resource('/','Dashboard\dashboard');
 
 Route::resource('companies/companies','Companies\Companies');
@@ -42,8 +42,9 @@ Route::group(['prefix' => 'purchases'], function () {
 	Route::resource('vendors','Purchases\Vendors');
 	Route::resource('payments','Purchases\Payments');
 	Route::resource('purchases','Purchases\Purchases');
-	Route::post('vendorajax','Purchases\Vendors@store1');
-	Route::post('/vendorInfo','Purchases\Purchases@vendorInfo');
+	//Route::get('purchases/payments/{id}/edit', 'Payments@edit');
+//Route::put('purchases/payments/{id}/update', 'Payments@update');
+	
 });
 
 Route::group(['prefix' => 'items'], function () {
@@ -59,9 +60,6 @@ Route::get('download/{id}','Sales\Sales@download');
 Route::get('/report',function() {
  	return view('reports.reports.income');
  });
-// Route::get('reports','Reports\Reports@index');
-
-Route::get('Reports','Reports\Reports@show');
  Route::get('test', function () {
     $GstRate = App\Models\Tax\Cess::find(0)->rate;
     echo($GstRate);
@@ -73,4 +71,3 @@ Route::get('put', function() {
 });
 
 
-?>

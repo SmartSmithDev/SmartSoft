@@ -3,7 +3,7 @@
 @section('title', trans('general.title.edit', ['type' => trans_choice('general.vendors', 1)]))
 
 @section('content')
-<!-- Default box -->
+
 <div class="box box-success">
     {!! Form::model($vendor, [
         'method' => 'PATCH',
@@ -40,12 +40,10 @@
             {{ Form::selectGroup('business_type',trans('general.business_type'),'briefcase', $business_type) }}
 
     </div>
-    <!-- /.box-body -->
 
     <div class="box-footer">
         {{ Form::saveButtons('purchases/vendors') }}
     </div>
-    <!-- /.box-footer -->
     {!! Form::close() !!}
 
 </div>
@@ -54,7 +52,7 @@
 
 @section('js')
     <script src="{{ asset('js/bootstrap-fancyfile.js') }}"></script>
-    <!-- Select2 -->
+  
     <link rel="stylesheet" href="{{ asset('dist/css/select2.min.css') }}">
     <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
 @endsection

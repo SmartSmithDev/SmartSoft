@@ -3,7 +3,7 @@
 @section('title', trans('general.title.new', ['type' => trans_choice('general.payments', 1)]))
 
 @section('content')
-    <!-- Default box -->
+  
     <div class="box box-success">
         {!! Form::open(['url' => '/purchases/payments','role' => 'form']) !!}
 
@@ -20,13 +20,10 @@
 
            
         </div>
-        <!-- /.box-body -->
-
         <div class="box-footer">
             {{ Form::saveButtons('/purchases/payments') }}
         </div>
-        <!-- /.box-footer -->
-
+        
         {!! Form::close() !!}
     </div>
 @endsection
@@ -53,7 +50,7 @@
 
 
 @section('css')
-    <!-- Select2 -->
+ 
     <link rel="stylesheet" href="{{ asset('dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-fancyfile.css') }}">

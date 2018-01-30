@@ -51,7 +51,7 @@
 
 @section('css')
 <style type="text/css">
-/* below css for correcting delete button in actions list */
+
     button[title="Delete"]{
         border:none;
         background:none;

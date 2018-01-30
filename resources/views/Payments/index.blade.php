@@ -17,45 +17,32 @@
     <table class="table table-striped table-hover"  class="ui-responsive" id="myTable">
       <thead>
         <tr>
-
-         
-
-
-          <th class="col-md-1 text-center" >@sortablelink('id', 'Id')</th>
-       
-          <th class="col-md-1 text-center" >@sortablelink('payment_date', 'Payment date')</th>
+ <th class="col-md-1 text-center" >@sortablelink('id', 'Id')</th>
+       <th class="col-md-1 text-center" >@sortablelink('payment_date', 'Payment date')</th>
           <th class="col-md-1 text-center" >@sortablelink('Payment_mode', 'Payment mode')</th>
-          
-         
-        
           <th class="col-md-1 text-center" >@sortablelink('payment_terms', 'Payment term')</th>
           <th class="col-md-1 text-center" >@sortablelink('payment_type', 'Payment Mode')</th>
-          
-          <th class="col-md-1 text-center" >@sortablelink('company_account_id', 'company account id')</th>
+           <th class="col-md-1 text-center" >@sortablelink('company_account_id', 'company account id')</th>
           <th class="col-md-1 text-center" >@sortablelink('customer_account_id', 'customer id')</th>
           <th class="col-md-1 text-center">@sortablelink('payment_reference', 'References')</th>
-          
           <th class="col-md-1 text-center">@sortablelink('payment_notes', 'Notess')</th>
              <th class="col-md-1 text-center">{{ trans('general.actions') }}</th>
          
 </tr>
-
-      </thead>
+    </thead>
        <tbody id = "table">
       @foreach($d as $Sale)
         <tr>
           <td class="col-md-1 text-center">{{ $Sale->id }}</td>
-          
           <td class="col-md-1 text-center">{{ $Sale->payment_date }}</td>
           <td class="col-md-1 text-center">{{ $Sale->payment_mode }}</td>
           <td class="col-md-1 text-center">{{ $Sale->payment_terms}}</td>
           <td class="col-md-1 text-center">{{ $Sale->payment_type}}</td>
-        
-          <td class="col-md-1 text-center">{{ $Sale->company_account_id}}</td>
+        <td class="col-md-1 text-center">{{ $Sale->company_account_id}}</td>
           <td class="col-md-1 text-center">{{ $Sale->customer_account_id}}</td>
           <td class="col-md-1 text-center">{{ $Sale->payment_reference}}</td>
           <td class="col-md-1 text-center">{{ $Sale->payment_notes}}</td>
-          <td style="background-color:DodgerBlue;"><button name="Edit" type="submit" value="Edit"><a href="{{ url('purchases/payments/' . $Sale->id . '/edit') }}">Edit</a></button></td>
+          <td style="background-color:DodgerBlue;"><button name="Edit" type="submit" value="Edit"><a href="{{ url('purchases/payments/' . $Sale->id . '/edit') }}">{{ 'Edit' }}</a></button></td>
         </tr>
       @endforeach
       </tbody>
