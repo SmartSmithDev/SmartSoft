@@ -8,7 +8,7 @@
     {!! Form::model($user, [
         'method' => 'PATCH',
         'files' => true,
-        'url' => ['users', $user->id],
+        'url' => ['auth/users', $user->id],
         'role' => 'form'
     ]) !!}
 

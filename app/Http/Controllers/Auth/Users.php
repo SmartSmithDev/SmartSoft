@@ -40,7 +40,7 @@ class Users extends Controller
     public function store(Request $request)
     {
         User::create($request->all());
-        return redirect("users"); 
+        return redirect("auth/users"); 
     }
 
     /**
@@ -62,7 +62,7 @@ class Users extends Controller
      */
     public function edit(User $user)
     {
-        return view('auth.users.edit');
+        return view('auth.users.edit',compact('user'));
     }
 
     /**
@@ -77,7 +77,7 @@ class Users extends Controller
         $user->update($request->input());
          $message = trans('messages.success.updated', ['type' => trans_choice('general.users', 1)]);
         flash($message)->success();
-        return redirect('users');
+        return redirect('auth/users');
     }
 
     /**
@@ -86,11 +86,11 @@ class Users extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
         $user->delete();
         $message = trans('messages.success.deleted', ['type' => trans_choice('general.users', 1)]);
         flash($message)->success();
-        return redirect('users');    
+        return redirect('auth/users');    
     }
 }

@@ -30,9 +30,9 @@
                                         <i class="fa fa-ellipsis-h"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right">
-                                       <li><a href="{{ url('user/' . $user->id . '/edit') }}">{{ 'Edit' }}</a></li>
+                                       <li><a href="{{ url('auth/users/' . $user->id . '/edit') }}">{{ 'Edit' }}</a></li>
                                         
-                                        <li>{!! Form::deleteLink($user, '/users') !!}</li>
+                                        <li>{!! Form::deleteLink($user, 'auth/users') !!}</li>
                                     </ul>
                                 </div>
                             </td>
