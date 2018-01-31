@@ -9,6 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use DB;
 use App\Models\Vendor\Vendor;
 use App\Models\Setting\State;
+use App\Models\Vendor\VendorAccount;
 
 
 class Vendors extends Controller
@@ -50,9 +51,13 @@ class Vendors extends Controller
      */
     public function store(Request $request)
     {
-        
-        Vendor::create($request->all());
-            return redirect("/purchases/vendors"); 
+        //dd($request->all());
+        Vendor::create($request->except(['accounts']));
+        if($request->input('accounts')){
+            $vendorAccounts=$request->input('accounts');
+            
+        }
+            return redirect("/purchases/vendors");
     }
 
     public function store1(Request $request)
