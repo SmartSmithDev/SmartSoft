@@ -44,4 +44,8 @@
     .dropdown-menu >li >a{
         text-align: center;
     }
+
+    .sidebar-menu, .main-sidebar .user-panel, .sidebar-menu>li.header{
+        overflow: visible;
+    }
 </style>
