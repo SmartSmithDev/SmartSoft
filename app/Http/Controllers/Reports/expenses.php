@@ -6,26 +6,19 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
 use App\Models\Sale\Sale;
-
-class Reports extends Controller
+use App\Models\Sale\SalesPayment;
+use App\Models\Vendor\Vendor;
+use App\Models\Vendor\VendorAccount;
+class expenses extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $r) {
-//       $name = $r->input('Customer_Name');
-//         $fromDate = $r->input('invoice1');
-//         $toDate = $r->input('invoice2');
-//         $ss =Customer::where('name','=',$name)->get();
-// foreach($ss as $sale){
-
-//             $sale->customer=Sale::find($sale->id)->whereBetween('invoice_date', array($fromDate, $toDate))->get();
-//             // dd($sale->customer);
-//         }
-//         $incomes = $sale->customer;
-    return view('reports.reports.income');
+    public function index() {
+//       
+    return view('reports.reports.expenses');
     }
     
 
@@ -56,37 +49,34 @@ class Reports extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $req)
+    public function show(Request $req)//expenses_modal
     {
         $pname = $req->input('party_name');
-        $fromDate = $req->input('invoice1');
-        $toDate = $req->input('invoice2');
+        $fromDate = $req->input('pdate1');
+        $toDate = $req->input('pdate2');
 
         //return json_encode($pname);
-        if( empty($fromDate) && empty($toDate)){
-        $ss =Customer::where('name','=',$pname)->get();
-        foreach($ss as $sale){
-            $sale->customer=Sale::where('customer_id','=',$sale->id)->get();
-            // dd($sale->customer);
+        if( empty($fromDate) && empty($toDate)) {
+            $ss =Vendor::where('name','=',$pname)->get();
+                foreach($ss as $sale)   {
+                    $sale->vendor=VendorAccount::where('vendor_id','=', $sale->id )->pluck('id');
+                    $sale->cname=SalesPayment::where('customer_account_id','=',$sale->vendor)->get();
+                }
+        return json_encode($sale->cname);
         }
-    return json_encode($sale->customer);
-    }
         else
         {
-           $ss =Customer::where('name','=',$pname)->get();
+            $ss =Vendor::where('name','=',$pname)->get();
             foreach($ss as $sale){
-
-            $sale->customer=Sale::where('customer_id','=',$sale->id)->whereBetween('invoice_date', array($fromDate, $toDate))->get();
-            // dd($sale->customer);
-        }
+                $sale->vendor=VendorAccount::where('vendor_id','=', $sale->id )->pluck('id');
+            
+                $sale->cname=SalesPayment::where('customer_account_id','=',$sale->vendor)->whereBetween('payment_date', array($fromDate, $toDate))->get();
+            // dd($sale->cname);
+            }
     
-        return json_encode($sale->customer);
+        return json_encode($sale->cname);
         }
     }
-        
-    
-
- 
 
     /**
      * Show the form for editing the specified resource.

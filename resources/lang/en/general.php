@@ -36,6 +36,11 @@ return [
     'switch'                => 'Switch',
     'manage_companies'      => 'Manage Companies',
     'users'                 => 'User|Users',
+    'purchases'             => 'Purchases',
+    'beneficiary_name'      => 'Beneficiary Name',
+    'account_number'        => 'Account Number',
+    'address'               => 'Address',
+    'beneficiary_bank'      => 'Beneficiary Bank',
 
     'title' => [
         'new'               => 'New :type',

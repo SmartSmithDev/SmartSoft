@@ -1,6 +1,6 @@
 @extends('layouts.entry')
 
-@section('title', trans('general.title.new', ['type' => trans_choice('general.sales', 1)]))
+@section('title', trans('general.title.new', ['type' => trans_choice('general.purchases', 1)]))
 
 @section('content')
 
@@ -18,11 +18,11 @@
 
       <div class="modal-body">
          
-         {!! Form::open(array('action' => 'Sales\Customers@store1')) !!}
+         {!! Form::open(array('action' => 'Purchases\Vendors@store1')) !!}
 
             {{ Form::textGroup('name', 'Name', 'id-card-o') }}
             
-            {{ Form::selectGroup('customer_type','Customer Type','id-card-o', $customer_type) }}
+            {{ Form::selectGroup('customer_type','Vendor Type','id-card-o', $customer_type) }}
 
             {{ Form::textGroup('gstin', 'GST No.', 'percent', []) }}
             
@@ -68,10 +68,10 @@
 
 <!-- Default box -->
   <div class="box box-success">
-    {!! Form::open(['url' => 'sales/sales', 'files' => true, 'role' => 'form']) !!}
+    {!! Form::open(['url' => 'purchases/purchases', 'files' => true, 'role' => 'form']) !!}
 
 <div class="box-body">
-        {{ Form::selectGroup('customer_id', 'Party Name', 'user', $customers) }}
+        {{ Form::selectGroup('vendor_id', 'Vendor Name', 'user', $vendors) }}
          
          {{ Form::selectGroup('bank_branch', 'Bank Branch', 'university', $bank_branch) }} 
          <!--  params(id,label,favicon-name,array for foreach)  -->
@@ -79,11 +79,11 @@
 
         {{ Form::textGroup('invoice_date', 'Invoice Date', 'calendar',['id' => 'invoice_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''], null) }}
 
-        {{ Form::textGroup('order_date', 'Order Date', 'calendar',['id' => 'order_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''], null) }}
+        
 
         {{ Form::textGroup('invoice_number', 'Invoice Number', 'file-text-o',[],$new_invoice_id) }}
 
-        {{ Form::textGroup('order_id', 'Order ID', 'shopping-cart',[]) }}
+    
 
         {{ Form::selectGroup('supply_state_id', 'Place of Supply', 'user', $states) }}
        
@@ -463,8 +463,8 @@ color:white;
 
             
             //Select2 For Vendor ID
-            $('#customer_id').select2({
-                placeholder: "{{ 'Select Customer' }}",
+            $('#vendor_id').select2({
+                placeholder: "{{ 'Select Vendor' }}",
             })
             .on("select2:select", function(e) { 
                    // what you would like to happen
@@ -472,10 +472,10 @@ color:white;
                    //    alert("Here it IS!");
 
                   $.ajax({
-                url: '{{ url("sales/customerInfo") }}',
+                url: '{{ url("purchases/vendorInfo") }}',
                 type: 'POST',
                 dataType: 'JSON',
-                data: {'customer_id':$(this).val()},
+                data: {'vendor_id':$(this).val()},
                 headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 success: function(data) {
                      
@@ -559,12 +559,12 @@ color:white;
 
           
 
-            $(document).on('change', '#customer_id', function (e) {
+            $(document).on('change', '#vendor_id', function (e) {
                 $.ajax({
                     url: '{{ url("sales/customers") }}',
                     type: 'GET',
                     dataType: 'JSON',
-                    data: 'customer_id=' + $(this).val(),
+                    data: 'vendor_id=' + $(this).val(),
                     success: function(data) {
                         $('#currency_code').val(data.currency_code);
 
@@ -914,17 +914,16 @@ for(var i=0;i<(nrows);i++){
   commonDetails['sgst']+=parseInt(rowsDetails[i+""].sgst);
   commonDetails['igst']+=parseInt(rowsDetails[i+""].igst);
   commonDetails['cess']+=parseInt(rowsDetails[i+""].cess_amount);
-  //commonDetails['ecommerce_vendor_id']=0;
+ 
 }
 
 //console.log(rowsDetails);
 
 
 
-commonDetails['customer_id']=$('#customer_id').val();
+commonDetails['vendor_id']=$('#vendor_id').val();
 commonDetails['invoice_date']=$('#invoice_date').val();
 commonDetails['invoice_number']=$('#invoice_number').val();
-commonDetails['order_id']=$('#order_id').val();
 commonDetails['supply_state_id']=$('#supply_state_id').val();
 commonDetails['total_taxable_value']=$('#sub-total').text();
 commonDetails['total_tax_amount']=$('#tax-total').text();
@@ -932,7 +931,7 @@ commonDetails['total_amount']=$('#grand-total').text();
 commonDetails['notes']=$('#notes').val();
 commonDetails['round_off']=Math.round(parseFloat($('#grand-total').text()));
 commonDetails['shipping_cost']=0;
-commonDetails['order_date']=$('#order_date').val();
+
 //console.log(commonDetails);
 //console.log(rowsDetails);
 $('#common-object').val(JSON.stringify(commonDetails));
@@ -985,29 +984,7 @@ $.ajax({
 });
 });
 
-// $('#items').on('blur','.quantity-class',function(){
-//   var elem=$(this);
-//   var quantity=$(this).val();
-//   var row=$(this).parent().parent().attr('id').split('-')[2];
-// $.ajax({
-// url:'{{ url("sales/quantity") }}',
-// type:'GET',
-// dataType:"text",
-// data:{'quantity':quantity,'sku':rowsDetails[row].sku},
-// success:function(data){
-// if(data=='-1'){
-//   elem.val("");
-//   alert("Item Does Not Exist In Inventory!");
-// }
-// else if(data!='Ok'){
-//   elem.val("");
-//   alert("Only "+data+" Units Remaining!");
-// }
-// }
-// });
 
-
-// });
 
 
 

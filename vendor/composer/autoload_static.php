@@ -25,6 +25,7 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         'd7354eb4c8441fbf08eec280b61c7c73' => __DIR__ . '/..' . '/rachidlaasri/laravel-installer/src/Helpers/functions.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
+        '4db33613fce4c89aa2457a348853af0a' => __DIR__ . '/..' . '/grimthorr/laravel-user-settings/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -107,6 +108,7 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+            'Grimthorr\\LaravelUserSettings\\' => 30,
             'Google\\Auth\\' => 12,
         ),
         'F' => 
@@ -311,6 +313,10 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'Grimthorr\\LaravelUserSettings\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/grimthorr/laravel-user-settings/src',
+        ),
         'Google\\Auth\\' => 
         array (
             0 => __DIR__ . '/..' . '/google/auth/src',
@@ -465,6 +471,7 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         'App\\Http\\Controllers\\Purchases\\Purchases' => __DIR__ . '/../..' . '/app/Http/Controllers/Purchases/Purchases.php',
         'App\\Http\\Controllers\\Purchases\\Vendors' => __DIR__ . '/../..' . '/app/Http/Controllers/Purchases/Vendors.php',
         'App\\Http\\Controllers\\Reports\\Reports' => __DIR__ . '/../..' . '/app/Http/Controllers/Reports/Reports.php',
+        'App\\Http\\Controllers\\Reports\\expenses' => __DIR__ . '/../..' . '/app/Http/Controllers/Reports/expenses.php',
         'App\\Http\\Controllers\\Sales\\Customers' => __DIR__ . '/../..' . '/app/Http/Controllers/Sales/Customers.php',
         'App\\Http\\Controllers\\Sales\\Payments' => __DIR__ . '/../..' . '/app/Http/Controllers/Sales/Payments.php',
         'App\\Http\\Controllers\\Sales\\Sales' => __DIR__ . '/../..' . '/app/Http/Controllers/Sales/Sales.php',
@@ -478,6 +485,7 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\StoreGstIn' => __DIR__ . '/../..' . '/app/Http/Requests/StoreGstIn.php',
+        'App\\Models\\Auth\\User' => __DIR__ . '/../..' . '/app/Models/Auth/User.php',
         'App\\Models\\Company\\Company' => __DIR__ . '/../..' . '/app/Models/Company/Company.php',
         'App\\Models\\Company\\CompanyBankAccount' => __DIR__ . '/../..' . '/app/Models/Company/CompanyBankAccount.php',
         'App\\Models\\Company\\CompanyBranch' => __DIR__ . '/../..' . '/app/Models/Company/CompanyBranch.php',
@@ -511,7 +519,7 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         'App\\Providers\\FormServiceProvider' => __DIR__ . '/../..' . '/app/Providers/FormServiceProvider.php',
         'App\\Providers\\GoogleDriveServiceProvider' => __DIR__ . '/../..' . '/app/Providers/GoogleDriveServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
-        'App\\User' => __DIR__ . '/../..' . '/app/Models/Auth/User.php',
+        'App\\Traits\\InventoryTrait' => __DIR__ . '/../..' . '/app/Traits/InventoryTrait.php',
         'App\\libraries\\GstCalculator' => __DIR__ . '/../..' . '/app/libraries/GstCalculator.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
@@ -7970,6 +7978,9 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         'Google_Task_Retryable' => __DIR__ . '/..' . '/google/apiclient/src/Google/Task/Retryable.php',
         'Google_Task_Runner' => __DIR__ . '/..' . '/google/apiclient/src/Google/Task/Runner.php',
         'Google_Utils_UriTemplate' => __DIR__ . '/..' . '/google/apiclient/src/Google/Utils/UriTemplate.php',
+        'Grimthorr\\LaravelUserSettings\\Facade' => __DIR__ . '/..' . '/grimthorr/laravel-user-settings/src/Facade.php',
+        'Grimthorr\\LaravelUserSettings\\ServiceProvider' => __DIR__ . '/..' . '/grimthorr/laravel-user-settings/src/ServiceProvider.php',
+        'Grimthorr\\LaravelUserSettings\\Setting' => __DIR__ . '/..' . '/grimthorr/laravel-user-settings/src/Setting.php',
         'GuzzleHttp\\Client' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Client.php',
         'GuzzleHttp\\ClientInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/ClientInterface.php',
         'GuzzleHttp\\Cookie\\CookieJar' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Cookie/CookieJar.php',
@@ -10104,6 +10115,7 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         'Sabberworm\\CSS\\Value\\URL' => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/URL.php',
         'Sabberworm\\CSS\\Value\\Value' => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/Value.php',
         'Sabberworm\\CSS\\Value\\ValueList' => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/ValueList.php',
+        'SampleDataSeeder' => __DIR__ . '/../..' . '/database/seeds/SampleDataSeeder.php',
         'SebastianBergmann\\CodeCoverage\\CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
         'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
         'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/Driver.php',
@@ -10387,6 +10399,7 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         'Symfony\\Component\\Debug\\FatalErrorHandler\\FatalErrorHandlerInterface' => __DIR__ . '/..' . '/symfony/debug/FatalErrorHandler/FatalErrorHandlerInterface.php',
         'Symfony\\Component\\Debug\\FatalErrorHandler\\UndefinedFunctionFatalErrorHandler' => __DIR__ . '/..' . '/symfony/debug/FatalErrorHandler/UndefinedFunctionFatalErrorHandler.php',
         'Symfony\\Component\\Debug\\FatalErrorHandler\\UndefinedMethodFatalErrorHandler' => __DIR__ . '/..' . '/symfony/debug/FatalErrorHandler/UndefinedMethodFatalErrorHandler.php',
+        'Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher' => __DIR__ . '/..' . '/symfony/event-dispatcher/ContainerAwareEventDispatcher.php',
         'Symfony\\Component\\EventDispatcher\\Debug\\TraceableEventDispatcher' => __DIR__ . '/..' . '/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php',
         'Symfony\\Component\\EventDispatcher\\Debug\\TraceableEventDispatcherInterface' => __DIR__ . '/..' . '/symfony/event-dispatcher/Debug/TraceableEventDispatcherInterface.php',
         'Symfony\\Component\\EventDispatcher\\Debug\\WrappedListener' => __DIR__ . '/..' . '/symfony/event-dispatcher/Debug/WrappedListener.php',
