@@ -317,13 +317,13 @@ $('#accountModal').modal('show');
 });
 
 $('#company-branches tbody').on('click','.branch-edit',function(){
-  var row=$(this).parent().parent().parent().parent().parent().attr('id').split("-")[2];
+  var row=$(this).parent().parent().parent().parent().parent();
   console.log(row);
     branch_edit_row=row;
-var len=$('#company-branches table tbody')[0].rows[row].cells.length-1;
+var len=branch_edit_row.children().length;
 console.log(len);
 for(var i=0;i<len;i++){
-  var value=$('#company-branches tbody tr').eq(row).children().eq(i).children().children().val();
+  var value=branch_edit_row.children().eq(i).children().children().val();
   $('#branchesModal .form-control').eq(i).val(value);
 }  
 $('#branchesModal').modal('show');
