@@ -1,22 +1,17 @@
 @extends('layouts.admin')
 
-@section('scripts')
-
-<script type="text/javascript">
-    console.log('lol2');
-</script>
-@endsection
 
 @section('content')
     <ul class="nav nav-tabs">
         <li class="active"><a href="#">Vendors</a></li>
         <li><a href="#">Vendor Accounts</a></li>
     </ul>
+    <br>
+    <br>
 
-@section('new_button')
-<span class="new-button"><a href="{{url('purchases/vendors/create')}}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
-@endsection
+    <span class="new-button"><a href="{{url('purchases/vendors/create')}}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
 
+    <br><br>
     <div class="box-body parts" id="vendors"> 
         
             <table class="table table-striped table-hover" id="tbl-vendors">

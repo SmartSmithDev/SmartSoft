@@ -7,9 +7,15 @@
         <li class="active"><a href="#">Vendors</a></li>
         <li><a href="#">Vendor Accounts</a></li>
     </ul>
+      {!! Form::open(['action' => 'Purchases\Vendors@store']) !!}
     <!-- Default box -->
-        <div class="box box-success">
-            {!! Form::open(['action' => 'Purchases\Vendors@store']) !!}
+       <div class="box-footer">
+            {{ Form::saveButtons('vendors') }}
+        </div>
+        <div class="box box-success parts" id="vendors">
+          
+
+
 
             <div class="box-body">
 
@@ -42,30 +48,28 @@
             </div>
         <!-- /.box-body -->
 
-
-        <div class="box-footer">
-            {{ Form::saveButtons('vendors') }}
-        </div>
         <!-- /.box-footer -->
 
 
 
 
-        {!! Form::close() !!}
     </div>
 
-    <div id="company-bank-accounts" class="parts">
+    <div id="vendor-accounts" class="parts" style="display: none">
         <br>
         <span class="new-button"><a href="#vendorAccountModal" class="btn btn-success btn-sm"  data-toggle="modal"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
         <table class="table table-striped table-hover" id="tbl-items">
             <thead>
                 <tr>
-                    <th class="col-md-1 hidden">Account Identifier</th>
-                    <th class="col-md-1 hidden">Entity Name</th>
                     <th class="col-md-1">Beneficiary Name</th>
                     <th class="col-md-1">Account Number</th>
-                    <th class="col-md-1">Address</th>
-                    <th class="col-md-1">Beneficiary Bank</th>                
+                    <th class="col-md-1">Beneficiary Address</th>
+                    <th class="col-md-1">Beneficiary Bank</th>
+                    <th class="col-md-1">Bank Address</th>
+                    <th class="col-md-1">IFSC Code</th> 
+                    <th class="col-md-1">Bank Code</th> 
+                    <th class="col-md-1">Branch Code</th>
+                    <th class="col-md-1">Account Type</th>                 
                     <th class="col-md-1 text-center">actions</th>
                 </tr>
             </thead>
@@ -113,6 +117,8 @@
         </div>
     </div>
 
+    {!! Form::close() !!}
+
 
 @endsection
 
@@ -130,23 +136,40 @@
 
 @section('scripts')
     <script type="text/javascript">
-
+        var accountRow=0;
+        var tabno=0;
         $(document).ready(function(){
-            alert("clicked");
 
+            $('.nav-tabs').on('click','li',function(){
+                $(this).addClass('active');
+                $('.parts').eq(tabno).css({display:"none"});
+                $('.nav-tabs li').eq(tabno).removeClass('active');
+                tabno=$(this).index();
+                $('.parts').eq(tabno).css({display:"block"});
+            });
+
+
+
+
+
+            $('#account_save').click(function(){ 
+            var beneficiary_name=$('#beneficiary_name').val();
+            var account_number=$('#account_number').val();
+            var beneficiary_address=$('#beneficiary_address').val();
+            var beneficiary_bank_address=$('#beneficiary_bank_address').val();
+            var ifsc_code=$('#ifsc_code').val();
+            var bank_code=$('#bank_code').val();
+            var branch_code=$('#branch_code').val();
+            var account_type=$('#account_type').val();
+           
+            var htmlAccountRow=$('#vendor-accounts tbody').append(
+				'<tr id="account-row-'+accountRow+'"><td id="col-md-1 hidden"><span>'+beneficiary_name+'<input type="hidden" name="accounts['+accountRow+'][beneficiary_name]" value='+beneficiary_name+'</span></td><td id="col-md-1 hidden"><span>'+account_number+'<input type="hidden" name="accounts['+accountRow+'][account_number]" value='+account_number+'</span></td><td id="col-md-1 hidden"><span>'+beneficiary_address+'<input type="hidden" name="accounts['+accountRow+'][beneficiary_address]" value='+beneficiary_address+'</span></td><td id="col-md-1 hidden"><span>'+beneficiary_bank_address+'<input type="hidden" name="accounts['+accountRow+'][beneficiary_bank_address]" value='+beneficiary_bank_address+'</span></td><td id="col-md-1 hidden"><span>'+ifsc_code+'<input type="hidden" name="accounts['+accountRow+'][ifsc_code]" value='+ifsc_code+'</span></td><td id="col-md-1 hidden"><span>'+bank_code+'<input type="hidden" name="accounts['+accountRow+'][bank_code]" value='+bank_code+'</span></td><td id="col-md-1 hidden"><span>'+branch_code+'<input type="hidden" name="accounts['+accountRow+'][branch_code]" value='+branch_code+'</span></td><td id="col-md-1 hidden"><span>'+account_type+'<input type="hidden" name="accounts['+accountRow+'][account_type]" value='+account_type+'</span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="account-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete" onclick="$(this).parent().parent().parent().parent().parent().remove();">Delete</button></li></ul></div></td></tr>');
+
+
+			console.log(htmlAccountRow[0]);
+            accountRow++;
+        });
 
         });
     </script>
 @endsection
-$('#account_save').click(function(){
-            alert("clicked");
-            // var beneficiary_name=$('#beneficiary_name').val();
-            // var account_number=$('#account_number').val();
-            // var beneficiary_address=$('#beneficiary_address').val();
-            // var beneficiary_bank_address=$('#beneficiary_bank_address').val();
-            // var ifsc_code=$('#ifsc_code').val();
-            // var bank_code=$('#bank_code').val();
-            // var branch_code=$('#branch_code').val();
-            // var account_type=$('#account_type').val();
-            // alert("test");
-        });
