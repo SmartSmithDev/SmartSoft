@@ -21,7 +21,7 @@
 
             {{ Form::passwordGroup('password_confirmation', trans('auth.password.current_confirm'), 'key') }}
 
-            {{ Form::checkboxGroup('companies', trans_choice('general.companies', 2), $companies, 'company_name') }}
+            {{ Form::checkboxGroup('companies', trans_choice('general.companies', 2), $companies, 'name') }}
 
         </div>
         <!-- /.box-body -->

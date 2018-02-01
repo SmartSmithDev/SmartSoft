@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User;
 use App\Models\Company\Company;
+use phpseclib\Crypt\Hash;
 
 class Users extends Controller
 {
@@ -39,8 +40,18 @@ class Users extends Controller
      */
     public function store(Request $request)
     {
-        User::create($request->all());
-        return redirect("auth/users"); 
+        $pass=$request['password'];
+        $confirm_pass=$request['password_confirmation'];
+        if ($pass!=$confirm_pass) {
+            $message = 'Passwords Do not Match';
+            flash($message)->warning();
+            return view('auth.users.create',compact('password','password_confirmation','name','email'));
+        }
+        else{
+            $password =bcrypt($pass);
+            User::create(['name'=>$request['name'],'email'=>$request['email'],'password'=>$password]);
+            return redirect("auth/users"); 
+        }
     }
 
     /**
@@ -62,7 +73,8 @@ class Users extends Controller
      */
     public function edit(User $user)
     {
-        return view('auth.users.edit',compact('user'));
+        $companies = Company::all();
+        return view('auth.users.edit',compact('user','companies'));
     }
 
     /**
@@ -74,10 +86,20 @@ class Users extends Controller
      */
     public function update(User $user,Request $request)
     {
-        $user->update($request->input());
-         $message = trans('messages.success.updated', ['type' => trans_choice('general.users', 1)]);
-        flash($message)->success();
-        return redirect('auth/users');
+        $pass=$request['password'];
+        $confirm_pass=$request['password_confirmation'];
+        if ($pass!=$confirm_pass) {
+            $message = 'Passwords Do not Match';
+            flash($message)->warning();
+            return view('auth.users.edit',compact('user','password','password_confirmation','name','email'));
+        }
+        else{
+            $password =bcrypt($pass);
+            $user->update(['name'=>$request['name'],'email'=>$request['email'],'password'=>$password]);
+            $message = trans('messages.success.updated', ['type' => trans_choice('general.users', 1)]);
+            flash($message)->success();
+            return redirect('auth/users');
+        }
     }
 
     /**
