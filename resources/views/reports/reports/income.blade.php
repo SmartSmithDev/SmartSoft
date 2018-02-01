@@ -1,72 +1,79 @@
 @extends('layouts.admin')
 
 @section('content')
-
+<!-- bootstrap datepicker -->
+<script src="../../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 
 <div class="box-body">
   <div id = "#div1" class="table table-responsive">
       <table id = "mytable"   class="table table-striped table-hover">
         
         <thead>
-          
-  
-  <!-- Trigger the modal with a button -->
-  <div class="pull-right">
-  <button type="button" class="btn  btn-lg"  data-toggle="modal" data-target="#myModal">Open Modal</button>
-   </div>
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-     
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h2 class="modal-title ">Sales Report</h2>
-        </div>
-        <div class="modal-body">
-          {!! Form::open(['url' => 'Reports\Reports@index', 'role' => 'form', 'method' => 'GET']) !!}
-           <p id = "demo">11</p>
-              <div class="pull-left">
-                  {{ Form::label('name','Party Name :') }}
-                  {{ Form::text('Customer_Name',"SmartSmith",["id" => "customer"])}}
-                 
-                  <br> <br> <br>
-                  {{ Form::label('invoice','Invoice Date :')}}
-                  <br>
-                  {{ Form::label('from','From :')}}
-                  {{ Form::text('invoice1',"2018-01-15",["id" => "invoice1"])}}
-                  {{ Form::label('to','To :')}}
-                  {{ Form::text('invoice2',"2018-01-20",["id" => "invoice2"])}}
-                  <br>
-                  <div class = "pull-right">
-                  <!--  {{ Form::Submit('Search')}} -->
-                  {{ Form::button('Search',["class" => "search"])}}
+          <!-- Trigger the modal with a button -->
+          <div class="pull-right">
+            <button type="button" class="btn btn-success btn-sm"  data-toggle="modal" data-target="#myModal">Search by</button>
+          </div>
+             <!-- Modal -->  
+          <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h4 class="modal-title">Income Report</h4>
+                </div>
+                <div class="modal-body">
+                {!! Form::open(['url' => 'Reports\Reports@index', 'role' => 'form', 'method' => 'GET']) !!}
+                 <!--  <p id = "demo">11</p> -->
+                  <div class="pull-left">
+                    {{ Form::textGroup('Customer_Name', 'Party Name' , 'id-card-o',["id" => "customer"]) }}
+                    <br> <br> <br>
+                    <!-- Date -->
+                    <div class="form-group pull-left">
+                      {{ Form::label('from','From :')}}
+
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id="datepicker">
+                      </div>
+                      <!-- /.input group -->
+                    </div>
+                    <div class="form-group pull-left">
+                      {{ Form::label('to','To :')}}
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id="datepicker1">
+                      </div>
+                      <!-- /.input group -->
+                    </div>
+                  </div>
+                          {!! Form::close() !!}
+                </div>
+                
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  <div class = "pull-right" >
+                        <!--  {{ Form::Submit('Search')}} -->
+                    {{ Form::button('search',array('class' => 'btn btn-primary','search'))}}
                   
-                 </div>
+                  </div>
+                </div>
               </div>
-              
-            {!! Form::close() !!}
-      
-        </div>
-        <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-default" data-dismiss="modal"></button> -->
-        </div>
-      </div>
-      
-    </div>
-  </div>
+            <!-- /.modal-content -->
+            </div>
+          <!-- /.modal-dialog -->
+          </div>
   
-</div>
-<tr>
-             <div class="container">
+ 
+          <tr>
+            <div class="container">
   
-              <th class="col-md-1 text-center">@sortablelink('company_id','Company ID ')</th>
-              <th class="col-md-1 text-center">@sortablelink('customer_id','Customer ID ')</th>
-              <th class="col-md-1 text-center">@sortablelink('ecommerce_vendor_id','Ecommerce Vendor ID')</th>
-               <th class="col-md-1 text-center">@sortablelink('supplier_state_id','Supplier State ID')</th>
-                <th class="col-md-1 text-center">@sortablelink('supply_state_id','Supply State ID')</th>
-                 <th class="col-md-1 text-center">@sortablelink('order_id','Order ID')</th>
               <th class="col-md-1 text-center">@sortablelink('invoice_date',   'Invoice date ')</th>
               <th class="col-md-1 text-center">@sortablelink('total_taxable_value', 'Total taxable value')</th>
               <th class="col-md-1 text-center">@sortablelink('total_discount', 'Total discount')</th>
@@ -82,7 +89,14 @@
         <tbody id = "table" >
          
           <script>
-        
+              //Date picker
+            $('#datepicker').datepicker({
+              autoclose: true
+            })
+            $('#datepicker1').datepicker({
+              autoclose: true
+            })
+
             $(document).ready(function(){
               $(".search").click(function()
               { //alert("The paragraph was clicked.");
@@ -104,12 +118,7 @@
                       for (var i = 0; i < json.length; i++) 
                       { //Dispaly Data
                         tr = $('<tr/>');
-                        tr.append("<td>" + json[i].company_id + "</td>");
-                        tr.append("<td>" + json[i].customer_id + "</td>");
-                        tr.append("<td>" + json[i].ecommerce_vendor_id + "</td>");
-                        tr.append("<td>" + json[i].supplier_state_id + "</td>");
-                        tr.append("<td>" + json[i].supply_state_id + "</td>");
-                        tr.append("<td>" + json[i].order_id + "</td>");
+                        
                         tr.append("<td>" + json[i].total_taxable_value + "</td>");
                         tr.append("<td>" + json[i].total_discount + "</td>");
                         tr.append("<td>" + json[i].cess + "</td>");
