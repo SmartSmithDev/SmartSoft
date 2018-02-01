@@ -60,7 +60,7 @@
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                   <div class = "pull-right" >
                         <!--  {{ Form::Submit('Search')}} -->
-                    {{ Form::button('search',array('class' => 'btn btn-primary','search'))}}
+                    {{ Form::button('search',array('class' => 'btn btn-primary','id' => 'search'))}}
                   
                   </div>
                 </div>
@@ -98,12 +98,12 @@
             })
 
             $(document).ready(function(){
-              $(".search").click(function()
+              $("#search").click(function()
               { //alert("The paragraph was clicked.");
                 var t = document.getElementById('customer').value; 
-                var in1 = document.getElementById('invoice1').value; 
-                var in2 = document.getElementById('invoice2').value; 
-                document.getElementById("demo").innerHTML = ""+t+""+in1+""+in2;
+                var in1 = document.getElementById('datepicker').value; 
+                var in2 = document.getElementById('datepicker1').value; 
+                //document.getElementById("demo").innerHTML = ""+t+""+in1+""+in2;
                 var xhttp = new XMLHttpRequest();
                 xhttp.open("GET", "{{ url('Reports') }}?party_name="+t+"&invoice1="+in1+"&invoice2="+in2, true);   //send Request
                 xhttp.send();
@@ -112,7 +112,7 @@
                   if (this.readyState == 4 && this.status == 200) 
                   {
                     var json=JSON.parse(this.responseText);
-                    console.log(json);
+                    //console.log(json);
                       $("#table").empty();
                       var tr;
                       for (var i = 0; i < json.length; i++) 
