@@ -118,6 +118,7 @@ class Items extends Controller
     public function itemCalculate() {
 
         $input_items = request('item');
+
         $supply_state_id = request('supply_state_id');
         $discountType = request('discountType');
         $rateType=request('rateType');
@@ -141,6 +142,9 @@ class Items extends Controller
         //Process each Item data
         if ($input_items) {
             foreach ($input_items as $key => $item) {
+                if($this->search_null($item)){
+                    continue;
+                }
                 $item_sub_total = ($item['price'] * $item['quantity']);
                $itemTotal=0;
                $itemTotalTax=0;
@@ -254,5 +258,15 @@ class Items extends Controller
         $item->gst=$gst_id[0];
         $item->cess=$cess_id[0];
         return json_encode($item);
+    }
+
+
+    public function search_null($array){
+        foreach($array as $key=>$value){
+         if($key!="discount" && $key!="item_id" && $value==null)
+            return true;
+        }
+
+        return false;
     }
 }
