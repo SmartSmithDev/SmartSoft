@@ -55,6 +55,10 @@ Route::group(['prefix' => 'items'], function () {
 	Route::post('/hsn','Items\Items@hsn');
 });
 
+Route::group(['prefix' => 'auth'], function () {
+    Route::resource('users', 'Auth\Users');
+});
+
 
 Route::get('download/{id}','Sales\Sales@download');
 

@@ -122,7 +122,7 @@ class Vendors extends Controller
     public function destroy(Vendor $vendor)
     {
         //
-         $vendor->delete();
+        $vendor->delete();
         $message = trans('messages.success.deleted', ['type' => trans_choice('general.vendors', 1)]);
 
             flash($message)->success();
