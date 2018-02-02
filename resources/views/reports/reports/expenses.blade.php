@@ -11,7 +11,7 @@
   
           <!-- Trigger the modal with a button -->
           <div class="pull-right">
-          <button type="button" class="btn  btn-lg"  data-toggle="modal" data-target="#myModal">Open Modal</button>
+          <button type="button" class="btn btn-success btn-sm"  data-toggle="modal" data-target="#myModal">Search By</button>
           </div>
           <!-- Modal -->
           <div class="modal fade" id="myModal" role="dialog">
@@ -30,6 +30,7 @@
 
                   {{ Form::textGroup('Customer_Name', 'Vendor Name' , 'id-card-o',["id" => "customer"]) }}
                   <br> <br> <br>
+                  <div class="form-group pull-left">
                   {{ Form::label('payment','Payment Date :')}}
                   <br>
                 <div class="form-group pull-left">
@@ -53,6 +54,7 @@
                       <!-- /.input group -->
               </div>
             </div>
+            </div>
               {!! Form::close() !!}
           </div>
           <div class="modal-footer">
@@ -60,7 +62,7 @@
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
               <div class = "pull-right" >
                         <!--  {{ Form::Submit('Search')}} -->
-                {{ Form::button('search',array('class' => 'btn btn-primary','search'))}}
+                {{ Form::button('search',array('class' => 'btn btn-primary','id' => 'search'))}}
                   
               </div>
             </div>
@@ -91,16 +93,16 @@
             $('#datepicker').datepicker({
               autoclose: true
             })
-            $('#datepicker1').datepicker1({
+            $('#datepicker1').datepicker({
               autoclose: true
             })
         
             $(document).ready(function(){
-              $(".search").click(function()
+              $("#search").click(function()
               { //alert("The paragraph was clicked.");
                 var t = document.getElementById('customer').value; 
-                var in1 = document.getElementById('pdate1').value; 
-                var in2 = document.getElementById('pdate2').value; 
+                var in1 = document.getElementById('datepicker').value; 
+                var in2 = document.getElementById('datepicker1').value; 
                 // document.getElementById("demo").innerHTML = ""+t+""+in1+""+in2;
                 var xhttp = new XMLHttpRequest();
                 xhttp.open("GET", "{{ url('Expenses') }}?party_name="+t+"&pdate1="+in1+"&pdate2="+in2, true);   //send Request
@@ -110,7 +112,7 @@
                   if (this.readyState == 4 && this.status == 200) 
                   {
                     var json=JSON.parse(this.responseText);
-                    console.log(json);
+                    //console.log(json);
                       $("#table").empty();
                       var tr;
                       for (var i = 0; i < json.length; i++) 

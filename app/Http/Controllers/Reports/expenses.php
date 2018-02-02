@@ -52,11 +52,8 @@ class expenses extends Controller
     public function show(Request $req)//expenses_modal
     {
         $pname = $req->input('party_name');
-        $fromDate = $req->input('pdate1');
-        $toDate = $req->input('pdate2');
-
         //return json_encode($pname);
-        if( empty($fromDate) && empty($toDate)) {
+        if( empty($req->input('pdate1')) && empty($req->input('pdate2'))) {
             $ss =Vendor::where('name','=',$pname)->get();
                 foreach($ss as $sale)   {
                     $sale->vendor=VendorAccount::where('vendor_id','=', $sale->id )->pluck('id');
@@ -65,7 +62,10 @@ class expenses extends Controller
         return json_encode($sale->cname);
         }
         else
-        {
+        {   $fDate = explode("/",$req->input('pdate1'));
+            $tDate = explode("/",$req->input('pdate2'));
+            $fromDate = "$fDate[2]-$fDate[0]-$fDate[1]";
+            $toDate = "$tDate[2]-$tDate[0]-$tDate[1]";
             $ss =Vendor::where('name','=',$pname)->get();
             foreach($ss as $sale){
                 $sale->vendor=VendorAccount::where('vendor_id','=', $sale->id )->pluck('id');
