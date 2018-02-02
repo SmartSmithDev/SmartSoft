@@ -29,10 +29,10 @@ class Purchases extends Controller
     public function index()
     {
         $purchases=Purchase::all(); 
-        foreach($purchases as $purchase){
-            $purchase->customer=Vendor::find($purchase->vendor_id)->name;
-            $purchase->company=Company::find($purchase->company_id)->name;
-        }
+        //foreach($purchases as $purchase){
+        //    $purchase->customer=Vendor::find($purchase->vendor_id)->name;
+        //    $purchase->company=Company::find($purchase->company_id)->name;
+        //}
         return view('purchase.purchases.index',compact('purchases'));
         //
     }

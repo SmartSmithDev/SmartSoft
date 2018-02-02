@@ -35,10 +35,10 @@ class Sales extends Controller
     {
         //
         $sales=Sale::all(); 
-        foreach($sales as $sale){
-            $sale->customer=Customer::find($sale->customer_id)->name;
-            $sale->company=Company::find($sale->company_id)->name;
-        }
+        //foreach($sales as $sale){
+        //    $sale->customer=Customer::find($sale->customer_id)->name;
+        //    $sale->company=Company::find($sale->company_id)->name;
+        //}
         return view('sales.sales.index',compact('sales'));
 
     }

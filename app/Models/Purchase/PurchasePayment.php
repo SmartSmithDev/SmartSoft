@@ -27,14 +27,21 @@ class PurchasePayment extends Model
     /**
      * @var array
      */
-    protected $fillable = ['company_account_id', 'vendor_account_id', 'purchase_id', 'payment_date', 'payment_mode', 'paid_amount', 'payment_terms', 'payment_type', 'payment_reference', 'payment_notes', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['purchase_id', 'payment_date', 'payment_mode', 'paid_amount', 'payment_terms', 'payment_type', 'company_account_id', 'vendor_account_id', 'payment_reference', 'payment_notes', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function bankAccount()
+
+    public function purchase()
     {
-        return $this->belongsTo('App\Models\Company\BankAccount', 'company_account_id');
+        return $this->belongsTo('App\Models\Purchase\Purchase');
+    }
+
+
+    public function companyAccount()
+    {
+        return $this->belongsTo('App\Models\Company\CompanyBankAccount', 'company_account_id');
     }
 
     /**

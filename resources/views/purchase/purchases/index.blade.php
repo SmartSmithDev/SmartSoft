@@ -27,11 +27,11 @@
                     @foreach($purchases as $purchase)
                         <tr>
                             <td class="col-md-2">{{ $purchase->id }}</td>
-                            <td class="col-md-2">{{ $purchase->company }}</td>
+                            <td class="col-md-2">{{ $purchase->company->name }}</td>
                             <td class="col-md-2">{{ $purchase->invoice_number }}</td>
                             <td class="col-md-2">{{ $purchase->invoice_date }}</td>
                            
-                            <td class="col-md-2">{{ $purchase->customer }}</td>
+                            <td class="col-md-2">{{ $purchase->customer->name }}</td>
                             <td class="text-center col-md-1">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false">

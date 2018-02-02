@@ -29,12 +29,12 @@
 
             <tr>
               <td class="col-md-1">{{ $Hsn->hsn}}</td>
-              <td class="col-md-1">{{ $Hsn->item}}</td>
-              <td class="col-md-1">{{ $Hsn->hsn_d }}</td>
-              <td class="col-md-1">{{ $Hsn->gst_rate}}</td>
-              <td class="col-md-1">{{ $Hsn->gst_d}}</td>
-              <td class="col-md-1">{{ $Hsn->cess_rate}}</td>
-              <td class="col-md-1">{{ $Hsn->cess_d}}</td>
+              <td class="col-md-1">{{ $Hsn->item_type}}</td>
+              <td class="col-md-1">{{ $Hsn->description }}</td>
+              <td class="col-md-1">{{ $Hsn->Gst->rate}}</td>
+              <td class="col-md-1">{{ $Hsn->Gst->description}}</td>
+              <td class="col-md-1">{{ $Hsn->Cess->rate}}</td>
+              <td class="col-md-1">{{ $Hsn->Cess->description}}</td>
               <td class="text-center">
                 <div class="btn-group">
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false">

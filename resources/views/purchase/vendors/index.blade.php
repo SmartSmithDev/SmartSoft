@@ -59,6 +59,7 @@
             <table class="table table-striped table-hover" id="tbl-vendors_accounts">
                 <thead>
                     <tr>
+                        <th class="col-md-3">@sortablelink('vendor_name', trans('general.vendor_name'))</th>
                         <th class="col-md-3">@sortablelink('beneficiary_name', trans('general.beneficiary_name'))</th>
                         <th class="col-md-3 hidden-xs">@sortablelink('account_number', trans('general.account_number'))</th>
                         <th class="col-md-2">@sortablelink('address', trans('general.address'))</th>
@@ -70,6 +71,7 @@
                 <tbody>
                     @foreach($vendorAccounts as $vendorAccount)
                         <tr>
+                            <td class="col-md-3">{{ $vendorAccount->vendor->name }}</td>
                             <td class="col-md-3">{{ $vendorAccount->beneficiary_name }}</td>
                             <td class="col-md-3">{{ $vendorAccount->account_number }}</td>
                             <td class="col-md-2">{{ $vendorAccount->beneficiary_address }}</td>
