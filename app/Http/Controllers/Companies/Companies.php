@@ -89,9 +89,11 @@ class Companies extends Controller
         $gstin=CompanyGstin::find($branch->gstin_id);
         $branch->gstin=$gstin->gstin;
         $branch->state=State::find($branch->state_id)->name;
-        //dd($branch->state);
-        $branch->city_id=0;
+        //dd(DB::table('countries')->where("name",$branch->country)->pluck('id')->toArray()[0]);
+        $branch->city_id=$branch->city;
+        $branch->city=$city[$branch->city_id];
         $branch->country_id=$branch->country;
+        $branch->country=DB::table('countries')->where("id",$branch->country_id)->pluck('name')->toArray()[0];
         //dd($branch->country_id);
         }
         return view("company.company.edit",compact("company","company_accounts","company_branches","states","city","country")); 

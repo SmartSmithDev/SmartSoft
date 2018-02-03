@@ -436,8 +436,9 @@ color:white;
         var item_row = '{{ $item_row }}';
         console.log(item_row+"second");
         var itemsArray={};
-        
-
+        var initial=1; //for initial ajax call for items table
+        var count=0;
+        var noOfItems=$('.items-dropdown').length;
         var ogRow;
         var visible=-1;
         var rowsDetails={};
@@ -641,6 +642,12 @@ color:white;
                          //used for reinitializing the popover element after changing content
                         //console.log(rowsDetails[0]);
                     }
+                },
+                complete:function(){
+                  if(initial){
+                    update();
+                    initial=0;
+                  }
                 }
             });
         }
@@ -724,7 +731,12 @@ $(document).ready(function() {
          $('input[name="item['+row+'][cess_id]"]').val(rowsDetails[row]['cess']);
          //console.log(row);
          //console.log(rowsDetails);
+         count++;
+         console.log(count);
+        if(count>=noOfItems){ 
         itemCalculate();
+      }
+
 
 
                
@@ -1013,9 +1025,7 @@ $.ajax({
 
 
  
-$('.items-dropdown').trigger('select2:select');
- 
-setTimeout(update,1000);
+
 
   
 
@@ -1043,6 +1053,10 @@ setTimeout(update,1000);
 
 
 // });
+$('.items-dropdown').trigger('select2:select');
+
+
+
 
 });
 

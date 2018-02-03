@@ -9,8 +9,6 @@ use App\Http\Requests\StoreGstIn;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tax\Hsn as hsns;
-use App\Models\Tax\Gst;
-use App\Models\Tax\Cess;
 
 class Hsn extends Controller
 {
@@ -22,11 +20,11 @@ class Hsn extends Controller
     public function index()
     {
         //
-         $hsns = hsns::
-        select('hsn.hsn as hsn','hsn.item_type as item','hsn.description as hsn_d','gst.rate as gst_rate','gst.description as gst_d','cess.rate as cess_rate','cess.description as cess_d')
-          ->join('gst', 'hsn.gst_id', '=', 'gst.id')
-          ->join('cess', 'hsn.cess_id', '=', 'cess.id')
-          ->get();
+         $hsns = hsns::get();
+        //select('hsn.hsn as hsn','hsn.item_type as item','hsn.description as hsn_d','gst.rate as gst_rate','gst.description as gst_d','cess.rate as cess_rate','cess.description as cess_d')
+        //  ->join('gst', 'hsn.gst_id', '=', 'gst.id')
+        //  ->join('cess', 'hsn.cess_id', '=', 'cess.id')
+         // ->get();
         return view('tax.hsn.index' , compact('hsns'));
     }
 
