@@ -38,9 +38,10 @@ class Vendors extends Controller
         //
 
         $states = State::all()->pluck ('name' , 'id');
+        $countries = DB::table('countries')->pluck('name' , 'id');
         $vendor_type= Vendors::getEnumValues('vendors','vendor_type');
         $business_type= Vendors::getEnumValues('vendors','business_type');
-        return view('purchase.vendors.create',compact('vendor_type','business_type','states'));
+        return view('purchase.vendors.create',compact('vendor_type','business_type','states','countries'));
     }
 
     /**
