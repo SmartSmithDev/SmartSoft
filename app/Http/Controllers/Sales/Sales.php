@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tax\Hsn;
 use App\Models\Setting\Unit;
 use App\Models\Setting\State;
+use App\Models\Setting\Country;
 use App\Models\Tax\Gst;
 use App\Models\Tax\Cess;
 use App\Models\Item\Item;
@@ -57,7 +58,7 @@ class Sales extends Controller
         $customers=Customer::all()->pluck ('name' , 'id');
         $gst = Gst::all()->pluck ('description' , 'id');
         $states = State::all()->pluck ('name' , 'id');
-        $countries = DB::table('countries')->pluck('name' , 'id');
+        $countries=Country::all()->pluck ('name' , 'id');
         $items=Item::all()->pluck('name','id');
         $items=$items->toArray();
         $bank_branch=CompanyBranch::all()->pluck('branch_name','id');

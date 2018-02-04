@@ -9,7 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use DB;
 use App\Models\Vendor\Vendor;
 use App\Models\Setting\State;
-use App\Models\Vendor\VendorAccount;
+use App\Models\Setting\Country;
 
 
 class Vendors extends Controller
@@ -22,10 +22,8 @@ class Vendors extends Controller
     public function index()
     {
         //
-        $vendors=Vendor::get();
-        $vendorAccounts=VendorAccount::get();
-        //dd($vendorAccounts);
-        return view('purchase.vendors.index',compact('vendors','vendorAccounts'));
+        $vendors=DB::table('vendors')->get();
+        return view('purchase.vendors.index',compact('vendors'));
     }
 
     /**
@@ -38,7 +36,7 @@ class Vendors extends Controller
         //
 
         $states = State::all()->pluck ('name' , 'id');
-        $countries = DB::table('countries')->pluck('name' , 'id');
+        $countries=Country::all()->pluck ('name' , 'id');
         $vendor_type= Vendors::getEnumValues('vendors','vendor_type');
         $business_type= Vendors::getEnumValues('vendors','business_type');
         return view('purchase.vendors.create',compact('vendor_type','business_type','states','countries'));
@@ -52,13 +50,9 @@ class Vendors extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
-        Vendor::create($request->except(['accounts']));
-        if($request->input('accounts')){
-            $vendorAccounts=$request->input('accounts');
-            
-        }
-            return redirect("/purchases/vendors");
+        
+        Vendor::create($request->all());
+            return redirect("/purchases/vendors"); 
     }
 
     public function store1(Request $request)
@@ -93,9 +87,10 @@ class Vendors extends Controller
     {
         //
         $states = State::all()->pluck ('name' , 'id');
+        $countries=Country::all()->pluck ('name' , 'id');
         $vendor_type= Vendors::getEnumValues('vendors','vendor_type');
         $business_type= Vendors::getEnumValues('vendors','business_type');
-        return view('purchase.vendors.edit',compact('vendor','vendor_type','business_type','states'));
+        return view('purchase.vendors.edit',compact('vendor','vendor_type','business_type','states','countries'));
     }
 
     /**
@@ -123,7 +118,7 @@ class Vendors extends Controller
     public function destroy(Vendor $vendor)
     {
         //
-        $vendor->delete();
+         $vendor->delete();
         $message = trans('messages.success.deleted', ['type' => trans_choice('general.vendors', 1)]);
 
             flash($message)->success();

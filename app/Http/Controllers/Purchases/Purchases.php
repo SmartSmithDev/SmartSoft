@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Tax\Hsn;
 use App\Models\Setting\Unit;
 use App\Models\Setting\State;
+use App\Models\Setting\Country;
 use App\Models\Tax\Gst;
 use App\Models\Tax\Cess;
 use App\Models\Item\Item;
@@ -29,10 +30,10 @@ class Purchases extends Controller
     public function index()
     {
         $purchases=Purchase::all(); 
-        //foreach($purchases as $purchase){
-        //    $purchase->customer=Vendor::find($purchase->vendor_id)->name;
-        //    $purchase->company=Company::find($purchase->company_id)->name;
-        //}
+        foreach($purchases as $purchase){
+            $purchase->customer=Vendor::find($purchase->vendor_id)->name;
+            $purchase->company=Company::find($purchase->company_id)->name;
+        }
         return view('purchase.purchases.index',compact('purchases'));
         //
     }
@@ -50,6 +51,7 @@ class Purchases extends Controller
         $vendors = Vendor::all()->pluck ('name' , 'id');
         $gst = Gst::all()->pluck ('description' , 'id');
         $states = State::all()->pluck ('name' , 'id');
+        $countries=Country::all()->pluck ('name' , 'id');
         $items=Item::pluck('name');
         $items=$items->toArray();
         $bank_branch=CompanyBranch::all()->pluck('branch_name','id');
@@ -60,7 +62,7 @@ class Purchases extends Controller
         //dd($items);
 
         $new_invoice_id=Purchase::max('id')+1;
-        return view('purchase.purchases.create' , compact('gst' , 'vendors' , 'hsn' , 'units' , 'states','items','bank_branch','customer_type','business_type','cess','new_invoice_id','bank_accounts'));
+        return view('purchase.purchases.create' , compact('gst' , 'vendors' , 'hsn' , 'units' , 'states','countries','items','bank_branch','customer_type','business_type','cess','new_invoice_id','bank_accounts'));
     }
 
     /**
