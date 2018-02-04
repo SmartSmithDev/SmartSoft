@@ -31,7 +31,7 @@
 
             {{ Form::selectGroup('state_id','State','home', $states) }}
 
-            {{ Form::selectGroup('country_id','Country','home', $countries) }}
+            {{ Form::selectGroup('country_id','Country','plane', $countries) }}
 
             {{ Form::textGroup('pin_code', 'Pin-Code', 'paperclip') }}
 
