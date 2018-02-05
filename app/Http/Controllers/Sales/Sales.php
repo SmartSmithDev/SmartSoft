@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tax\Hsn;
 use App\Models\Setting\Unit;
 use App\Models\Setting\State;
+use App\Models\Setting\Country;
 use App\Models\Tax\Gst;
 use App\Models\Tax\Cess;
 use App\Models\Item\Item;
@@ -35,10 +36,7 @@ class Sales extends Controller
     {
         //
         $sales=Sale::all(); 
-     /*   foreach($sales as $sale){
-            $sale->customer=Customer::find($sale->customer_id)->name;
-            $sale->company=Company::find($sale->company_id)->name;
-        }*/
+
         return view('sales.sales.index',compact('sales'));
 
     }
@@ -57,7 +55,8 @@ class Sales extends Controller
         $customers=Customer::all()->pluck ('name' , 'id');
         $gst = Gst::all()->pluck ('description' , 'id');
         $states = State::all()->pluck ('name' , 'id');
-        $items=Item::pluck('name');
+        $countries=Country::all()->pluck ('name' , 'id');
+        $items=Item::all()->pluck('name','id');
         $items=$items->toArray();
         $bank_branch=CompanyBranch::all()->pluck('branch_name','id');
         $customer_type= Sales::getEnumValues('customers','customer_type');
@@ -67,7 +66,7 @@ class Sales extends Controller
         //dd($items);
 
         $new_invoice_id=Sale::max('id')+1;
-        return view('sales.sales.create' , compact('gst' , 'customers' , 'hsn' , 'units' , 'states','items','bank_branch','customer_type','business_type','cess','new_invoice_id','bank_accounts'));
+        return view('sales.sales.create' , compact('gst' , 'customers' , 'hsn' , 'units' , 'states','countries','items','bank_branch','customer_type','business_type','cess','new_invoice_id','bank_accounts'));
     }
 
     /**
@@ -79,7 +78,9 @@ class Sales extends Controller
 
     public function store(Request $request)
     {  
-      try{
+
+          //dd($request->all());
+      
           $file=$request->file('attachment'); 
             
           $sale_table=json_decode($request->input('common-object'),true);
@@ -127,11 +128,9 @@ class Sales extends Controller
 
            Storage::put('invoices/invoice'.$user_id.$sale_id.'.pdf', $pdf->output());
            return redirect("sales/sales");
-         }
+         
        
-       catch (Exception $e) {         
-        return "Some error occured : " .$e ;
-    }
+   
     }
 
 
@@ -164,7 +163,7 @@ class Sales extends Controller
         $customers = Customer::all()->pluck ('name' , 'id');
         $gst = Gst::all()->pluck ('description' , 'id');
         $states = State::all()->pluck ('name' , 'id');
-        $items=Item::pluck('name');
+        $items=Item::pluck('name','id');
         $items=$items->toArray();
         $bank_accounts=CompanyBankAccount::all()->pluck('account_number','id');
         $bank_branch=CompanyBranch::all()->pluck('branch_name','id');
@@ -199,12 +198,17 @@ class Sales extends Controller
     public function update(Request $request, $id)
     {
         //
+        //dd($id);
         Sale::find($id)->delete();
 
         try {
           $file=$request->file('attachment'); 
             
           $sale_table=json_decode($request->input('common-object'),true);
+          $sale_table['payment_status']="Pending";
+          if($request->input('payment_status')){
+            $sale_table['payment_status']="Completed";
+          }
           $bank_branch_id=$request->input('bank_branch');
           $user_id=1; 
             
@@ -266,9 +270,9 @@ class Sales extends Controller
     //autoFill() returns the item details using item name
     public function autoFill(Request $req)
     {
-        $data=$req->item;  //item is the get data from url
+        $data=$req->id;  //item is the get data from url
         //var_dump($data);
-        $item_details=Item::where('name','=',$data)->get()->toArray();
+        $item_details=Item::where('id','=',$data)->get()->toArray();
         $hsn_row=HSN::where('hsn','=',$item_details[0]['hsn'])->pluck('gst_id','cess_id')->toArray();//returns an associative array with key as cess_id and value as gst_id of each row
         $gst_id=array_values($hsn_row);
         $cess_id=array_keys($hsn_row);

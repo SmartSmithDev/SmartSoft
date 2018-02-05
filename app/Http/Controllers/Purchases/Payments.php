@@ -14,6 +14,7 @@ use App\Models\Company\CompanyBankAccount;
 use App\Models\Sale\Sale;
 use  App\Models\Customer\Customer;
 use App\Models\Customer\CustomerAccounts;
+use App\Models\Purchase\PurchasePayment;
 
 
 class Payments extends Controller
@@ -25,9 +26,12 @@ class Payments extends Controller
      */
     public function index()
     {
+
        
          $d=DB::table('sales_payments')->get();
          return view('Payments.index',compact('d'));
+       
+
        
 
     }

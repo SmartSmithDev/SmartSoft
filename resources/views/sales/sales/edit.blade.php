@@ -147,14 +147,14 @@ $item_row=0;
                                 <!-- <input class="form-control typeahead" required="required" placeholder="{{ 'Enter Item Name' }}" name="item[{{ $item_row }}][name]" type="text" id="item-name-{{ $item_row }}">
                                 <input name="item[{{ $item_row }}][item_id]" type="hidden" id="item-id-{{ $item_row }}"> -->
                               <select id="item-name-{{ $item_row }}"  name="item[{{ $item_row }}][name]"  id="item-name-{{ $item_row }}" class="select2 items-dropdown">
-                                <option disabled>Select Item</option>
+                                <option >Select Item</option>
                                  <?php
-                                 foreach($items as $item_name){
-                                   if($item_name==$item->item_name){
-                                    echo "<option value='".$item_name."' selected>".$item_name."</option>";
+                                 foreach($items as $id=>$name){
+                                   if($name==$item->item_name){
+                                    echo "<option value='".$id."' selected>".$name."</option>";
                                    } 
                                    else{
-                                   echo "<option value='".$item_name."'>".$item_name."</option>";
+                                   echo "<option value='".$id."'>".$name."</option>";
                                     }
                                  }
                                  ?>
@@ -167,7 +167,7 @@ $item_row=0;
 
                             <!-- HSN Code -->
                             <td class="text-center">
-                                 <span id="item-extra-info-0" class="extra-info-popup" data-toggle="popover" data-trigger="click" tabindex="0" data-placement="bottom" data-content='<button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row="{{ $item_row }}">Edit</button><br><br>' data-html="true"><i style="font-size:1.5vw;color:blue" class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i></span>
+                                 <span id="item-extra-info-{{ $item_row }}" class="extra-info-popup" data-toggle="popover" data-trigger="click" tabindex="0" data-placement="bottom" data-content='<button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row="{{ $item_row }}">Edit</button><br><br>' data-html="true"><i style="font-size:1.5vw;color:blue" class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i></span>
                                 
                                 
                             </td>
@@ -201,7 +201,7 @@ $item_row=0;
    
                             <!-- Total Tax -->
                             <td class="text-right" style="vertical-align: middle;">
-                                 <span id="item-tax-info-0" class="item-tax-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Please Select All Options First" data-html="true" style="float:left"><i style="font-size:1.5vw;color:blue" class="fa">&#xf129;</i></span>
+                                 <span id="item-tax-info-{{$item_row }}" class="item-tax-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Please Select All Options First" data-html="true" style="float:left"><i style="font-size:1.5vw;color:blue" class="fa">&#xf129;</i></span>
                                 <span id="item-total-tax-{{ $item_row }}">0</span>
                             </td>
 
@@ -435,16 +435,17 @@ color:white;
     <script type="text/javascript">
         var item_row = '{{ $item_row }}';
         console.log(item_row+"second");
-        var itemsArray=new Array();
-        
-
+        var itemsArray={};
+        var initial=1; //for initial ajax call for items table
+        var count=0;
+        var noOfItems=$('.items-dropdown').length;
         var ogRow;
         var visible=-1;
         var rowsDetails={};
 //console.log(rowsDetails);
 
         function addItem() {
-            html  = '<tr id="item-row-'+item_row+'" class="item-row"><td class="text-center" style="vertical-align: middle;"><button type="button" onclick="$(this).tooltip(\'destroy\'); $(\'#item-row-'+item_row+'\').remove();rowsDetails['+item_row+']=null;itemCalculate();" data-toggle="tooltip" title=\'{{ trans("general.delete") }}\' class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td><td><select id="item-name-'+item_row+'"  name="item['+item_row+'][name]"  id="item-name-'+item_row+'" class="select2 items-dropdown"><option disabled selected>Select Item</option></select></td><td class="text-center"><span id="item-extra-info-'+item_row+'" class="extra-info-popup" data-toggle="popover" data-trigger="click" tabindex="0" data-placement="bottom" data-content=\'<button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row="'+item_row+'">Edit</button><br><br>\' data-html="true"><i style="font-size:1.5vw;color:blue" class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i></span></td><td><input class="form-control text-center quantity-class" required="required" name="item['+item_row+'][quantity]" type="text" id="item-quantity-'+item_row+'"></td><td><input class="form-control text-right" required="required" name="item['+item_row+'][price]" type="text" id="item-price-'+item_row+'"></td><td><input class="form-control typeahead" required="required" placeholder=\'{{ "Discount" }}\' name="item['+item_row+'][discount]" type="text" id="item-discount-'+item_row+'"><input name="item['+item_row+'][item_id]" type="hidden" id="item-id-'+item_row+'"></td><td class="text-right" style="vertical-align: middle;"><span id="item-tax-info-'+item_row+'" class="item_tax-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Please Select All Options First" data-html="true" style="float:left"><i style="font-size:1.5vw;color:blue" class="fa">&#xf129;</i></span><span id="item-total-tax-'+item_row+'">0</span></td><td class="text-right" style="vertical-align: middle;"><span id="item-total-'+item_row+'">0</span><input type="hidden" name="item['+item_row+'][gst_id]" class="hidden-gst-id"/><input type="hidden" name="item['+item_row+'][cess_id]" class="hidden-cess-id"/></td></tr>';
+            html  = '<tr id="item-row-'+item_row+'" class="item-row"><td class="text-center" style="vertical-align: middle;"><button type="button" onclick="$(this).tooltip(\'destroy\'); $(\'#item-row-'+item_row+'\').remove();rowsDetails['+item_row+']=null;itemCalculate();" data-toggle="tooltip" title=\'{{ trans("general.delete") }}\' class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td><td><select id="item-name-'+item_row+'"  name="item['+item_row+'][name]"  id="item-name-'+item_row+'" class="select2 items-dropdown"><option  selected>Select Item</option></select></td><td class="text-center"><span id="item-extra-info-'+item_row+'" class="extra-info-popup" data-toggle="popover" data-trigger="click" tabindex="0" data-placement="bottom" data-content=\'<button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row="'+item_row+'">Edit</button><br><br>\' data-html="true"><i style="font-size:1.5vw;color:blue" class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i></span></td><td><input class="form-control text-center quantity-class" required="required" name="item['+item_row+'][quantity]" type="text" id="item-quantity-'+item_row+'"></td><td><input class="form-control text-right" required="required" name="item['+item_row+'][price]" type="text" id="item-price-'+item_row+'"></td><td><input class="form-control typeahead" required="required" placeholder=\'{{ "Discount" }}\' name="item['+item_row+'][discount]" type="text" id="item-discount-'+item_row+'"><input name="item['+item_row+'][item_id]" type="hidden" id="item-id-'+item_row+'"></td><td class="text-right" style="vertical-align: middle;"><span id="item-tax-info-'+item_row+'" class="item_tax-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Please Select All Options First" data-html="true" style="float:left"><i style="font-size:1.5vw;color:blue" class="fa">&#xf129;</i></span><span id="item-total-tax-'+item_row+'">0</span></td><td class="text-right" style="vertical-align: middle;"><span id="item-total-'+item_row+'">0</span><input type="hidden" name="item['+item_row+'][gst_id]" class="hidden-gst-id"/><input type="hidden" name="item['+item_row+'][cess_id]" class="hidden-cess-id"/></td></tr>';
             $('#items tbody #addItem').before(html);
 
                        $(document).ready(function() {
@@ -464,9 +465,10 @@ color:white;
    
 
       
+  
      var initialLength=$('#item-name-0')[0].options.length;
-    for(var i=0;i<initialLength;i++){
-      itemsArray.push($('#item-name-0')[0].options[i].value);
+    for(var i=1;i<initialLength;i++){
+      itemsArray[$('#item-name-0')[0].options[i].value]=$('#item-name-0')[0].options[i].innerHTML;
     }
 
     console.log(itemsArray);
@@ -622,6 +624,7 @@ color:white;
                       
                              
                             });
+                            console.log("key="+key);
                        rowsDetails[key].cgst=data.items[key].cgst;
                        rowsDetails[key].sgst= data.items[key].sgst;
                        rowsDetails[key].ugst=data.items[key].ugst; 
@@ -639,6 +642,12 @@ color:white;
                          //used for reinitializing the popover element after changing content
                         //console.log(rowsDetails[0]);
                     }
+                },
+                complete:function(){
+                  if(initial){
+                    update();
+                    initial=0;
+                  }
                 }
             });
         }
@@ -703,10 +712,11 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('#items').on('select2:select','.items-dropdown',function(){
+  
    var row = $(this).parent().parent().attr('id').split("-");
    row=row[row.length-1];
     
-    var itemName=$("#item-name-"+row).val();
+    var itemId=$("#item-name-"+row).val();
     //console.log(itemName);
    
 
@@ -721,20 +731,24 @@ $(document).ready(function() {
          $('input[name="item['+row+'][cess_id]"]').val(rowsDetails[row]['cess']);
          //console.log(row);
          //console.log(rowsDetails);
+         count++;
+         console.log(count);
+        if(count>=noOfItems){ 
         itemCalculate();
+      }
+
 
 
                
       }
       }        
      };
-     xml.open("GET","{{  url('sales/autofill')  }}?item="+itemName,true);
+     xml.open("GET","{{  url('sales/autofill')  }}?id="+itemId,true);
      xml.send();
 
 
     });
 });
-
 
 $(document).on('submit','.add-item-form',function(event){
 event.preventDefault();
@@ -886,24 +900,27 @@ $('input[name="item['+ogRow+'][cess_id]"]').val(rowsDetails[ogRow]['cess']);
 itemCalculate();
 });
 
-
 $(document).ready(function(){
 $('#items').on('select2:opening','.items-dropdown',function(){
     var row = $(this).parent().parent().attr('id').split('-');
    row=row[row.length-1];
    ogRow=row;
    var selected=$(this).val();
-   //console.log(row);
+   
    $(this).html("");
-   var len=itemsArray.length;
-   for(var i=0;i<len;i++){
-    $(this).append('<option value="'+itemsArray[i]+'" >'+itemsArray[i]+'</option>');
-   }
+   //console.log(itemsArray);
+   $(this).html("<option value='Select Item'>Select Item</option>")
+   
+   $.each(itemsArray,function(key,value){
+   
+    $('#item-name-'+row).append('<option value="'+key+'" >'+value+'</option>');
+   });
 
    $(this).val(selected);
    $(this).trigger('change.select2');
 
 });
+
 
 
 $('.box-success>form').on('click','button[type="submit"]',function(event){
@@ -1008,9 +1025,7 @@ $.ajax({
 
 
  
-$('.items-dropdown').trigger('select2:select');
- 
-setTimeout(update,500);
+
 
   
 
@@ -1038,6 +1053,10 @@ setTimeout(update,500);
 
 
 // });
+$('.items-dropdown').trigger('select2:select');
+
+
+
 
 });
 

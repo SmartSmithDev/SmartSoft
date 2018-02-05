@@ -165,6 +165,30 @@
 
 
 
+  <!-- Modal -->
+<div id="deleteModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Delete</h4>
+      </div>
+      <div class="modal-body" style="overflow-y: hidden"><!-- for floating element i.e clearfix hack  -->
+         Are You Sure You Want Delete? 
+      </div>
+      <div class="modal-footer">
+         <button  class="btn btn-danger" id="delete_button">Delete</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
 
 @endsection
 
@@ -234,18 +258,6 @@
 
 
 $(document).ready(function(){
-$('.radio-inline label').removeClass('active');
-$('.radio-inline').on('click','label',function(){
-if($(this).attr('id')=="type_0"){
-  $(this).css({"background-color":"#398439","color":"white"});
-  $('#type_1').css({"background-color":"#E7E7E7","color":"black"});
-}
-else{
-$(this).css({"background-color":"red","color":"white"});
-  $('#type_0').css({"background-color":"#E7E7E7","color":"black"});
-}
-});
-
 $('.nav-tabs').on('click','li',function(){
 
 $(this).addClass('active');
@@ -265,7 +277,7 @@ var bank_name=$('#bn').val();
 var account_number=$('#an').val();
 var ifsc_code=$('#ifsc').val();
 var notes=$('#notes').val();
-var htmlaccountRow=$('#company-bank-accounts tbody').append('<tr id="account-row-'+accountrow+'"><td class="col-md-1 hidden"><span>'+accnt_id+'<input type="hidden" name="accounts['+accountrow+'][account_identifier]" value='+accnt_id+'></span></td><td class="col-md-1 hidden"><span>'+entity_name+'<input type="hidden" name="accounts['+accountrow+'][entity_name]" value='+entity_name+'></span></td><td class="col-md-1"><span>'+holder_name+'<input type="hidden" name="accounts['+accountrow+'][holder_name]" value='+holder_name+'></span></td><td class="col-md-1"><span>'+bank_name+'<input type="hidden" name="accounts['+accountrow+'][bank_name]" value='+bank_name+'></span></td><td class="col-md-1"><span>'+account_number+'<input type="hidden" name="accounts['+accountrow+'][account_number]" value='+account_number+'></span></td><td class="col-md-1"><span>'+ifsc_code+'<input type="hidden" name="accounts['+accountrow+'][ifsc_code]" value='+ifsc_code+'></span></td><td class="col-md-1 hidden"><span>'+notes+'<input type="hidden" name="accounts['+accountrow+'][notes]" value='+notes+'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="account-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete" onclick="$(this).parent().parent().parent().parent().parent().remove();">Delete</button></li></ul></div></td></tr>');
+var htmlaccountRow=$('#company-bank-accounts tbody').append('<tr id="account-row-'+accountrow+'"><td class="col-md-1 hidden"><span>'+accnt_id+'<input type="hidden" name="accounts['+accountrow+'][account_identifier]" value='+accnt_id+'></span></td><td class="col-md-1 hidden"><span>'+entity_name+'<input type="hidden" name="accounts['+accountrow+'][entity_name]" value='+entity_name+'></span></td><td class="col-md-1"><span>'+holder_name+'<input type="hidden" name="accounts['+accountrow+'][holder_name]" value='+holder_name+'></span></td><td class="col-md-1"><span>'+bank_name+'<input type="hidden" name="accounts['+accountrow+'][bank_name]" value='+bank_name+'></span></td><td class="col-md-1"><span>'+account_number+'<input type="hidden" name="accounts['+accountrow+'][account_number]" value='+account_number+'></span></td><td class="col-md-1"><span>'+ifsc_code+'<input type="hidden" name="accounts['+accountrow+'][ifsc_code]" value='+ifsc_code+'></span></td><td class="col-md-1 hidden"><span>'+notes+'<input type="hidden" name="accounts['+accountrow+'][notes]" value='+notes+'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="account-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>');
 
 accountrow++;
 if(account_edit_row>-1){
@@ -288,7 +300,7 @@ var state=$('#state')[0].options[$('#state')[0].selectedIndex].innerHTML;
 var country_id=$('#country').val();
 var country=$('#country')[0].options[$('#country')[0].selectedIndex].innerHTML;
 var pincode=$('#pincode').val();
-var html=$('#company-branches tbody').append(' <tr id="branch-row-'+branch_row+'"><td class="col-md-1 hidden"><span>'+gstin+'<input type="hidden" name="branch['+branch_row+'][gstin]" value='+gstin+'></span></td><td class="col-md-1"><span>'+b_name+'<input type="hidden" name="branch['+branch_row+'][branch_name]" value='+b_name+'></span></td><td class="col-md-1"><span>'+phone+'<input type="hidden" name="branch['+branch_row+'][phone]" value='+phone+'></span></td><td class="col-md-1"><span>'+email+'<input type="hidden" name="branch['+branch_row+'][email_id]" value='+email+'></span></td><td class="col-md-1"><span>'+address+'<input type="hidden" name="branch['+branch_row+'][address]" value='+address+'></span></td><td class="col-md-1"><span>'+city+'<input type="hidden" name="branch['+branch_row+'][city]" value='+city_id+'></span></td><td class="col-md-1"><span>'+state+'<input type="hidden" name="branch['+branch_row+'][state_id]" value='+state_id+'></span></td><td class="col-md-1 hidden"><span>'+country+'<input type="hidden" name="branch['+branch_row+'][country]" value='+country_id+'></span></td><td class="col-md-1 hidden"><span>'+pincode+'<input type="hidden" name="branch['+branch_row+'][pin_code]" value='+pincode+'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="branch-edit">{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete" onclick="$(this).parent().parent().parent().parent().parent().remove();">Delete</button></li></ul></div></td></tr>');
+var html=$('#company-branches tbody').append(' <tr id="branch-row-'+branch_row+'"><td class="col-md-1 hidden"><span>'+gstin+'<input type="hidden" name="branch['+branch_row+'][gstin]" value='+gstin+'></span></td><td class="col-md-1"><span>'+b_name+'<input type="hidden" name="branch['+branch_row+'][branch_name]" value='+b_name+'></span></td><td class="col-md-1"><span>'+phone+'<input type="hidden" name="branch['+branch_row+'][phone]" value='+phone+'></span></td><td class="col-md-1"><span>'+email+'<input type="hidden" name="branch['+branch_row+'][email_id]" value='+email+'></span></td><td class="col-md-1"><span>'+address+'<input type="hidden" name="branch['+branch_row+'][address]" value='+address+'></span></td><td class="col-md-1"><span>'+city+'<input type="hidden" name="branch['+branch_row+'][city]" value='+city_id+'></span></td><td class="col-md-1"><span>'+state+'<input type="hidden" name="branch['+branch_row+'][state_id]" value='+state_id+'></span></td><td class="col-md-1 hidden"><span>'+country+'<input type="hidden" name="branch['+branch_row+'][country]" value='+country_id+'></span></td><td class="col-md-1 hidden"><span>'+pincode+'<input type="hidden" name="branch['+branch_row+'][pin_code]" value='+pincode+'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="branch-edit">{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>');
 branch_row++;
 if(branch_edit_row>-1){
   $('#branch-row-'+branch_edit_row).remove();
@@ -300,17 +312,19 @@ $('#branchesModal input').val("");
 $('#branchesModal,#accountModal').on('hidden.bs.modal',function(){
 $('#branchesModal input,#branchesModal select,#branchesModal textarea').val("");
 $('#accountModal input,#accountModal select,#accountModal textarea').val("");
+account_edit_row=-1;
+branch_edit_row=-1;
 });
 
 $('#company-bank-accounts tbody').on('click','.account-edit',function(){
-  var row=$(this).parent().parent().parent().parent().parent().attr('id').split("-")[2];
+  var row=$(this).parent().parent().parent().parent().parent();
   console.log(row);
-  account_edit_row=row;
+  account_edit_row=row.attr("id").split("-")[2];
 
-var len=$('#company-bank-accounts table tbody')[0].rows[row].cells.length-1;
+var len=row.children().length;
 console.log(len);
 for(var i=0;i<len;i++){
-  var value=$('#company-bank-accounts tbody tr').eq(row).children().eq(i).children().children().val();
+  var value=row.children().eq(i).children().children().val();
   $('#accountModal input').eq(i).val(value);
 }  
 $('#accountModal').modal('show');
@@ -319,15 +333,26 @@ $('#accountModal').modal('show');
 $('#company-branches tbody').on('click','.branch-edit',function(){
   var row=$(this).parent().parent().parent().parent().parent();
   console.log(row);
-    branch_edit_row=row;
-var len=branch_edit_row.children().length;
+    branch_edit_row=row.attr("id").split("-")[2];
+var len=row.children().length;
 console.log(len);
 for(var i=0;i<len;i++){
-  var value=branch_edit_row.children().eq(i).children().children().val();
+  var value=row.children().eq(i).children().children().val();
   $('#branchesModal .form-control').eq(i).val(value);
 }  
 $('#branchesModal').modal('show');
 });
+
+
+$('.parts').on('click','.delete-link',function(event){
+  event.preventDefault();
+var elem=$(this).parent().parent().parent().parent().parent().attr("id");
+$('#delete_button').attr("onclick","$('#"+elem+"').remove();$('#deleteModal').modal('hide');");
+$('#deleteModal').modal('show');
+});
+
+
+
 
 });
 

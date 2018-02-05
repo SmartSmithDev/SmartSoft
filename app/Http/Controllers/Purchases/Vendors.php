@@ -10,6 +10,7 @@ use DB;
 use App\Models\Vendor\Vendor;
 use App\Models\Setting\State;
 use App\Models\Vendor\VendorAccount;
+use App\Models\Setting\Country;
 
 
 class Vendors extends Controller
@@ -21,9 +22,13 @@ class Vendors extends Controller
      */
     public function index()
     {
+
         //
         $vendors=DB::table('vendors')->get();
         $vendorAccounts=DB::table('vendor_accounts')->get();
+
+         //
+      
         return view('purchase.vendors.index',compact('vendors','vendorAccounts'));
     }
 
@@ -34,13 +39,9 @@ class Vendors extends Controller
      */
     public function create()
     {
-        //
-
-        //$states = State::all()->pluck ('name' , 'id');
-        //$vendor_type= Vendors::getEnumValues('vendors','vendor_type');
-        //$business_type= Vendors::getEnumValues('vendors','business_type');
-        //return view('purchase.vendors.create',compact('vendor_type','business_type','states'));
+    
         return view('purchase.vendors.create');
+
     }
 
     /**
@@ -51,10 +52,7 @@ class Vendors extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
-        /*Vendor::create($request->except(['accounts']));
-        if($request->input('accounts')){
-            $vendorAccounts=$request->input('accounts');*/
+
         $cname=$request->input('name');
         $email_id=$request->input('email_id');
         $bn=$request->input('beneficiary_name');
@@ -84,14 +82,16 @@ class Vendors extends Controller
     public function edit(Request $request,$id)
     {
         //
-       //$states = State::all()->pluck ('name' , 'id');
+
+       
       
           $vendors = Vendor::find($id);
        //$vendorAccounts=VendorAccount::find($id);
            $vendor_accounts=Vendor::find($id)->vendorAccounts()->get();
-       //$vendor_accounts=Vendor::find($id)->vendorAccounts()->get();
-          //$Vendor_accounts=VendorAccount::find($id);
+       
             return view('purchase.vendors.edit',compact('vendors','vendor_accounts'));
+
+       
     }
 
     /**

@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 
-
 @section('content')
 
   <ul class="nav nav-tabs">
@@ -19,6 +18,7 @@
   <br>
        {{ Form::textGroup('name', trans('general.name'), 'id-card-o') }}
             {{ Form::emailGroup('email_id', 'Email', 'envelope', []) }}
+
             {{ Form::textGroup('phone', 'phone', 'id-badge', []) }}
            {{ Form::textGroup('vendor_type', 'vendor_type', 'id-badge', []) }}
           {{ Form::textGroup('business_type', 'business_type', 'id-badge', []) }}
@@ -57,6 +57,7 @@
         <h4 class="modal-title">Add New Account</h4>
       </div>
       <div class="modal-body" style="overflow-y: hidden">
+
          
           {{ Form::textGroup('beneficiary_name','beneficiary_name', 'beneficiary_name') }}
          {{ Form::textGroup('account_number','account_number', 'account_number') }}
