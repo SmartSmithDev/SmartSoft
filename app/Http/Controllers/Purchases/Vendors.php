@@ -9,6 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use DB;
 use App\Models\Vendor\Vendor;
 use App\Models\Setting\State;
+use App\Models\Vendor\VendorAccount;
 use App\Models\Setting\Country;
 
 
@@ -21,9 +22,11 @@ class Vendors extends Controller
      */
     public function index()
     {
-        //
-        $vendors=DB::table('vendors')->get();
-        return view('purchase.vendors.index',compact('vendors'));
+         //
+        $vendors=Vendor::get();
+        $vendorAccounts=VendorAccount::get();
+        //dd($vendorAccounts);
+        return view('purchase.vendors.index',compact('vendors','vendorAccounts'));
     }
 
     /**
@@ -34,9 +37,8 @@ class Vendors extends Controller
     public function create()
     {
         //
-
-        $states = State::all()->pluck ('name' , 'id');
-        $countries=Country::all()->pluck ('name' , 'id');
+       $states = State::all()->pluck ('name' , 'id');
+       $countries=Country::all()->pluck ('name' , 'id');
         $vendor_type= Vendors::getEnumValues('vendors','vendor_type');
         $business_type= Vendors::getEnumValues('vendors','business_type');
         return view('purchase.vendors.create',compact('vendor_type','business_type','states','countries'));
@@ -51,8 +53,13 @@ class Vendors extends Controller
     public function store(Request $request)
     {
         
-        Vendor::create($request->all());
-            return redirect("/purchases/vendors"); 
+         //dd($request->all());
+        Vendor::create($request->except(['accounts']));
+        if($request->input('accounts')){
+            $vendorAccounts=$request->input('accounts');
+            
+        }
+            return redirect("/purchases/vendors");
     }
 
     public function store1(Request $request)

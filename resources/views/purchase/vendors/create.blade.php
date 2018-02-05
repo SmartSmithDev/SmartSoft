@@ -10,7 +10,8 @@
       {!! Form::open(['action' => 'Purchases\Vendors@store']) !!}
     <!-- Default box -->
        <div class="box-footer">
-            {{ Form::saveButtons('vendors') }}
+            <button type="submit" name="submit" class="btn btn-success"><i class="fa fa-save"></i>Save</button>&nbsp;
+            <a href="{{ url('/purchases/vendors') }}" class="btn btn-default"><i class="fa fa-times-circle"></i>Cancel</a>
         </div>
         <div class="box box-success parts" id="vendors">
           
@@ -37,7 +38,7 @@
 
             {{ Form::selectGroup('state_id','State','home', $states) }}
 
-            {{ Form::textGroup('country', 'Country', 'plane') }}
+            {{ Form::selectGroup('country_id', 'Country', 'plane', $countries) }}
 
             {{ Form::textGroup('pin_code', 'Pin-Code', 'paperclip') }}
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tax\Hsn;
 use App\Models\Setting\Unit;
 use App\Models\Setting\State;
+use App\Models\Setting\Country;
 use App\Models\Tax\Gst;
 use App\Models\Tax\Cess;
 use App\Models\Item\Item;
@@ -57,6 +58,7 @@ class Sales extends Controller
         $customers=Customer::all()->pluck ('name' , 'id');
         $gst = Gst::all()->pluck ('description' , 'id');
         $states = State::all()->pluck ('name' , 'id');
+        $countries=Country::all()->pluck ('name' , 'id');
         $items=Item::all()->pluck('name','id');
         $items=$items->toArray();
         $bank_branch=CompanyBranch::all()->pluck('branch_name','id');
@@ -67,7 +69,7 @@ class Sales extends Controller
         //dd($items);
 
         $new_invoice_id=Sale::max('id')+1;
-        return view('sales.sales.create' , compact('gst' , 'customers' , 'hsn' , 'units' , 'states','items','bank_branch','customer_type','business_type','cess','new_invoice_id','bank_accounts'));
+        return view('sales.sales.create' , compact('gst' , 'customers' , 'hsn' , 'units' , 'states','countries','items','bank_branch','customer_type','business_type','cess','new_invoice_id','bank_accounts'));
     }
 
     /**
