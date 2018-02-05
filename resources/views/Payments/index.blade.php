@@ -1,14 +1,8 @@
 @extends('layouts.admin')
-@section('heading')
-    <h1>{{ __('All payments') }}</h1>
-@stop
+@section('title','All payments')
+
 
 @section('content')
-<h1>All Payments</h1>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
     
 
@@ -42,7 +36,19 @@
           <td class="col-md-1 text-center">{{ $Sale->customer_account_id}}</td>
           <td class="col-md-1 text-center">{{ $Sale->payment_reference}}</td>
           <td class="col-md-1 text-center">{{ $Sale->payment_notes}}</td>
-          <td style="background-color:DodgerBlue;"><button name="Edit" type="submit" value="Edit"><a href="{{ url('purchases/payments/' . $Sale->id . '/edit') }}">{{ 'Edit' }}</a></button></td>
+           <td class="text-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="{{ url('purchases/payments/' . $Sale->id . '/edit') }}">{{ 'Edit' }}</a></li>
+                                       
+                                    </ul>
+                                </div>
+                            </td>
+        
+          
         </tr>
       @endforeach
       </tbody>
