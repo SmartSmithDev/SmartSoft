@@ -136,11 +136,11 @@
                                 <!-- <input class="form-control typeahead" required="required" placeholder="{{ 'Enter Item Name' }}" name="item[{{ $item_row }}][name]" type="text" id="item-name-{{ $item_row }}">
                                 <input name="item[{{ $item_row }}][item_id]" type="hidden" id="item-id-{{ $item_row }}"> -->
                               <select id="item-name-{{ $item_row }}"  name="item[{{ $item_row }}][name]"  id="item-name-{{ $item_row }}" class="select2 items-dropdown">
-                                <option disabled selected>Select Item</option>
-                                 <?php
-                                 foreach($items as $item){
+                                <option selected>Select Item</option>
+                                <?php
+                                 foreach($items as $id=>$name){
                                     
-                                   echo "<option value='".$item."'>".$item."</option>";
+                                   echo "<option value='".$id."'>".$name."</option>";
                                  }
                                  ?>
                                  
@@ -418,7 +418,7 @@ color:white;
     <script type="text/javascript">
         var item_row = '{{ $item_row }}';
         console.log(item_row);
-        var itemsArray=new Array();
+        var itemsArray={};
 
         var ogRow;
         var visible=-1;
@@ -426,7 +426,7 @@ color:white;
 //console.log(rowsDetails);
 
         function addItem() {
-            html  = '<tr id="item-row-'+item_row+'" class="item-row"><td class="text-center" style="vertical-align: middle;"><button type="button" onclick="$(this).tooltip(\'destroy\'); $(\'#item-row-'+item_row+'\').remove();rowsDetails['+item_row+']=null;itemCalculate();" data-toggle="tooltip" title=\'{{ trans("general.delete") }}\' class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td><td><select id="item-name-'+item_row+'"  name="item['+item_row+'][name]"  id="item-name-'+item_row+'" class="select2 items-dropdown"><option disabled selected>Select Item</option></select></td><td class="text-center"><span id="item-extra-info-'+item_row+'" class="extra-info-popup" data-toggle="popover" data-trigger="click" tabindex="0" data-placement="bottom" data-content=\'<button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row="'+item_row+'">Edit</button><br><br>\' data-html="true"><i style="font-size:1.5vw;color:blue" class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i></span></td><td><input class="form-control text-center quantity-class" required="required" name="item['+item_row+'][quantity]" type="text" id="item-quantity-'+item_row+'"></td><td><input class="form-control text-right" required="required" name="item['+item_row+'][price]" type="text" id="item-price-'+item_row+'"></td><td><input class="form-control typeahead" required="required" placeholder=\'{{ "Discount" }}\' name="item['+item_row+'][discount]" type="text" id="item-discount-'+item_row+'"><input name="item['+item_row+'][item_id]" type="hidden" id="item-id-'+item_row+'"></td><td class="text-right" style="vertical-align: middle;"><span id="item-tax-info-'+item_row+'" class="item_tax-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Please Select All Options First" data-html="true" style="float:left"><i style="font-size:1.5vw;color:blue" class="fa">&#xf129;</i></span><span id="item-total-tax-'+item_row+'">0</span></td><td class="text-right" style="vertical-align: middle;"><span id="item-total-'+item_row+'">0</span><input type="hidden" name="item['+item_row+'][gst_id]" class="hidden-gst-id"/><input type="hidden" name="item['+item_row+'][cess_id]" class="hidden-cess-id"/></td></tr>';
+            html  = '<tr id="item-row-'+item_row+'" class="item-row"><td class="text-center" style="vertical-align: middle;"><button type="button" onclick="$(this).tooltip(\'destroy\'); $(\'#item-row-'+item_row+'\').remove();rowsDetails['+item_row+']=null;itemCalculate();" data-toggle="tooltip" title=\'{{ trans("general.delete") }}\' class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td><td><select id="item-name-'+item_row+'"  name="item['+item_row+'][name]"  id="item-name-'+item_row+'" class="select2 items-dropdown"><option  selected>Select Item</option></select></td><td class="text-center"><span id="item-extra-info-'+item_row+'" class="extra-info-popup" data-toggle="popover" data-trigger="click" tabindex="0" data-placement="bottom" data-content=\'<button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row="'+item_row+'">Edit</button><br><br>\' data-html="true"><i style="font-size:1.5vw;color:blue" class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i></span></td><td><input class="form-control text-center quantity-class" required="required" name="item['+item_row+'][quantity]" type="text" id="item-quantity-'+item_row+'"></td><td><input class="form-control text-right" required="required" name="item['+item_row+'][price]" type="text" id="item-price-'+item_row+'"></td><td><input class="form-control typeahead" required="required" placeholder=\'{{ "Discount" }}\' name="item['+item_row+'][discount]" type="text" id="item-discount-'+item_row+'"><input name="item['+item_row+'][item_id]" type="hidden" id="item-id-'+item_row+'"></td><td class="text-right" style="vertical-align: middle;"><span id="item-tax-info-'+item_row+'" class="item_tax-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Please Select All Options First" data-html="true" style="float:left"><i style="font-size:1.5vw;color:blue" class="fa">&#xf129;</i></span><span id="item-total-tax-'+item_row+'">0</span></td><td class="text-right" style="vertical-align: middle;"><span id="item-total-'+item_row+'">0</span><input type="hidden" name="item['+item_row+'][gst_id]" class="hidden-gst-id"/><input type="hidden" name="item['+item_row+'][cess_id]" class="hidden-cess-id"/></td></tr>';
             $('#items tbody #addItem').before(html);
 
                        $(document).ready(function() {
@@ -445,8 +445,8 @@ color:white;
             //Date picker
 
      var initialLength=$('#item-name-0')[0].options.length;
-    for(var i=0;i<initialLength;i++){
-      itemsArray.push($('#item-name-0')[0].options[i].value);
+     for(var i=1;i<initialLength;i++){
+      itemsArray[$('#item-name-0')[0].options[i].value]=$('#item-name-0')[0].options[i].innerHTML;
     }
 
     console.log(itemsArray);
@@ -686,7 +686,7 @@ $(document).ready(function() {
    var row = $(this).parent().parent().attr('id').split("-");
    row=row[row.length-1];
     
-    var itemName=$("#item-name-"+row).val();
+    var itemId=$("#item-name-"+row).val();
     //console.log(itemName);
    
 
@@ -708,7 +708,7 @@ $(document).ready(function() {
       }
       }        
      };
-     xml.open("GET","{{  url('sales/autofill')  }}?item="+itemName,true);
+     xml.open("GET","{{  url('sales/autofill')  }}?id="+itemId,true);
      xml.send();
 
 
@@ -872,12 +872,15 @@ $('#items').on('select2:opening','.items-dropdown',function(){
    row=row[row.length-1];
    ogRow=row;
    var selected=$(this).val();
-   //console.log(row);
+   
    $(this).html("");
-   var len=itemsArray.length;
-   for(var i=0;i<len;i++){
-    $(this).append('<option value="'+itemsArray[i]+'" >'+itemsArray[i]+'</option>');
-   }
+   //console.log(itemsArray);
+   $(this).html("<option value='Select Item'>Select Item</option>")
+   
+   $.each(itemsArray,function(key,value){
+   
+    $('#item-name-'+row).append('<option value="'+key+'" >'+value+'</option>');
+   });
 
    $(this).val(selected);
    $(this).trigger('change.select2');

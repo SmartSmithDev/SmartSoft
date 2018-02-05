@@ -645,7 +645,7 @@ color:white;
                 },
                 complete:function(){
                   if(initial){
-                    update();
+                    update(); //for updating the extra info of each item updated by user during creation 
                     initial=0;
                   }
                 }
@@ -764,11 +764,11 @@ $.ajax({
 
                     rowsDetails[ogRow]=data;
                
-          itemsArray.push(data.name);         
+          itemsArray[data.id]=data.name;       
         // document.getElementById('item-type-'+globalRow).value=data['type'];
         // document.getElementById('item-tax-'+globalRow).value=data['unit_id'];
         //  document.getElementById('item-gst-'+globalRow).value=data['gst'];
-         var option = new Option(data.name,data.name, true, true);  // Option(innerHTML,value,selected,actual Selection)
+         var option = new Option(data.name,data.id, true, true);  // Option(innerHTML,value,selected,actual Selection)
          $('#item-name-'+globalRow).append(option);
 
           $('.select2').trigger('change.select2'); //for updating select2 selected option
@@ -867,25 +867,27 @@ $(document).on('click','.extra-info-modal',function(){
     
 
 });
+
+
 $(document).ready(function(){
-$('#items').on('shown.bs.popover','.extra-info-popup', function () {
+  $('#items').on('shown.bs.popover','.extra-info-popup', function () {
   // do something…
   console.log("popup");
   
-   var row=$(this).parent().parent().attr("id").split("-");
-   row=row[row.length-1];
-   visible=row;
+  var row=$(this).parent().parent().attr("id").split("-");
+  row=row[row.length-1];
+  visible=row;
     //console.log(rowsDetails[row]);
-        if(rowsDetails[row]){
-          var unit=$('select[name="unit_modal"]')[0].options[parseInt(rowsDetails[row].unit_id)+1].innerHTML;
-          var gst=$('select[name="gst"]')[0].options[parseInt(rowsDetails[row].gst)+1].innerHTML;
-          var cess=$('select[name="cess"]')[0].options[parseInt(rowsDetails[row].cess)+1].innerHTML;
+    if(rowsDetails[row]){
+      var unit=$('select[name="unit_modal"]')[0].options[parseInt(rowsDetails[row].unit_id)+1].innerHTML;
+      var gst=$('select[name="gst"]')[0].options[parseInt(rowsDetails[row].gst)+1].innerHTML;
+      var cess=$('select[name="cess"]')[0].options[parseInt(rowsDetails[row].cess)+1].innerHTML;
 
-       $(this).attr("data-content",'SKU:'+rowsDetails[row].sku+'<br>HSN:'+rowsDetails[row].hsn+'<br>Type:'+rowsDetails[row].type+'<br>Unit:'+unit+'<br>GST Type:'+gst+'<br>Cess Type:'+cess+'<br><br><button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row='+row+'>Edit</button>').data('bs.popover').setContent();
+      $(this).attr("data-content",'SKU:'+rowsDetails[row].sku+'<br>HSN:'+rowsDetails[row].hsn+'<br>Type:'+rowsDetails[row].type+'<br>Unit:'+unit+'<br>GST Type:'+gst+'<br>Cess Type:'+cess+'<br><br><button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row='+row+'>Edit</button>').data('bs.popover').setContent();
 
-        }
-   
-});
+    }
+
+  });
 });
 
 $(document).on('change','#item-details-Modal .no-ajax',function(){
@@ -901,25 +903,25 @@ itemCalculate();
 });
 
 $(document).ready(function(){
-$('#items').on('select2:opening','.items-dropdown',function(){
+  $('#items').on('select2:opening','.items-dropdown',function(){
     var row = $(this).parent().parent().attr('id').split('-');
-   row=row[row.length-1];
-   ogRow=row;
-   var selected=$(this).val();
-   
-   $(this).html("");
+    row=row[row.length-1];
+    ogRow=row;
+    var selected=$(this).val();
+
+    $(this).html("");
    //console.log(itemsArray);
-   $(this).html("<option value='Select Item'>Select Item</option>")
+   $(this).html("<option value='Select Item'>Select Item</option>");
    
    $.each(itemsArray,function(key,value){
-   
+
     $('#item-name-'+row).append('<option value="'+key+'" >'+value+'</option>');
-   });
+  });
 
    $(this).val(selected);
    $(this).trigger('change.select2');
 
-});
+ });
 
 
 
@@ -934,14 +936,6 @@ for(var i=0;i<(nrows);i++){
   }
   rowsDetails[i+""].quantity=$('#item-row-'+i)[0].cells[3].children[0].value;
   rowsDetails[i+""].unit_price=(rowsDetails[i+""].unit_price*1.0)/rowsDetails[i+""].quantity;
-//   if($('input[name="discountType"]:checked')[0].value==0){
-//   rowsDetails[i+""].discount=$('#item-row-'+i)[0].cells[5].children[0].value;
-// }
-// else{
-
-//  rowsDetails[i+""].discount=(parseInt($('#item-row-'+i)[0].cells[5].children[0].value)/100.0)*rowsDetails[i+""].unit_price*rowsDetails[i+""].quantity; 
-
-// }
   rowsDetails[i+""].tax_amount=$('#item-total-tax-'+i).text();
   rowsDetails[i+""].name=$('#item-name-'+i).val();
   rowsDetails[i+""].total_amount=$('#item-total-'+i).text();
