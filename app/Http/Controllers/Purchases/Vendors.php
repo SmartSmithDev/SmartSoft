@@ -23,7 +23,7 @@ class Vendors extends Controller
     {
         //
         $vendors=DB::table('vendors')->get();
-        $vendorAccounts=DB::table('vendor_accounts')->get();
+        $vendorAccounts=VendorAccount::all();
         //dd($vendorAccounts);
         return view('purchase.vendors.index',compact('vendors','vendorAccounts'));
     }
@@ -51,13 +51,17 @@ class Vendors extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
-        Vendor::create($request->except(['accounts']));
+        $query=Vendor::create($request->except(['accounts']));
+        $id=$query->id;
         if($request->input('accounts')){
             $vendorAccounts=$request->input('accounts');
+            foreach ($vendorAccounts as $vendorAccount) {
+                $vendorAccount['vendor_id']=$id;
+                VendorAccount::create($vendorAccount);
+            }
             
         }
-            return redirect("/purchases/vendors");
+        return redirect("/purchases/vendors");
     }
 
     public function store1(Request $request)
