@@ -26,6 +26,9 @@ $branch_row=0;
 
    
   </div>
+<<<<<<< HEAD
+  
+=======
   <div id="company-bank-accounts" class="parts">
     <br>
     <span class="new-button"><a href="#accountModal" class="btn btn-success btn-sm"  data-toggle="modal"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
@@ -380,4 +383,5 @@ $('#deleteModal').modal('show');
 
 
     </script>
+>>>>>>> c852cb72d27cb1e4a01b67e04fc3f8ceed906220
 @endsection

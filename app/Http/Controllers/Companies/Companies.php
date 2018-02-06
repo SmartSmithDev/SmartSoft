@@ -119,7 +119,8 @@ class Companies extends Controller
         //$status= $request->input('type');
         $cname=$request->input('name');
         $pan=$request->input('pan');
-       return  $this->insert($cname,$pan,$branches,$accounts);
+      return  $this->insert($cname,$pan,$branches,$accounts);
+        
     }
 
     /**
@@ -143,8 +144,8 @@ class Companies extends Controller
 
     public function insert($cname,$pan,$branches,$accounts){
          $company=Company::create(["name"=>$cname,"pan"=>$pan]);
-        $cid=$company->id;
-        if(!empty($branches)){
+       // $cid=$company->id;
+       /* if(!empty($branches)){
         foreach($branches as $branch){
          $gstin=CompanyGstin::create(["gstin"=>$branch['gstin'],"company_id"=>$cid,"state_id"=>$branch['state_id']]);
          $gstin_id=$gstin->id;
@@ -155,7 +156,7 @@ class Companies extends Controller
         foreach($accounts as $account){
             $account_row=CompanyBankAccount::create(["company_id"=>$cid,"account_identifier"=>$account["account_identifier"],"entity_name"=>$account["entity_name"],"holder_name"=>$account["holder_name"],"bank_name"=>$account["bank_name"],"account_number"=>$account["account_number"],"ifsc_code"=>$account["ifsc_code"],"notes"=>$account["notes"]]);
         }
-    }
+    }*/
         return redirect("/companies/companies");
     }
 }
