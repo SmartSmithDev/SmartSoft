@@ -25,10 +25,7 @@ class Vendors extends Controller
 
         //
         $vendors=DB::table('vendors')->get();
-        $vendorAccounts=DB::table('vendor_accounts')->get();
-
-         //
-      
+        $vendorAccounts=VendorAccount::all();
         return view('purchase.vendors.index',compact('vendors','vendorAccounts'));
     }
 
@@ -52,6 +49,18 @@ class Vendors extends Controller
      */
     public function store(Request $request)
     {
+        $query=Vendor::create($request->except(['accounts']));
+        $id=$query->id;
+        if($request->input('accounts')){
+            $vendorAccounts=$request->input('accounts');
+            foreach ($vendorAccounts as $vendorAccount) {
+                $vendorAccount['vendor_id']=$id;
+                VendorAccount::create($vendorAccount);
+            }
+            
+        }
+        return redirect("/purchases/vendors");
+    }
 
         $cname=$request->input('name');
         $email_id=$request->input('email_id');

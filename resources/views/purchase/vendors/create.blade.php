@@ -58,6 +58,58 @@
       </div>
       <div class="modal-body" style="overflow-y: hidden">
 
+            {{ Form::textGroup('website', 'Website', 'globe',[]) }}
+
+            {{ Form::selectGroup('business_type',trans('general.business_type'),'briefcase', $business_type) }}
+
+            </div>
+        <!-- /.box-body -->
+
+        <!-- /.box-footer -->
+
+
+
+
+    </div>
+
+    <div id="vendor-accounts" class="parts" style="display: none">
+        <br>
+        <span class="new-button"><a href="#vendorAccountModal" class="btn btn-success btn-sm"  data-toggle="modal"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
+        <table class="table table-striped table-hover" id="tbl-items">
+            <thead>
+                <tr>
+                    <th class="col-md-1">Beneficiary Name</th>
+                    <th class="col-md-1">Account Number</th>
+                    <th class="col-md-1">Beneficiary Address</th>
+                    <th class="col-md-1">Beneficiary Bank</th>
+                    <th class="col-md-1">Bank Address</th>
+                    <th class="col-md-1">IFSC Code</th> 
+                    <th class="col-md-1">Bank Code</th> 
+                    <th class="col-md-1">Branch Code</th>
+                    <th class="col-md-1">Account Type</th>                 
+                    <th class="col-md-1 text-center">actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                   
+                    
+            </tbody>
+        </table>
+    </div>
+
+
+    {!! Form::close() !!}
+
+    <div id="vendorAccountModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add New Vendor Account</h4>
+                </div>
+                <div class="modal-body" style="overflow-y: hidden">
          
           {{ Form::textGroup('beneficiary_name','beneficiary_name', 'beneficiary_name') }}
          {{ Form::textGroup('account_number','account_number', 'account_number') }}
@@ -72,10 +124,6 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
-
-  </div>
-</div>
-
 @endsection
 
 @section('js')
@@ -118,76 +166,26 @@
      </style>
 @endsection
 
-@section('scripts')
-    <script type="text/javascript">
-    var tabno=0;
-    var accountrow=0;
-    var branch_row=0;
-     var branch_edit_row=-1;
-        var account_edit_row=-1;
-        var text_yes = '{{ trans('general.goods') }}';
-        var text_no = '{{ trans('general.service') }}';
-$(document).ready(function(){
-$('.radio-inline label').removeClass('active');
-$('.radio-inline').on('click','label',function(){
-if($(this).attr('id')=="type_0"){
-  $(this).css({"background-color":"#398439","color":"white"});
-  $('#type_1').css({"background-color":"#E7E7E7","color":"black"});
-}
-else{
-$(this).css({"background-color":"red","color":"white"});
-  $('#type_0').css({"background-color":"#E7E7E7","color":"black"});
-}
-});
+            $('#account_save').click(function(event){
+            event.preventDefault(); 
+            var beneficiary_name=$('#beneficiary_name').val();
+            var account_number=$('#account_number').val();
+            var beneficiary_address=$('#beneficiary_address').val();
+            var beneficiary_bank=$('#beneficiary_bank').val();
+            var beneficiary_bank_address=$('#beneficiary_bank_address').val();
+            var ifsc_code=$('#ifsc_code').val();
+            var bank_code=$('#bank_code').val();
+            var branch_code=$('#branch_code').val();
+            var account_type=$('#account_type').val();
+           
+            var htmlAccountRow=$('#vendor-accounts tbody').append(
+				'<tr id="account-row-'+accountRow+'"><td id="col-md-1 hidden"><span>'+beneficiary_name+'<input type="hidden" name="accounts['+accountRow+'][beneficiary_name]" value="'+beneficiary_name+'" /></span></td><td id="col-md-1 hidden"><span>'+beneficiary_name+'<input type="hidden" name="accounts['+accountRow+'][beneficiary_name]" value="'+beneficiary_name+'" /></span></td><td id="col-md-1 hidden"><span>'+account_number+'<input type="hidden" name="accounts['+accountRow+'][account_number]" value="'+account_number+'" /></span></td><td id="col-md-1 hidden"><span>'+beneficiary_address+'<input type="hidden" name="accounts['+accountRow+'][beneficiary_address]" value="'+beneficiary_address+'" /></span></td><td id="col-md-1 hidden"><span>'+beneficiary_bank+'<input type="hidden" name="accounts['+accountRow+'][beneficiary_bank]" value="'+beneficiary_bank+'" /></span></td><td id="col-md-1 hidden"><span>'+beneficiary_bank_address+'<input type="hidden" name="accounts['+accountRow+'][beneficiary_bank_address]" value="'+beneficiary_bank_address+'" /></span></td><td id="col-md-1 hidden"><span>'+ifsc_code+'<input type="hidden" name="accounts['+accountRow+'][ifsc_code]" value="'+ifsc_code+'" /></span></td><td id="col-md-1 hidden"><span>'+bank_code+'<input type="hidden" name="accounts['+accountRow+'][bank_code]" value="'+bank_code+'" /></span></td><td id="col-md-1 hidden"><span>'+branch_code+'<input type="hidden" name="accounts['+accountRow+'][branch_code]" value="'+branch_code+'" /></span></td><td id="col-md-1 hidden"><span>'+account_type+'<input type="hidden" name="accounts['+accountRow+'][account_type]" value="'+account_type+'" /></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="account-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete" onclick="$(this).parent().parent().parent().parent().parent().remove();">Delete</button></li></ul></div></td></tr>');
 
 
-
-$('.nav-tabs').on('click','li',function(){
-
-$(this).addClass('active');
-$('.parts').eq(tabno).css({display:"none"});
-$('.nav-tabs li').eq(tabno).removeClass('active');
-tabno=$(this).index();
-$('.parts').eq(tabno).css({display:"block"});
-
-
-});
-        $('#account_save').click(function(){
-var id=$('#id').val();
-var beneficiary_name=$('#beneficiary_name').val();
-var account_number=$('#account_number').val();
-var beneficiary_address=$('#beneficiary_address').val();
-var beneficiary_bank=$('#beneficiary_bank').val();
-var htmlaccountRow=$('##vendor-accounts tbody').append('<tr id="account-row-'+accountrow+'"><td class="col-md-1 hidden"><span>'+ beneficiary_name+'<input type="hidden" name="accounts['+accountrow+'][ beneficiary_name]" value='+ beneficiary_name+'></span></td><td class="col-md-1"><span>'+account_number+'<input type="hidden" name="accounts['+accountrow+'][account_number]" value='+account_number+'></span></td><td class="col-md-1"><span>'+beneficiary_address+'<input type="hidden" name="accounts['+accountrow+'][beneficiary_address]" value='+beneficiary_address+'></span></td><td class="col-md-1"><span>'+beneficiary_bank+'<input type="hidden" name="accounts['+accountrow+'][beneficiary_bank]" value='+beneficiary_bank+'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="account-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete" onclick="$(this).parent().parent().parent().parent().parent().remove();">Delete</button></li></ul></div></td></tr>');
-
-accountrow++;
-if(account_edit_row>-1){
-  $('#account-row-'+account_edit_row).remove();
-}
-$('#accountModal').modal('hide');
-$('#accountModal input').val("");
-});
-
-
-
-$('#vendor-accounts tbody').on('click','.branch-edit',function(){
-  var row=$(this).parent().parent().parent().parent().parent().attr('id').split("-")[2];
-  console.log(row);
-  account_edit_row=row;
-
-var len=$('#company-bank-accounts table tbody')[0].rows[row].cells.length-1;
-console.log(len);
-for(var i=0;i<len;i++){
-  var value=$('#company-bank-accounts tbody tr').eq(row).children().eq(i).children().children().val();
-  $('#accountModal input').eq(i).val(value);
-}  
-$('#accountModal').modal('show');
-});
-
-
-});
-
-
-
+			console.log(htmlAccountRow[0]);
+            accountRow++;
+            $('#vendorAccountModal').modal('hide');
+            $('#vendorAccountModal input').val("");
+        });
     </script>
 @endsection
