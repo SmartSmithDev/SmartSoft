@@ -59,19 +59,18 @@ Route::group(['prefix' => 'items'], function () {
 Route::group(['prefix' => 'auth'], function () {
     Route::resource('users', 'Auth\Users');
 });
+Route::group(['prefix' => 'reports'], function(){
+	Route::resource('income','Reports\Reports');
+	Route::resource('expenses','Reports\expenses');
+	Route::get('Expenses','Reports\expenses@show');
+	
+});
+Route::get('Reports','Reports\Reports@show');
 
 
 Route::get('download/{id}','Sales\Sales@download');
 
-Route::get('/report',function() {
- 	return view('reports.reports.income');
- });
-// Route::get('reports','Reports\Reports@index');
-Route::get('/expense',function() {
- 	return view('reports.reports.expenses');
-});
-Route::get('Expenses','Reports\expenses@show');
-Route::get('Reports','Reports\Reports@show');
+
  Route::get('test', function () {
     $GstRate = App\Models\Tax\Cess::find(0)->rate;
     echo($GstRate);
