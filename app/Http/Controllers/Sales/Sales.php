@@ -180,7 +180,7 @@ class Sales extends Controller
         }
 
 
-        $newRowDetails=json_encode($newRowDetails);
+       // $newRowDetails=json_encode($newRowDetails);
         
 
         return view('sales.sales.edit',compact('sale','sales_items','items','hsn','units','customers','gst','states','bank_branch','customer_type','business_type','cess','newRowDetails','bank_accounts'));

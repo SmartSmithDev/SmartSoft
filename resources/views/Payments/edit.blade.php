@@ -1,55 +1,62 @@
 @extends('layouts.admin')
 
-@section('title', trans('general.title.edit', ['type' => trans_choice('general.payments', 1)]))
+@section('title', trans('general.title.edit', ['type' => trans_choice('general.Payments', 1)]))
 
 @section('content')
-<!-- Default box -->
-<div class="box box-success">
-    {!! Form::model($payment, [
-        'method' => 'PATCH',
-        'files' => true,
-        'url' => ['payments', $payment->id],
-        'role' => 'form'
-    ]) !!}
+ <h1>{{ __('Edit payments') }}</h1>
 
+  {!! Form::open(array('url' => 'purchases/payments/'.$SalesPayment->id,'method'=>'PUT')) !!} 
+  <button type="submit" name="submit" class="btn btn-success"><i class="fa fa-save"></i>Save</button>&nbsp;
+<a href="{{ url('/purchases/payments') }}" class="btn btn-default"><i class="fa fa-times-circle"></i>Cancel</a>
     <div class="box-body">
-            <!-- {{ Form::selectGroup('sales_id', trans_choice('general.sales', 1), 'credit-card', $sales) }} -->
+<div class="form-group">
+    {!! Form::label('id', __('id'), ['class' => 'control-label']) !!}
+    {!! Form::text('name', null, ['class' => 'form-control']) !!}
+</div>
 
-            {{ Form::textGroup('sales_id', 'Sales Invoice ID', 'credit-card', ['required' => 'required', 'autofocus' => 'autofocus']) }}
+<div class="form-group">
+    {!! Form::label('sales_id', __('sales_id'), ['class' => 'control-label']) !!}
+    {!! Form::text('sales_id', null, ['class' => 'form-control']) !!}
+</div>
 
-             {{ Form::textGroup('payment_date', 'Payment Date','calendar', array('id' => 'payment_date', 'class' => ' form-control datepicker', 'required' => 'required' , 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => '')) }}
+<div class="form-group">
+    {!! Form::label('company_account_id', __('company_account_id'), ['class' => 'control-label']) !!}
+    {!! Form::text('company_account_id',  null, ['class' => 'form-control']) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('customer_account_id', __('customer_account_id'), ['class' => 'control-label']) !!}
+     {!! Form::text('customer_account_id',  null, ['class' => 'form-control']) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('payment_reference', __('payment_reference'), ['class' => 'control-label']) !!}
+    {!! Form::text('payment_reference',  null, ['class' => 'form-control']) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('payment_notes', __('payment_notes'), ['class' => 'control-label']) !!}
+     {!! Form::text('payment_notes',  null, ['class' => 'form-control']) !!}
+</div>
 
-            {{ Form::selectGroup('payment_mode', trans('general.payment_mode'), 'credit-card', $payment_mode) }}
 
-            {{ Form::textGroup('paid_amount', trans('general.amount'), 'money', ['required' => 'required', 'autofocus' => 'autofocus']) }}
 
-            {{ Form::textareaGroup('payment_terms', trans('general.payment_terms')) }}
 
-            {{ Form::selectGroup('vendor_account_id', trans_choice('general.vendors', 1), 'credit-card', $vendor_accounts) }}
-
-            {{ Form::selectGroup('company_account_id', trans_choice('general.company', 1), 'folder-open-o', $company_accounts) }}
-
-            {{ Form::selectGroup('payment_type', trans_choice('general.payment_types', 1), 'credit-card', $payment_type) }}
-
-            {{ Form::textGroup('payment_reference', trans('general.reference'), 'file-text-o',[]) }}
-
-            {{ Form::textGroup('payment_notes', trans('general.payment_notes'), 'file-text-o',[]) }}
-        </div>
-    <!-- /.box-body -->
+           
+  </div>
+   
 
     <div class="box-footer">
-        {{ Form::saveButtons('payments') }}
+        {{ Form::saveButtons('index') }}
     </div>
-    <!-- /.box-footer -->
+   
     {!! Form::close() !!}
 
 </div>
-@endsection
+
+
 
 
 @section('js')
     <script src="{{ asset('js/bootstrap-fancyfile.js') }}"></script>
-    <!-- Select2 -->
+    
     <link rel="stylesheet" href="{{ asset('dist/css/select2.min.css') }}">
     <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
 @endsection
@@ -59,3 +66,5 @@
 @endsection
 
 
+
+@stop
