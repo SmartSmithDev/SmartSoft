@@ -66,15 +66,12 @@ Route::get('download/{id}','Sales\Sales@download');
 Route::get('/report',function() {
  	return view('reports.reports.income');
  });
-<<<<<<< HEAD
-=======
 // Route::get('reports','Reports\Reports@index');
 Route::get('/expense',function() {
  	return view('reports.reports.expenses');
 });
 Route::get('Expenses','Reports\expenses@show');
 Route::get('Reports','Reports\Reports@show');
->>>>>>> 20c00ac954472311321b5a42607ecbba43afd06e
  Route::get('test', function () {
     $GstRate = App\Models\Tax\Cess::find(0)->rate;
     echo($GstRate);
