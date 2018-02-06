@@ -899,14 +899,7 @@ for(var i=0;i<(nrows);i++){
   }
   rowsDetails[i+""].quantity=$('#item-row-'+i)[0].cells[3].children[0].value;
   rowsDetails[i+""].unit_price=(rowsDetails[i+""].unit_price*1.0)/rowsDetails[i+""].quantity;
-//   if($('input[name="discountType"]:checked')[0].value==0){
-//   rowsDetails[i+""].discount=$('#item-row-'+i)[0].cells[5].children[0].value;
-// }
-// else{
 
-//  rowsDetails[i+""].discount=(parseInt($('#item-row-'+i)[0].cells[5].children[0].value)/100.0)*rowsDetails[i+""].unit_price*rowsDetails[i+""].quantity; 
-
-// }
   rowsDetails[i+""].tax_amount=$('#item-total-tax-'+i).text();
   rowsDetails[i+""].name=$('#item-name-'+i).val();
   rowsDetails[i+""].total_amount=$('#item-total-'+i).text();
