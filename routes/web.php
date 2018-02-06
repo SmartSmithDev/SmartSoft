@@ -14,9 +14,9 @@
 //use App\Tax\Gst;
 
 
-Route::get('/', function () {
-    return view('dashboard.dashboard.index');
-});
+//Route::get('/', function () {
+ //   return view('dashboard.dashboard.index');
+//});
 Route::resource('/','Dashboard\dashboard');
 
 Route::group(['prefix' => 'companies'], function () {
@@ -44,8 +44,9 @@ Route::group(['prefix' => 'purchases'], function () {
 	Route::resource('vendors','Purchases\Vendors');
 	Route::resource('payments','Purchases\Payments');
 	Route::resource('purchases','Purchases\Purchases');
-	Route::post('vendorajax','Purchases\Vendors@store1');
-	Route::post('/vendorInfo','Purchases\Purchases@vendorInfo');
+	//Route::get('purchases/payments/{id}/edit', 'Payments@edit');
+//Route::put('purchases/payments/{id}/update', 'Payments@update');
+	
 });
 
 Route::group(['prefix' => 'items'], function () {
@@ -82,4 +83,3 @@ Route::get('put', function() {
 });
 
 
-?>
