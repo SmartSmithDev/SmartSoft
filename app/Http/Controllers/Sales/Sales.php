@@ -36,7 +36,6 @@ class Sales extends Controller
     {
         //
         $sales=Sale::all(); 
-
         return view('sales.sales.index',compact('sales'));
 
     }
@@ -63,9 +62,10 @@ class Sales extends Controller
         $business_type= Sales::getEnumValues('customers','business_type');
         $cess=Cess::all()->pluck ('description' , 'id');
         $bank_accounts=CompanyBankAccount::all()->pluck('account_number','id');
-        //dd($items);
+        
 
-        $new_invoice_id=Sale::max('id')+1;
+        $statement = DB::select("SHOW TABLE STATUS LIKE 'purchases'"); //for getting the next value auto increment id
+        $new_invoice_id = $statement[0]->Auto_increment;
         return view('sales.sales.create' , compact('gst' , 'customers' , 'hsn' , 'units' , 'states','countries','items','bank_branch','customer_type','business_type','cess','new_invoice_id','bank_accounts'));
     }
 
@@ -111,9 +111,7 @@ class Sales extends Controller
                if(!empty($item_row)){
                    $sales_item=SalesItem::insert(['sales_id'=>$sale_id,'item_id'=>$item_row['id'],'hsn'=>$item_row['hsn'],'item_type'=>$item_row['type'],'unit_price'=>$item_row['unit_price'],'quantity'=>$item_row['quantity'],'unit_id'=>$item_row['unit_id'],'discount'=>$item_row['discount'],'taxable_value'=>$item_row['taxable_value'],'gst_id'=>$item_row['gst'],'cgst'=>$item_row['cgst'],'sgst'=>$item_row['sgst'],'igst'=>$item_row['igst'],'ugst'=>$item_row['ugst'],'cess_id'=>$item_row['cess'],'tax_amount'=>$item_row['tax_amount'],'total_product_amount'=>$item_row['total_amount'],'cess_amount'=>$item_row['cess_amount']]);
 
-                    if($sales_item){
-                    DB::table('inventory')->decrement('quantity',$item_row['quantity'],['sku'=>$item_row['sku']]);
-                  }
+                  
                }
            }
 
