@@ -33,10 +33,11 @@ class Companies extends Controller
     public function create()
     {
         //
+        $companies=Company::all();
         $states = State::all()->pluck('name' ,'id');
         $city=["0"=>"Mumbai"];
         $country=DB::table('countries')->get()->pluck('name','id');
-        return view('company.company.create',compact('states','city','country'));
+        return view('company.company.create',compact('companies','states','city','country'));
     }
 
     /**
@@ -88,9 +89,11 @@ class Companies extends Controller
         $gstin=CompanyGstin::find($branch->gstin_id);
         $branch->gstin=$gstin->gstin;
         $branch->state=State::find($branch->state_id)->name;
-        //dd($branch->state);
-        $branch->city_id=0;
+        //dd(DB::table('countries')->where("name",$branch->country)->pluck('id')->toArray()[0]);
+        $branch->city_id=$branch->city;
+        $branch->city=$city[$branch->city_id];
         $branch->country_id=$branch->country;
+        $branch->country=DB::table('countries')->where("id",$branch->country_id)->pluck('name')->toArray()[0];
         //dd($branch->country_id);
         }
         return view("company.company.edit",compact("company","company_accounts","company_branches","states","city","country")); 
@@ -116,7 +119,8 @@ class Companies extends Controller
         //$status= $request->input('type');
         $cname=$request->input('name');
         $pan=$request->input('pan');
-       return  $this->insert($cname,$pan,$branches,$accounts);
+      return  $this->insert($cname,$pan,$branches,$accounts);
+        
     }
 
     /**
@@ -140,8 +144,8 @@ class Companies extends Controller
 
     public function insert($cname,$pan,$branches,$accounts){
          $company=Company::create(["name"=>$cname,"pan"=>$pan]);
-        $cid=$company->id;
-        if(!empty($branches)){
+       // $cid=$company->id;
+       /* if(!empty($branches)){
         foreach($branches as $branch){
          $gstin=CompanyGstin::create(["gstin"=>$branch['gstin'],"company_id"=>$cid,"state_id"=>$branch['state_id']]);
          $gstin_id=$gstin->id;
@@ -152,7 +156,7 @@ class Companies extends Controller
         foreach($accounts as $account){
             $account_row=CompanyBankAccount::create(["company_id"=>$cid,"account_identifier"=>$account["account_identifier"],"entity_name"=>$account["entity_name"],"holder_name"=>$account["holder_name"],"bank_name"=>$account["bank_name"],"account_number"=>$account["account_number"],"ifsc_code"=>$account["ifsc_code"],"notes"=>$account["notes"]]);
         }
-    }
+    }*/
         return redirect("/companies/companies");
     }
 }

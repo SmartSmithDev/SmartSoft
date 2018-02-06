@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Taxes;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
+use App\Http\Requests\StoreGstIn;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tax\Hsn as hsns;
 
@@ -17,11 +20,11 @@ class Hsn extends Controller
     public function index()
     {
         //
-         $hsns = hsns::
-        select('hsn.hsn as hsn','hsn.item_type as item','hsn.description as hsn_d','gst.rate as gst_rate','gst.description as gst_d','cess.rate as cess_rate','cess.description as cess_d')
-          ->join('gst', 'hsn.gst_id', '=', 'gst.id')
-          ->join('cess', 'hsn.cess_id', '=', 'cess.id')
-          ->get();
+         $hsns = hsns::get();
+        //select('hsn.hsn as hsn','hsn.item_type as item','hsn.description as hsn_d','gst.rate as gst_rate','gst.description as gst_d','cess.rate as cess_rate','cess.description as cess_d')
+        //  ->join('gst', 'hsn.gst_id', '=', 'gst.id')
+        //  ->join('cess', 'hsn.cess_id', '=', 'cess.id')
+         // ->get();
         return view('tax.hsn.index' , compact('hsns'));
     }
 
@@ -33,6 +36,11 @@ class Hsn extends Controller
     public function create()
     {
         //
+        $item_type = Hsn::getEnumValues('hsn','item_type');
+        // $gst_description = Hsn::getEnumValues('gst','description');
+      
+        
+        return view('tax.hsn.create',compact('item_type'));
     }
 
     /**
@@ -44,6 +52,12 @@ class Hsn extends Controller
     public function store(Request $request)
     {
         //
+        Hsn::create($request->all());
+        //   if(!empty($request->input('gst_rate'))){
+        //   DB::table('gst')->insert(['rate'=>$request->input('gst_rate'),'description'=>$request->input('gst_d')]);  
+        // DB::table('cess')->insert(['rate'=>$request->input('cess_rate'),'description'=>$request->input('cess_d')]); 
+        //   }
+        return redirect('tax/hsn');
     }
 
     /**
@@ -89,5 +103,17 @@ class Hsn extends Controller
     public function destroy($id)
     {
         //
+    }
+      //to retrieve enum values from  database as an array
+    public static function getEnumValues($table, $column) {
+      $type = DB::select(DB::raw("SHOW COLUMNS FROM $table WHERE Field = '{$column}'"))[0]->Type ;
+      preg_match('/^enum\((.*)\)$/', $type, $matches);
+      $enum = array();
+      foreach( explode(',', $matches[1]) as $value )
+      {
+        $v = trim( $value, "'" );
+        $enum = array_add($enum, $v, $v);
+      }
+      return $enum;
     }
 }

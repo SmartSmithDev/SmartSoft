@@ -38,8 +38,10 @@ trait InventoryTrait
 
 
 	public function isInStock(){
-		if($this->getQuantity()>0){
-			return true;
+		if($this->existInInventory()){
+			if($this->getQuantity()>0){
+				return true;
+			}
 		}
 		return false;
 	}

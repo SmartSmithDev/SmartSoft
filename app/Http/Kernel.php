@@ -37,7 +37,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
-
+  'payment.update' => [ \App\Http\Middleware\Payment\CanPaymentUpdate::class ],
         'api' => [
             'throttle:60,1',
             'bindings',

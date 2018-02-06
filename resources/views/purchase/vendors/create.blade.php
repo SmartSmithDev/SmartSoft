@@ -1,45 +1,62 @@
 @extends('layouts.admin')
 
-@section('title', 'Create Vendor')
 
 @section('content')
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#">Vendors</a></li>
-        <li><a href="#">Vendor Accounts</a></li>
-    </ul>
-      {!! Form::open(['action' => 'Purchases\Vendors@store']) !!}
-    <!-- Default box -->
-       <div class="box-footer">
-            {{ Form::saveButtons('vendors') }}
-        </div>
-        <div class="box box-success parts" id="vendors">
-          
 
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#">vendor</a></li>
+    <li><a href="#">vendor Accounts</a></li>
 
-
-            <div class="box-body">
-
-            {{ Form::textGroup('name', trans('general.name'), 'id-card-o') }}
-            
-            {{ Form::selectGroup('vendor_type', trans('general.vendor_type'),'id-card-o', $vendor_type) }}
-
-            {{ Form::textGroup('gstin', 'GST No.', 'percent', []) }}
-            
-            {{ Form::textGroup('pan', 'PAN No.', 'id-badge', []) }}
-
+   
+  </ul>
+  <br>
+ {!! Form::open(array('url' => '/purchases/vendors')) !!}  
+<button type="submit" name="submit" class="btn btn-success"><i class="fa fa-save"></i>Save</button>&nbsp;
+<a href="{{ url('/purchases/vendors') }}" class="btn btn-default"><i class="fa fa-times-circle"></i>Cancel</a>
+  <div id="vendors"  class="parts">
+     <br>
+  <br>
+       {{ Form::textGroup('name', trans('general.name'), 'id-card-o') }}
             {{ Form::emailGroup('email_id', 'Email', 'envelope', []) }}
 
-            {{ Form::textGroup('phone', 'Phone No.', 'phone', []) }}
+            {{ Form::textGroup('phone', 'phone', 'id-badge', []) }}
+           {{ Form::textGroup('vendor_type', 'vendor_type', 'id-badge', []) }}
+          {{ Form::textGroup('business_type', 'business_type', 'id-badge', []) }}
 
-            {{ Form::textareaGroup('address','Address') }}
+  </div>
+  <div id="vendor-accounts" class="parts">
+    <br>
+    <span class="new-button"><a href="#accountModal" class="btn btn-success btn-sm"  data-toggle="modal"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
+     <table class="table table-striped table-hover" id="tbl-items">
+                <thead>
+                    <tr>
+                        <th class="col-md-1 ">beneficiary_name</th>
+                        <th class="col-md-1 ">account_number</th>
+                         <th class="col-md-1">beneficiary_address</th>
+                         <th class="col-md-1">beneficiary_bank</th>
+                        <th class="col-md-1">action</th>         
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+            </table>
+  
+  </div>
 
-            {{ Form::textGroup('city', 'City', 'home') }}
+   {!! Form::close() !!}
 
-            {{ Form::selectGroup('state_id','State','home', $states) }}
+  
+<div id="accountModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
-            {{ Form::textGroup('country', 'Country', 'plane') }}
 
-            {{ Form::textGroup('pin_code', 'Pin-Code', 'paperclip') }}
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add New Account</h4>
+      </div>
+      <div class="modal-body" style="overflow-y: hidden">
 
             {{ Form::textGroup('website', 'Website', 'globe',[]) }}
 
@@ -94,63 +111,60 @@
                 </div>
                 <div class="modal-body" style="overflow-y: hidden">
          
-                    {{ Form::textGroup('beneficiary_name', 'Beneficiary Name') }}
+          {{ Form::textGroup('beneficiary_name','beneficiary_name', 'beneficiary_name') }}
+         {{ Form::textGroup('account_number','account_number', 'account_number') }}
+        {{ Form::textGroup('beneficiary_address','beneficiary_address', 'beneficiary_address') }}
+             {{ Form::textGroup('beneficiary_bank','beneficiary_bank', 'beneficiary_bank') }}
+                            
 
-                    {{ Form::textGroup('account_number', 'Account Number') }}
-
-                    {{ Form::textGroup('beneficiary_address', 'Beneficiary Address') }}
-
-                    {{ Form::textGroup('beneficiary_bank', 'Beneficiary Bank') }}
-
-                    {{ Form::textGroup('beneficiary_bank_address', 'Beneficiary Bank Address') }}
-
-                    {{ Form::textGroup('ifsc_code', 'Ifsc Code') }}
-
-                    {{ Form::textGroup('bank_code', 'Bank Code') }}
-
-                    {{ Form::textGroup('branch_code', 'Branch Code') }}
-
-                    {{ Form::textGroup('account_type', 'Account Type') }}
-                </div>
-                <div class="modal-footer">
-                    <button  class="btn btn-success" id="account_save">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
+         
+      </div>
+      <div class="modal-footer">
+         <button  class="btn btn-success" id="account_save">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
     </div>
-
 @endsection
-
 
 @section('js')
     <script src="{{ asset('js/bootstrap-fancyfile.js') }}"></script>
-    <!-- Select2 -->
+    
     <link rel="stylesheet" href="{{ asset('dist/css/select2.min.css') }}">
     <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
 @endsection
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/bootstrap-fancyfile.css') }}">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     <style type="text/css">
+         #vendor-accounts{
+            display:none;
+         
+         }
+
+         th{
+          color:#3C8DBC;
+         }
+
+          button[title="Delete"]{
+        border:none;
+        background:none;
+        width:100%;
+        color:grey;
+    }
+
+    button[title="Delete"]:hover{
+        background-color:#E1E3E9;
+        color:black;
+    }
+
+    .dropdown-menu >li >a{
+        text-align: center;
+    }
+
+
+     </style>
 @endsection
-
-@section('scripts')
-    <script type="text/javascript">
-        var accountRow=0;
-        var tabno=0;
-        $(document).ready(function(){
-
-            $('.nav-tabs').on('click','li',function(){
-                $(this).addClass('active');
-                $('.parts').eq(tabno).css({display:"none"});
-                $('.nav-tabs li').eq(tabno).removeClass('active');
-                tabno=$(this).index();
-                $('.parts').eq(tabno).css({display:"block"});
-            });
-
-
-
-
 
             $('#account_save').click(function(event){
             event.preventDefault(); 
@@ -172,8 +186,6 @@
             accountRow++;
             $('#vendorAccountModal').modal('hide');
             $('#vendorAccountModal input').val("");
-        });
-
         });
     </script>
 @endsection

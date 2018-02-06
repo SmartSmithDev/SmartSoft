@@ -26,6 +26,9 @@ $branch_row=0;
 
    
   </div>
+<<<<<<< HEAD
+  
+=======
   <div id="company-bank-accounts" class="parts">
     <br>
     <span class="new-button"><a href="#accountModal" class="btn btn-success btn-sm"  data-toggle="modal"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
@@ -46,7 +49,7 @@ $branch_row=0;
                 <tbody>
                    <?php
                    foreach($company_accounts as $account){  
-                  echo '<tr id="account-row-'. $accountrow.'"><td class="col-md-1 hidden"><span>'.$account->account_identifier.'<input type="hidden" name="accounts['. $accountrow.'][account_identifier]" value='.$account->account_identifier.'></span></td><td class="col-md-1 hidden"><span>'.$account->entity_name.'<input type="hidden" name="accounts['. $accountrow.'][entity_name]" value='.$account->entity_name.'></span></td><td class="col-md-1"><span>'.$account->holder_name.'<input type="hidden" name="accounts['. $accountrow.'][holder_name]" value='.$account->holder_name.'></span></td><td class="col-md-1"><span>'.$account->bank_name.'<input type="hidden" name="accounts['. $accountrow.'][bank_name]" value='.$account->bank_name.'></span></td><td class="col-md-1"><span>'.$account->account_number.'<input type="hidden" name="accounts['. $accountrow.'][account_number]" value='.$account->account_number.'></span></td><td class="col-md-1"><span>'.$account->ifsc_code.'<input type="hidden" name="accounts['. $accountrow.'][ifsc_code]" value='.$account->ifsc_code.'></span></td><td class="col-md-1 hidden"><span>'.$account->notes.'<input type="hidden" name="accounts['. $accountrow.'][notes]" value='.$account->notes.'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="account-edit" >Edit</a></li><li><button class="delete-link" title="Delete" onclick="$(this).parent().parent().parent().parent().parent().remove();">Delete</button></li></ul></div></td></tr>';
+                  echo '<tr id="account-row-'. $accountrow.'"><td class="col-md-1 hidden"><span>'.$account->account_identifier.'<input type="hidden" name="accounts['. $accountrow.'][account_identifier]" value='.$account->account_identifier.'></span></td><td class="col-md-1 hidden"><span>'.$account->entity_name.'<input type="hidden" name="accounts['. $accountrow.'][entity_name]" value='.$account->entity_name.'></span></td><td class="col-md-1"><span>'.$account->holder_name.'<input type="hidden" name="accounts['. $accountrow.'][holder_name]" value='.$account->holder_name.'></span></td><td class="col-md-1"><span>'.$account->bank_name.'<input type="hidden" name="accounts['. $accountrow.'][bank_name]" value='.$account->bank_name.'></span></td><td class="col-md-1"><span>'.$account->account_number.'<input type="hidden" name="accounts['. $accountrow.'][account_number]" value='.$account->account_number.'></span></td><td class="col-md-1"><span>'.$account->ifsc_code.'<input type="hidden" name="accounts['. $accountrow.'][ifsc_code]" value='.$account->ifsc_code.'></span></td><td class="col-md-1 hidden"><span>'.$account->notes.'<input type="hidden" name="accounts['. $accountrow.'][notes]" value='.$account->notes.'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="account-edit" >Edit</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>';
                          $accountrow++;
                        }
 
@@ -68,7 +71,7 @@ $branch_row=0;
                         <th class="col-md-1">Branch Name</th>
                         <th class="col-md-1">Phone</th>
                         <th class="col-md-1">Email</th>
-                        <th class="col-md-1">Address</th>
+                        <th class="col-md-3">Address</th>
                         <th class="col-md-1">City</th>
                         <th class="col-md-1">State</th>
                         <th class="col-md-1 hidden">Country</th>
@@ -79,7 +82,7 @@ $branch_row=0;
                 <tbody>
                       <?php
                    foreach($company_branches as $branch){  
-                  echo '<tr id="branch-row-'.$branch_row.'"><td class="col-md-1 hidden"><span>'.$branch->gstin.'<input type="hidden" name="branch['.$branch_row.'][gstin]" value='.$branch->gstin.'></span></td><td class="col-md-1"><span>'.$branch->branch_name.'<input type="hidden" name="branch['.$branch_row.'][branch_name]" value='.$branch->branch_name.'></span></td><td class="col-md-1"><span>'.$branch->phone.'<input type="hidden" name="branch['.$branch_row.'][phone]" value='.$branch->phone.'></span></td><td class="col-md-1"><span>'.$branch->email_id.'<input type="hidden" name="branch['.$branch_row.'][email_id]" value='.$branch->email_id.'></span></td><td class="col-md-1"><span>'.$branch->address.'<input type="hidden" name="branch['.$branch_row.'][address]" value='.$branch->address.'></span></td><td class="col-md-1"><span>'.$branch->city.'<input type="hidden" name="branch['.$branch_row.'][city]" value='.$branch->city_id.'></span></td><td class="col-md-1"><span>'.$branch->state.'<input type="hidden" name="branch['.$branch_row.'][state_id]" value='.$branch->state_id.'></span></td><td class="col-md-1 hidden"><span>'.$branch->country.'<input type="hidden" name="branch['.$branch_row.'][country]" value='.$branch->country_id.'></span></td><td class="col-md-1 hidden"><span>'.$branch->pin_code.'<input type="hidden" name="branch['.$branch_row.'][pin_code]" value='.$branch->pin_code.'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="branch-edit">Edit</a></li><li><button class="delete-link" title="Delete" onclick="$(this).parent().parent().parent().parent().parent().remove();">Delete</button></li></ul></div></td></tr>';
+                  echo '<tr id="branch-row-'.$branch_row.'"><td class="col-md-1 hidden"><span>'.$branch->gstin.'<input type="hidden" name="branch['.$branch_row.'][gstin]" value='.$branch->gstin.'></span></td><td class="col-md-1"><span>'.$branch->branch_name.'<input type="hidden" name="branch['.$branch_row.'][branch_name]" value='.$branch->branch_name.'></span></td><td class="col-md-1"><span>'.$branch->phone.'<input type="hidden" name="branch['.$branch_row.'][phone]" value='.$branch->phone.'></span></td><td class="col-md-1"><span>'.$branch->email_id.'<input type="hidden" name="branch['.$branch_row.'][email_id]" value='.$branch->email_id.'></span></td><td class="col-md-3"><span>'.$branch->address.'<input type="hidden" name="branch['.$branch_row.'][address]" value='.$branch->address.'></span></td><td class="col-md-1"><span>'.$branch->city.'<input type="hidden" name="branch['.$branch_row.'][city]" value='.$branch->city_id.'></span></td><td class="col-md-1"><span>'.$branch->state.'<input type="hidden" name="branch['.$branch_row.'][state_id]" value='.$branch->state_id.'></span></td><td class="col-md-1 hidden"><span>'.$branch->country.'<input type="hidden" name="branch['.$branch_row.'][country]" value='.$branch->country_id.'></span></td><td class="col-md-1 hidden"><span>'.$branch->pin_code.'<input type="hidden" name="branch['.$branch_row.'][pin_code]" value='.$branch->pin_code.'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="branch-edit">Edit</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>';
                      $branch_row++;
 
                        }
@@ -181,6 +184,30 @@ $branch_row=0;
 </div>
 
 
+  <!-- Modal -->
+<div id="deleteModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Delete</h4>
+      </div>
+      <div class="modal-body" style="overflow-y: hidden"><!-- for floating element i.e clearfix hack  -->
+         Are You Sure You Want Delete? 
+      </div>
+      <div class="modal-footer">
+         <button  class="btn btn-danger" id="delete_button">Delete</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
 
 
 @endsection
@@ -251,17 +278,7 @@ $branch_row=0;
 
 
 $(document).ready(function(){
-$('.radio-inline label').removeClass('active');
-$('.radio-inline').on('click','label',function(){
-if($(this).attr('id')=="type_0"){
-  $(this).css({"background-color":"#398439","color":"white"});
-  $('#type_1').css({"background-color":"#E7E7E7","color":"black"});
-}
-else{
-$(this).css({"background-color":"red","color":"white"});
-  $('#type_0').css({"background-color":"#E7E7E7","color":"black"});
-}
-});
+
 
 $('.nav-tabs').on('click','li',function(){
 
@@ -282,7 +299,7 @@ var bank_name=$('#bn').val();
 var account_number=$('#an').val();
 var ifsc_code=$('#ifsc').val();
 var notes=$('#notes').val();
-var htmlaccountRow=$('#company-bank-accounts tbody').append('<tr id="account-row-'+accountrow+'"><td class="col-md-1 hidden"><span>'+accnt_id+'<input type="hidden" name="accounts['+accountrow+'][account_identifier]" value='+accnt_id+'></span></td><td class="col-md-1 hidden"><span>'+entity_name+'<input type="hidden" name="accounts['+accountrow+'][entity_name]" value='+entity_name+'></span></td><td class="col-md-1"><span>'+holder_name+'<input type="hidden" name="accounts['+accountrow+'][holder_name]" value='+holder_name+'></span></td><td class="col-md-1"><span>'+bank_name+'<input type="hidden" name="accounts['+accountrow+'][bank_name]" value='+bank_name+'></span></td><td class="col-md-1"><span>'+account_number+'<input type="hidden" name="accounts['+accountrow+'][account_number]" value='+account_number+'></span></td><td class="col-md-1"><span>'+ifsc_code+'<input type="hidden" name="accounts['+accountrow+'][ifsc_code]" value='+ifsc_code+'></span></td><td class="col-md-1 hidden"><span>'+notes+'<input type="hidden" name="accounts['+accountrow+'][notes]" value='+notes+'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="account-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete" onclick="$(this).parent().parent().parent().parent().parent().remove();">Delete</button></li></ul></div></td></tr>');
+var htmlaccountRow=$('#company-bank-accounts tbody').append('<tr id="account-row-'+accountrow+'"><td class="col-md-1 hidden"><span>'+accnt_id+'<input type="hidden" name="accounts['+accountrow+'][account_identifier]" value='+accnt_id+'></span></td><td class="col-md-1 hidden"><span>'+entity_name+'<input type="hidden" name="accounts['+accountrow+'][entity_name]" value='+entity_name+'></span></td><td class="col-md-1"><span>'+holder_name+'<input type="hidden" name="accounts['+accountrow+'][holder_name]" value='+holder_name+'></span></td><td class="col-md-1"><span>'+bank_name+'<input type="hidden" name="accounts['+accountrow+'][bank_name]" value='+bank_name+'></span></td><td class="col-md-1"><span>'+account_number+'<input type="hidden" name="accounts['+accountrow+'][account_number]" value='+account_number+'></span></td><td class="col-md-1"><span>'+ifsc_code+'<input type="hidden" name="accounts['+accountrow+'][ifsc_code]" value='+ifsc_code+'></span></td><td class="col-md-1 hidden"><span>'+notes+'<input type="hidden" name="accounts['+accountrow+'][notes]" value='+notes+'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="account-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>');
 
 accountrow++;
 if(account_edit_row>-1){
@@ -306,7 +323,7 @@ var state=$('#state')[0].options[$('#state')[0].selectedIndex].innerHTML;
 var country_id=$('#country').val();
 var country=$('#country')[0].options[$('#country')[0].selectedIndex].innerHTML;
 var pincode=$('#pincode').val();
-var html=$('#company-branches tbody').append(' <tr id="branch-row-'+branch_row+'"><td class="col-md-1 hidden"><span>'+gstin+'<input type="hidden" name="branch['+branch_row+'][gstin]" value='+gstin+'></span></td><td class="col-md-1"><span>'+b_name+'<input type="hidden" name="branch['+branch_row+'][branch_name]" value='+b_name+'></span></td><td class="col-md-1"><span>'+phone+'<input type="hidden" name="branch['+branch_row+'][phone]" value='+phone+'></span></td><td class="col-md-1"><span>'+email+'<input type="hidden" name="branch['+branch_row+'][email_id]" value='+email+'></span></td><td class="col-md-1"><span>'+address+'<input type="hidden" name="branch['+branch_row+'][address]" value='+address+'></span></td><td class="col-md-1"><span>'+city+'<input type="hidden" name="branch['+branch_row+'][city]" value='+city_id+'></span></td><td class="col-md-1"><span>'+state+'<input type="hidden" name="branch['+branch_row+'][state_id]" value='+state_id+'></span></td><td class="col-md-1 hidden"><span>'+country+'<input type="hidden" name="branch['+branch_row+'][country]" value='+country_id+'></span></td><td class="col-md-1 hidden"><span>'+pincode+'<input type="hidden" name="branch['+branch_row+'][pin_code]" value='+pincode+'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="branch-edit">{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete" onclick="$(this).parent().parent().parent().parent().parent().remove();">Delete</button></li></ul></div></td></tr>');
+var html=$('#company-branches tbody').append(' <tr id="branch-row-'+branch_row+'"><td class="col-md-1 hidden"><span>'+gstin+'<input type="hidden" name="branch['+branch_row+'][gstin]" value='+gstin+'></span></td><td class="col-md-1"><span>'+b_name+'<input type="hidden" name="branch['+branch_row+'][branch_name]" value='+b_name+'></span></td><td class="col-md-1"><span>'+phone+'<input type="hidden" name="branch['+branch_row+'][phone]" value='+phone+'></span></td><td class="col-md-1"><span>'+email+'<input type="hidden" name="branch['+branch_row+'][email_id]" value='+email+'></span></td><td class="col-md-1"><span>'+address+'<input type="hidden" name="branch['+branch_row+'][address]" value='+address+'></span></td><td class="col-md-1"><span>'+city+'<input type="hidden" name="branch['+branch_row+'][city]" value='+city_id+'></span></td><td class="col-md-1"><span>'+state+'<input type="hidden" name="branch['+branch_row+'][state_id]" value='+state_id+'></span></td><td class="col-md-1 hidden"><span>'+country+'<input type="hidden" name="branch['+branch_row+'][country]" value='+country_id+'></span></td><td class="col-md-1 hidden"><span>'+pincode+'<input type="hidden" name="branch['+branch_row+'][pin_code]" value='+pincode+'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="branch-edit">{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>');
 branch_row++;
 if(branch_edit_row>-1){
   $('#branch-row-'+branch_edit_row).remove();
@@ -325,29 +342,39 @@ branch_edit_row=-1;
 });
 
 $('#company-bank-accounts tbody').on('click','.account-edit',function(){
-  var row=$(this).parent().parent().parent().parent().parent().attr('id').split("-")[2];
+  var row=$(this).parent().parent().parent().parent().parent();
   console.log(row);
-account_edit_row=row;
-var len=$('#company-bank-accounts table tbody')[0].rows[row].cells.length-1;
+  account_edit_row=row.attr("id").split("-")[2];
+
+var len=row.children().length;
 console.log(len);
 for(var i=0;i<len;i++){
-  var value=$('#company-bank-accounts tbody tr').eq(row).children().eq(i).children().children().val();
+  var value=row.children().eq(i).children().children().val();
   $('#accountModal input').eq(i).val(value);
 }  
 $('#accountModal').modal('show');
 });
 
 $('#company-branches tbody').on('click','.branch-edit',function(){
- var row=$(this).parent().parent().parent().parent().parent();
+  var row=$(this).parent().parent().parent().parent().parent();
   console.log(row);
-    branch_edit_row=row;
-var len=branch_edit_row.children().length;
+    branch_edit_row=row.attr("id").split("-")[2];
+var len=row.children().length;
 console.log(len);
 for(var i=0;i<len;i++){
-  var value=branch_edit_row.children().eq(i).children().children().val();
+  var value=row.children().eq(i).children().children().val();
   $('#branchesModal .form-control').eq(i).val(value);
 }  
 $('#branchesModal').modal('show');
+});
+
+
+
+$('.parts').on('click','.delete-link',function(event){
+  event.preventDefault();
+var elem=$(this).parent().parent().parent().parent().parent().attr("id");
+$('#delete_button').attr("onclick","$('#"+elem+"').remove();$('#deleteModal').modal('hide');");
+$('#deleteModal').modal('show');
 });
 
 
@@ -356,4 +383,5 @@ $('#branchesModal').modal('show');
 
 
     </script>
+>>>>>>> c852cb72d27cb1e4a01b67e04fc3f8ceed906220
 @endsection

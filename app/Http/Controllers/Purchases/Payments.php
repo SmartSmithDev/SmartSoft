@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Sale\SalesPayment;
 use DB;
+use App\Http\Requests;
 use App\Models\Vendor\Vendor;
 use App\Models\Vendor\VendorAccount;
 use App\Models\Company\Company;
@@ -13,6 +14,7 @@ use App\Models\Company\CompanyBankAccount;
 use App\Models\Sale\Sale;
 use  App\Models\Customer\Customer;
 use App\Models\Customer\CustomerAccounts;
+use App\Models\Purchase\PurchasePayment;
 
 
 class Payments extends Controller
@@ -24,13 +26,13 @@ class Payments extends Controller
      */
     public function index()
     {
-        //
-       //Display the payments
-        $d =Sale::select('sales.invoice_type as invoice_type','sales.order_date as order_date','sales.total_taxable_value as total_taxable_value','sales.total_discount as total_discount ','sales.total_tax_amount as total_tax_amount','sales.shipping_cost as shipping_cost','sales.round_off as round_off','sales.total_amount as total_amount','sales.reverse_charge as reverse_chargep','sales.payment_status as status','sales_payments.payment_date as payment_date','sales_payments.payment_mode as payment_mode','sales_payments.paid_amount as paid_amount','sales_payments.payment_type as payment_type')
-          ->join('sales_payments', 'sales.id', '=', 'sales_payments.sales_id')
-          ->get();
-        $status = array('Paid','Unpaid');
-        return view('Payments.payments',compact('d','status'));
+
+       
+         $d=DB::table('sales_payments')->get();
+         return view('Payments.index',compact('d'));
+       
+
+       
 
     }
 
@@ -58,12 +60,12 @@ class Payments extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Requests $request)
     {
         //dd($request->all());
         //$sales_id=$request['sales_id'];
         //dd($sales_id);
-        $sale=Sale::find($request->sales_id)->pluck('company_account_id','customer_id')->toArray();
+       /* $sale=Sale::find($request->sales_id)->pluck('company_account_id','customer_id')->toArray();
         //dd($sale);
         $company_account_id=array_values($sale)[0];
         $customer_id=array_keys($sale)[0];
@@ -71,7 +73,19 @@ class Payments extends Controller
 
 
         // $payment=SalesPayment::updateOrCreate($request->all());
-        // $payment->paid_amount=$payment->paid_amount+$request->input('paid_amount');
+        // $payment->paid_amount=$payment->paid_amount+$request->input('paid_amount');*/
+$id=$request->input('id');
+        $company_account_id=$request->input('company_account_id');
+        $customer_account_id= $request->input('customer_account_id');
+        $payment_reference=$request->input('payment_reference');
+        $payment_notes=$request->input('payment_notes');
+        
+         return $this->insert($id,$company_account_id, $customer_account_id, $payment_reference, $payment_notes);
+
+
+
+
+
     }
 
     /**
@@ -102,14 +116,11 @@ class Payments extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $req,$id)
+    public function edit($id)
     {
-        // $sales = Sale::all()->pluck('id');
-        // $vendor_accounts = VendorAccount::all()->pluck('account_number','id');
-        // $company_accounts=CompanyBankAccount::all()->pluck('account_number','id');
-        // $payment_mode=Payments::getEnumValues('sales_payments','payment_mode');
-        // $payment_type=Payments::getEnumValues('sales_payments','payment_type');
-        return view('Payments.edit',compact('vendor','vendor_accounts','company_accounts','payment_mode','payment_type'));
+       
+          $SalesPayment=SalesPayment::find($id);
+          return view('Payments.edit',compact('SalesPayment')) ;
     }
 
     /**
@@ -119,12 +130,19 @@ class Payments extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SalesPayment $payment,Request $request)
+    public function update(Request $request,$id)
     {
-        $payment->update($request->input());
-        $message = trans('messages.success.updated', ['type' => trans_choice('general.payments', 1)]);
-        flash($message)->success();
-        return redirect('payments');
+          
+          SalesPayment::find($id)->delete();
+         $id=$request->input('id');
+        $company_account_id=$request->input('company_account_id');
+        $customer_account_id= $request->input('customer_account_id');
+        $payment_reference=$request->input('payment_reference');
+        $payment_notes=$request->input('payment_notes');
+         return $this->insert($id,$company_account_id, $customer_account_id, $payment_reference, $payment_notes);
+
+
+
     }
 
     /**
@@ -135,27 +153,17 @@ class Payments extends Controller
      */
     public function destroy($id)
     {
-        $payment->delete();
-        $message = trans('messages.success.deleted', ['type' => trans_choice('general.payments', 1)]);
+    
+          $SalesPayment->delete();
+           $message = trans('messages.success.deleted', ['type' => trans_choice('general.payments', 1)]);
         flash($message)->success();
-        return redirect('payments');
+        return redirect('purchases/payments');
     }
-
-     //to retrieve enum values from  database as an array
-    public static function getEnumValues($table, $column) {
-      $type = DB::select(DB::raw("SHOW COLUMNS FROM $table WHERE Field = '{$column}'"))[0]->Type ;
-      preg_match('/^enum\((.*)\)$/', $type, $matches);
-      $enum = array();
-      foreach( explode(',', $matches[1]) as $value )
-      {
-        $v = trim( $value, "'" );
-        $enum = array_add($enum, $v, $v);
-      }
-      return $enum;
+public function insert($id,$company_account_id, $customer_account_id, $payment_reference, $payment_notes)
+{
+         $SalesPayment=SalesPayment::create(["id"=>$id,"company_account_id"=>$company_account_id]);
+       return redirect("/purchases/payments");
     }
-
-    public function customer_accounts(Request $req){
-        $customer_accounts=Customer::find($req->input('id'))->accounts()->pluck('account_number','id');
-        return json_encode($customer_accounts);
-    }
+    
+    
 }

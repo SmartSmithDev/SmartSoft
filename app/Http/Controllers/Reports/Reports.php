@@ -59,11 +59,10 @@ class Reports extends Controller
     public function show(Request $req)
     {
         $pname = $req->input('party_name');
-        $fromDate = $req->input('invoice1');
-        $toDate = $req->input('invoice2');
-
-        //return json_encode($pname);
-        if( empty($fromDate) && empty($toDate)){
+        
+    
+        // return json_encode($fromDate);
+        if( empty($req->input('invoice1')) && empty($req->input('invoice2'))){
         $ss =Customer::where('name','=',$pname)->get();
         foreach($ss as $sale){
             $sale->customer=Sale::where('customer_id','=',$sale->id)->get();
@@ -73,6 +72,10 @@ class Reports extends Controller
     }
         else
         {
+        $fDate = explode("/",$req->input('invoice1'));
+        $tDate = explode("/",$req->input('invoice2'));
+        $fromDate = "$fDate[2]-$fDate[0]-$fDate[1]";
+        $toDate = "$tDate[2]-$tDate[0]-$tDate[1]";
            $ss =Customer::where('name','=',$pname)->get();
             foreach($ss as $sale){
 
@@ -81,6 +84,7 @@ class Reports extends Controller
         }
     
         return json_encode($sale->customer);
+        
         }
     }
         

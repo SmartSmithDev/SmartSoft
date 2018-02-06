@@ -3,7 +3,7 @@
 @section('title', 'Create Customer')
 
 @section('content')
-    <!-- Default box -->
+
         <div class="box box-success">
             {!! Form::open(['action' => 'Sales\Customers@store']) !!}
 
@@ -36,12 +36,12 @@
             {{ Form::selectGroup('business_type',trans('general.business_type'),'briefcase', $business_type) }}
 
             </div>
-        <!-- /.box-body -->
+     
 
         <div class="box-footer">
             {{ Form::saveButtons('customers') }}
         </div>
-        <!-- /.box-footer -->
+   
 
         {!! Form::close() !!}
     </div>
@@ -50,7 +50,7 @@
 
 @section('js')
     <script src="{{ asset('js/bootstrap-fancyfile.js') }}"></script>
-    <!-- Select2 -->
+   
     <link rel="stylesheet" href="{{ asset('dist/css/select2.min.css') }}">
     <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
 @endsection
