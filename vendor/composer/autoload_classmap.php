@@ -57,6 +57,7 @@ return array(
     'App\\Models\\Sale\\SalesChallanTextile' => $baseDir . '/app/Models/Sale/SalesChallanTextile.php',
     'App\\Models\\Sale\\SalesItem' => $baseDir . '/app/Models/Sale/SalesItem.php',
     'App\\Models\\Sale\\SalesPayment' => $baseDir . '/app/Models/Sale/SalesPayment.php',
+    'App\\Models\\Setting\\Country' => $baseDir . '/app/Models/Setting/Country.php',
     'App\\Models\\Setting\\State' => $baseDir . '/app/Models/Setting/State.php',
     'App\\Models\\Setting\\Unit' => $baseDir . '/app/Models/Setting/Unit.php',
     'App\\Models\\Tax\\Cess' => $baseDir . '/app/Models/Tax/Cess.php',
