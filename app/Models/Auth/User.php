@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'picture',
     ];
 
     /**
@@ -28,4 +28,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function companies()
+    {
+        return $this->morphToMany('App\Models\Company\Company', 'user', 'company_selected', 'user_id', 'company_id');
+    }
 }

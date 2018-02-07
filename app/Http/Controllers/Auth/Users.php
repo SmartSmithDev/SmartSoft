@@ -40,16 +40,32 @@ class Users extends Controller
      */
     public function store(Request $request)
     {
+         // Upload picture
+        $picture = $request->file('picture');
+        if ($picture) {
+            $request['picture'] = $picture->store('uploads/users');
+        }
+
+        //password checking
         $pass=$request['password'];
         $confirm_pass=$request['password_confirmation'];
         if ($pass!=$confirm_pass) {
             $message = 'Passwords Do not Match';
             flash($message)->warning();
-            return view('auth.users.create',compact('password','password_confirmation','name','email'));
+            return view('auth.users.create',compact('password','password_confirmation','name','email','picture'));
         }
         else{
-            $password =bcrypt($pass);
-            User::create(['name'=>$request['name'],'email'=>$request['email'],'password'=>$password]);
+            $request['password'] =bcrypt($pass);
+            // Create user
+            $user = User::create($request->input());
+            // User::create(['name'=>$request['name'],'email'=>$request['email'],'password'=>$password,'picture'=>$request['picture']]);
+            // Attach companies
+            $user->companies()->attach($request['companies']);
+
+            $message = trans('messages.success.added', ['type' => trans_choice('general.users', 1)]);
+
+            flash($message)->success();
+
             return redirect("auth/users"); 
         }
     }

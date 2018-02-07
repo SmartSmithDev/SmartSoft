@@ -5,7 +5,7 @@
 @section('content')
     <!-- Default box -->
         <div class="box box-success">
-        {!! Form::open(['url' => 'auth/users', 'role' => 'form']) !!}
+        {!! Form::open(['url' => 'auth/users', 'role' => 'form', 'files' => 'true']) !!}
 
         <div class="box-body">
             {{ Form::textGroup('name', trans('general.name'), 'id-card-o') }}
@@ -15,6 +15,8 @@
             {{ Form::passwordGroup('password', trans('auth.password.current'), 'key') }}
 
             {{ Form::passwordGroup('password_confirmation', trans('auth.password.current_confirm'), 'key') }}
+
+            {{ Form::fileGroup('picture',  trans_choice('general.pictures', 1)) }}
 
             {{ Form::checkboxGroup('companies', trans_choice('general.companies', 2), $companies, 'name') }}
 
