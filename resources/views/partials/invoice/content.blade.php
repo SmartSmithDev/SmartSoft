@@ -35,10 +35,13 @@ $tquantity+=$item['quantity'];
 	</tbody>
 </table>
 <div class="row tax-info">
-	<div class="col-xs-6">
+	<div class="col-xs-12">
 		<p><strong>Bank Details:</strong></p>
         <p>Building 6A, Shop No.5,Ashok Nagar,Bhiwandi,Mumbai, India</p>
 	</div>
+</div>
+
+<div class="row">
 	
 	<div class="col-xs-5">
 		<p><strong>Total Value Before Tax:</strong>{{ $sale["total_taxable_value"] }}<p>
@@ -55,9 +58,17 @@ $tquantity+=$item['quantity'];
          @if($sale["ugst"]>0)
          <p><b>ugst</b> : {{ $sale["ugst"] }}</p>
 		@endif
+	</div>
+	<div class="col-xs-5">
+		
 		<p><strong>Total GST :</strong>  {{ $tgst }}</p>
 		<p><strong>Total Value After Tax :</strong>  {{ $sale["total_amount"] }}</p>
 		<strong>Net Round Off Value:</strong>
-		{{ $sale["round_off"]  }}
+		{{ $sale["round_off"]  }}<br><br>
+		<strong>In Words:</strong>
+		{{ $sale["money_in_words"] }} Only
+
+	
 	</div>
+
 </div>

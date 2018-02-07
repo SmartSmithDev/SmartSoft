@@ -1,8 +1,8 @@
 
 <header>
-		<h1  class="invoice-header">Tax Invoice</h1>
+		<h3 class="invoice-header">Tax Invoice</h3>
 <div class="company-info">
-	<h1>Company Name</h1>
+	<h1>Smart Smith</h1>
 	<p class="address">Building 6A, Shop No.5,Ashok Nagar,Bhiwandi,Mumbai, India|<span class="phoneno">+91 8080568008</span></p>
 	<p class="email"><strong>Email Id :</strong>contact@smartsmith.in</p>
 </div>
