@@ -22,10 +22,15 @@
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                      @if ($user->picture)
+                        <img src="{{  Storage::url($user->picture) }}" class="img-circle" alt="User Image">
+                      @endif
                     <p>
-                      Alexander Pierce - Web Developer
-                      <small>Member since Nov. 2012</small>
+                      @if (!empty($user->name))
+                            {{ $user->name }}
+                       @else
+                                <i class="fa fa-4 fa-user-o" style="color: #fff; font-size: 7em;"></i>
+                      @endif
                     </p>
                   </li>
                   <!-- Menu Body -->
@@ -40,7 +45,7 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                     <a href="#" class="btn btn-default btn-flat">{{ trans('auth.profile') }}</a>
+                     <a href="{{ url('auth/users/' . $user->id . '/edit') }}" class="btn btn-default btn-flat">{{ trans('auth.profile') }}</a>
                     </div>
                     <div class="pull-right">
                        <a href="{{ url('auth/logout') }}" class="btn btn-default btn-flat">{{ trans('auth.logout') }}</a>

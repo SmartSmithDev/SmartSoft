@@ -21,6 +21,8 @@
 
             {{ Form::passwordGroup('password_confirmation', trans('auth.password.current_confirm'), 'key') }}
 
+            {{ Form::fileGroup('picture',  trans_choice('general.pictures', 1)) }}
+
             {{ Form::checkboxGroup('companies', trans_choice('general.companies', 2), $companies, 'name') }}
 
         </div>

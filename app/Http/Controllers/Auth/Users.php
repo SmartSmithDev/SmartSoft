@@ -101,7 +101,19 @@ class Users extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(User $user,Request $request)
-    {
+    {   
+        // Upload picture
+        $picture = $request->file('picture');
+        if ($picture) {
+            $request['picture'] = $picture->store('uploads/users');
+        }
+
+         // Do not reset password if not entered/changed
+        if (empty($request['password'])) {
+            unset($request['password']);
+            unset($request['password_confirmation']);
+        }
+        
         $pass=$request['password'];
         $confirm_pass=$request['password_confirmation'];
         if ($pass!=$confirm_pass) {
@@ -110,8 +122,8 @@ class Users extends Controller
             return view('auth.users.edit',compact('user','password','password_confirmation','name','email'));
         }
         else{
-            $password =bcrypt($pass);
-            $user->update(['name'=>$request['name'],'email'=>$request['email'],'password'=>$password]);
+            $request['password'] =bcrypt($pass);
+            $user->update($request->input());
             $message = trans('messages.success.updated', ['type' => trans_choice('general.users', 1)]);
             flash($message)->success();
             return redirect('auth/users');
