@@ -26,9 +26,6 @@ $branch_row=0;
 
    
   </div>
-<<<<<<< HEAD
-  
-=======
   <div id="company-bank-accounts" class="parts">
     <br>
     <span class="new-button"><a href="#accountModal" class="btn btn-success btn-sm"  data-toggle="modal"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
@@ -82,7 +79,7 @@ $branch_row=0;
                 <tbody>
                       <?php
                    foreach($company_branches as $branch){  
-                  echo '<tr id="branch-row-'.$branch_row.'"><td class="col-md-1 hidden"><span>'.$branch->gstin.'<input type="hidden" name="branch['.$branch_row.'][gstin]" value='.$branch->gstin.'></span></td><td class="col-md-1"><span>'.$branch->branch_name.'<input type="hidden" name="branch['.$branch_row.'][branch_name]" value='.$branch->branch_name.'></span></td><td class="col-md-1"><span>'.$branch->phone.'<input type="hidden" name="branch['.$branch_row.'][phone]" value='.$branch->phone.'></span></td><td class="col-md-1"><span>'.$branch->email_id.'<input type="hidden" name="branch['.$branch_row.'][email_id]" value='.$branch->email_id.'></span></td><td class="col-md-3"><span>'.$branch->address.'<input type="hidden" name="branch['.$branch_row.'][address]" value='.$branch->address.'></span></td><td class="col-md-1"><span>'.$branch->city.'<input type="hidden" name="branch['.$branch_row.'][city]" value='.$branch->city_id.'></span></td><td class="col-md-1"><span>'.$branch->state.'<input type="hidden" name="branch['.$branch_row.'][state_id]" value='.$branch->state_id.'></span></td><td class="col-md-1 hidden"><span>'.$branch->country.'<input type="hidden" name="branch['.$branch_row.'][country]" value='.$branch->country_id.'></span></td><td class="col-md-1 hidden"><span>'.$branch->pin_code.'<input type="hidden" name="branch['.$branch_row.'][pin_code]" value='.$branch->pin_code.'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="branch-edit">Edit</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>';
+                  echo '<tr id="branch-row-'.$branch_row.'"><td class="col-md-1 hidden"><span>'.$branch->gstin.'<input type="hidden" name="branch['.$branch_row.'][gstin]" value='.$branch->gstin.'></span></td><td class="col-md-1"><span>'.$branch->branch_name.'<input type="hidden" name="branch['.$branch_row.'][branch_name]" value='.$branch->branch_name.'></span></td><td class="col-md-1"><span>'.$branch->phone.'<input type="hidden" name="branch['.$branch_row.'][phone]" value='.$branch->phone.'></span></td><td class="col-md-1"><span>'.$branch->email_id.'<input type="hidden" name="branch['.$branch_row.'][email_id]" value='.$branch->email_id.'></span></td><td class="col-md-3"><span>'.$branch->address.'<input type="hidden" name="branch['.$branch_row.'][address]" value="'.$branch->address.'"></span></td><td class="col-md-1"><span>'.$branch->city.'<input type="hidden" name="branch['.$branch_row.'][city]" value='.$branch->city.'></span></td><td class="col-md-1"><span>'.$branch->state.'<input type="hidden" name="branch['.$branch_row.'][state_id]" value='.$branch->state_id.'></span></td><td class="col-md-1 hidden"><span>'.$branch->country.'<input type="hidden" name="branch['.$branch_row.'][country]" value='.$branch->country_id.'></span></td><td class="col-md-1 hidden"><span>'.$branch->pin_code.'<input type="hidden" name="branch['.$branch_row.'][pin_code]" value='.$branch->pin_code.'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="branch-edit">Edit</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>';
                      $branch_row++;
 
                        }
@@ -316,14 +313,13 @@ var b_name=$('#brname').val();
 var phone=$('#phone').val();
 var email=$('#email').val();
 var address=$('#address').val();
-var city_id=$('#city').val();
-var city=$('#city')[0].options[$('#city')[0].selectedIndex].innerHTML;
+var city=$('#city').val();
 var state_id=$('#state').val();
 var state=$('#state')[0].options[$('#state')[0].selectedIndex].innerHTML;
 var country_id=$('#country').val();
 var country=$('#country')[0].options[$('#country')[0].selectedIndex].innerHTML;
 var pincode=$('#pincode').val();
-var html=$('#company-branches tbody').append(' <tr id="branch-row-'+branch_row+'"><td class="col-md-1 hidden"><span>'+gstin+'<input type="hidden" name="branch['+branch_row+'][gstin]" value='+gstin+'></span></td><td class="col-md-1"><span>'+b_name+'<input type="hidden" name="branch['+branch_row+'][branch_name]" value='+b_name+'></span></td><td class="col-md-1"><span>'+phone+'<input type="hidden" name="branch['+branch_row+'][phone]" value='+phone+'></span></td><td class="col-md-1"><span>'+email+'<input type="hidden" name="branch['+branch_row+'][email_id]" value='+email+'></span></td><td class="col-md-1"><span>'+address+'<input type="hidden" name="branch['+branch_row+'][address]" value='+address+'></span></td><td class="col-md-1"><span>'+city+'<input type="hidden" name="branch['+branch_row+'][city]" value='+city_id+'></span></td><td class="col-md-1"><span>'+state+'<input type="hidden" name="branch['+branch_row+'][state_id]" value='+state_id+'></span></td><td class="col-md-1 hidden"><span>'+country+'<input type="hidden" name="branch['+branch_row+'][country]" value='+country_id+'></span></td><td class="col-md-1 hidden"><span>'+pincode+'<input type="hidden" name="branch['+branch_row+'][pin_code]" value='+pincode+'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="branch-edit">{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>');
+var html=$('#company-branches tbody').append('<tr id="branch-row-'+branch_row+'"><td class="col-md-1 hidden"><span>'+gstin+'<input type="hidden" name="branch['+branch_row+'][gstin]" value='+gstin+'></span></td><td class="col-md-1"><span>'+b_name+'<input type="hidden" name="branch['+branch_row+'][branch_name]" value='+b_name+'></span></td><td class="col-md-1"><span>'+phone+'<input type="hidden" name="branch['+branch_row+'][phone]" value='+phone+'></span></td><td class="col-md-1"><span>'+email+'<input type="hidden" name="branch['+branch_row+'][email_id]" value='+email+'></span></td><td class="col-md-1"><span>'+address+'<input type="hidden" name="branch['+branch_row+'][address]" value="'+address+'"></span></td><td class="col-md-1"><span>'+city+'<input type="hidden" name="branch['+branch_row+'][city]" value='+city+'></span></td><td class="col-md-1"><span>'+state+'<input type="hidden" name="branch['+branch_row+'][state_id]" value='+state_id+'></span></td><td class="col-md-1 hidden"><span>'+country+'<input type="hidden" name="branch['+branch_row+'][country]" value='+country_id+'></span></td><td class="col-md-1 hidden"><span>'+pincode+'<input type="hidden" name="branch['+branch_row+'][pin_code]" value='+pincode+'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="branch-edit">{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>');
 branch_row++;
 if(branch_edit_row>-1){
   $('#branch-row-'+branch_edit_row).remove();
@@ -358,18 +354,19 @@ $('#accountModal').modal('show');
 $('#company-branches tbody').on('click','.branch-edit',function(){
   var row=$(this).parent().parent().parent().parent().parent();
   console.log(row);
-    branch_edit_row=row.attr("id").split("-")[2];
-var len=row.children().length;
-console.log(len);
-for(var i=0;i<len;i++){
-  var value=row.children().eq(i).children().children().val();
-  $('#branchesModal .form-control').eq(i).val(value);
-}  
-$('#branchesModal').modal('show');
+  branch_edit_row=row.attr("id").split("-")[2];
+  var len=row.children().length;
+  console.log(len);
+  for(var i=0;i<len;i++){
+    var value=row.children().eq(i).children().children().val();
+
+    $('#branchesModal .form-control').eq(i).val(value);
+  }  
+  $('#branchesModal').modal('show');
 });
 
 
-
+  
 $('.parts').on('click','.delete-link',function(event){
   event.preventDefault();
 var elem=$(this).parent().parent().parent().parent().parent().attr("id");
@@ -383,5 +380,4 @@ $('#deleteModal').modal('show');
 
 
     </script>
->>>>>>> c852cb72d27cb1e4a01b67e04fc3f8ceed906220
 @endsection

@@ -18,6 +18,7 @@ use App\Models\Company\CompanyBranch;
 use App\Models\Company\CompanyBankAccount;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use PDF;
 use Illuminate\Http\Request; //for Request class
 use Exception;//for exception handling
@@ -35,6 +36,7 @@ class Sales extends Controller
     public function index()
     {
         //
+        
         $sales=Sale::all(); 
         return view('sales.sales.index',compact('sales'));
 
@@ -89,7 +91,7 @@ class Sales extends Controller
             $sale_table['payment_status']="Completed";
           }
           $bank_branch_id=$request->input('bank_branch');
-          $user_id=1; 
+          $user_id=Auth::id(); 
             
           $company=CompanyBranch::find($bank_branch_id);
           $company_id=$company->company_id;
@@ -209,7 +211,7 @@ class Sales extends Controller
             $sale_table['payment_status']="Completed";
           }
           $bank_branch_id=$request->input('bank_branch');
-          $user_id=1; 
+          $user_id=Auth::id(); 
             
           $company=CompanyBranch::find($bank_branch_id);
           $company_id=$company->company_id;
