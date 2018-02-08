@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCompanySelectedTable extends Migration
+class CreateUserCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCompanySelectedTable extends Migration
      */
     public function up()
     {
-        Schema::create('company_selected', function (Blueprint $table) {
+        Schema::create('user_companies', function (Blueprint $table) {
             $table->integer('user_id');
             $table->integer('company_id');
             $table->string('user_type');
@@ -31,6 +31,6 @@ class CreateCompanySelectedTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_selected');
+        Schema::dropIfExists('user_companies');
     }
 }

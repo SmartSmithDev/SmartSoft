@@ -31,6 +31,6 @@ class User extends Authenticatable
 
     public function companies()
     {
-        return $this->morphToMany('App\Models\Company\Company', 'user', 'company_selected', 'user_id', 'company_id');
+        return $this->morphToMany('App\Models\Company\Company', 'user', 'user_companies', 'user_id', 'company_id');
     }
 }
