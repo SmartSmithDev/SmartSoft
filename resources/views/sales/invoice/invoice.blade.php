@@ -11,6 +11,7 @@
 html,body{
   min-width:100%;
   min-height:100%;
+  font-size: 13px;
 }
   
   .invoice-header,.company-info,.buyer-info,header{
@@ -25,7 +26,7 @@ html,body{
  margin-left:5%;
   }
   @page { margin-top: 400px;
-         margin-bottom: 130px;
+         margin-bottom: 100px;
      }
 header,
 footer {
@@ -38,9 +39,9 @@ header {
     width: 100%;
 }
 footer {
-    bottom:-125px;
+    bottom:-100px;
     width: 100%;
-    height: 100px;
+    height: 98px;
    
 }
 

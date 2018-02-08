@@ -81,4 +81,9 @@ class SalesItem extends Model
     {
         return $this->belongsTo('App\Models\Setting\Unit');
     }
+
+     public function item()
+    {
+        return $this->belongsTo('App\Models\Item\Item','item_id');
+    }
 }
