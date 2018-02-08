@@ -94,7 +94,6 @@ class Vendors extends Controller
      */
     public function edit(Vendor $vendor)
     {
-        //
         $states = State::all()->pluck ('name' , 'id');
         $vendor_type= Vendors::getEnumValues('vendors','vendor_type');
         $business_type= Vendors::getEnumValues('vendors','business_type');
@@ -126,12 +125,12 @@ class Vendors extends Controller
     public function destroy(Vendor $vendor)
     {
         //
-         $vendor->delete();
-        $message = trans('messages.success.deleted', ['type' => trans_choice('general.vendors', 1)]);
+       $vendor->delete();
+       $message = trans('messages.success.deleted', ['type' => trans_choice('general.vendors', 1)]);
 
-            flash($message)->success();
-        return redirect('purchases/vendors');
-    }
+       flash($message)->success();
+       return redirect('purchases/vendors');
+   }
 
     //to retrieve enum values from  database as an array
     public static function getEnumValues($table, $column) {

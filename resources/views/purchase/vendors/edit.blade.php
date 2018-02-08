@@ -4,6 +4,13 @@
 
 @section('content')
 <!-- Default box -->
+
+<ul class="nav nav-tabs">
+        <li class="active"><a href="#">Vendors</a></li>
+        <li><a href="#">Vendor Accounts</a></li>
+</ul>
+<br>
+<br>
 <div class="box box-success">
     {!! Form::model($vendor, [
         'method' => 'PATCH',
@@ -42,6 +49,34 @@
     </div>
     <!-- /.box-body -->
 
+
+    <div class="box-body parts" id="vendor_accounts">
+        
+            <table class="table table-striped table-hover" id="tbl-vendors_accounts">
+                <thead>
+                    <tr>
+                        <th class="col-md-3">@sortablelink('beneficiary_name', trans('general.beneficiary_name'))</th>
+                        <th class="col-md-3 hidden-xs">@sortablelink('account_number', trans('general.account_number'))</th>
+                        <th class="col-md-2">@sortablelink('address', trans('general.address'))</th>
+                        <th class="col-md-2">@sortablelink('beneficiary_bank', trans('general.beneficiary_bank'))</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach($vendorAccounts as $vendorAccount)
+                        <tr>
+                            <td class="col-md-3">{{ $vendorAccount->beneficiary_name }}</td>
+                            <td class="col-md-3">{{ $vendorAccount->account_number }}</td>
+                            <td class="col-md-2">{{ $vendorAccount->beneficiary_address }}</td>
+                            <td class="col-md-2">{{ $vendorAccount->beneficiary_bank }}</td>
+                        </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+        
+    </div>
+
     <div class="box-footer">
         {{ Form::saveButtons('purchases/vendors') }}
     </div>
@@ -57,6 +92,11 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('dist/css/select2.min.css') }}">
     <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            alert("clicked");
+        })
+    </script>
 @endsection
 
 @section('css')

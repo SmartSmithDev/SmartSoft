@@ -63,7 +63,6 @@
                         <th class="col-md-3 hidden-xs">@sortablelink('account_number', trans('general.account_number'))</th>
                         <th class="col-md-2">@sortablelink('address', trans('general.address'))</th>
                         <th class="col-md-2">@sortablelink('beneficiary_bank', trans('general.beneficiary_bank'))</th>
-                        <th class="col-md-1 text-center">{{ trans('general.actions') }}</th>
                     </tr>
                 </thead>
 
@@ -74,18 +73,6 @@
                             <td class="col-md-3">{{ $vendorAccount->account_number }}</td>
                             <td class="col-md-2">{{ $vendorAccount->beneficiary_address }}</td>
                             <td class="col-md-2">{{ $vendorAccount->beneficiary_bank }}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-h"></i>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                       <li><a href="{{ url('purchases/vendors/' . $vendorAccount->id . '/edit') }}">{{ 'Edit' }}</a></li>
-                                        
-                                        <li>{!! Form::deleteLink($vendor, '/purchases/vendors') !!}</li>
-                                    </ul>
-                                </div>
-                            </td>
                         </tr>
                     @endforeach
                     
@@ -105,7 +92,6 @@
     <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
 
      <script type="text/javascript" >
-  console.log('lol');
         $(document).ready(function(){
             //alert("clicked");
             var tabno=0;
