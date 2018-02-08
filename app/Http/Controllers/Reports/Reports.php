@@ -14,20 +14,11 @@ class Reports extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $r) {
-//       $name = $r->input('Customer_Name');
-//         $fromDate = $r->input('invoice1');
-//         $toDate = $r->input('invoice2');
-//         $ss =Customer::where('name','=',$name)->get();
-// foreach($ss as $sale){
 
-//             $sale->customer=Sale::find($sale->id)->whereBetween('invoice_date', array($fromDate, $toDate))->get();
-//             // dd($sale->customer);
-//         }
-//         $incomes = $sale->customer;
-    return view('reports.reports.income');
+    public function index(Request $r) {
+
+        return view('reports.reports.income');
     }
-    
 
     /**
      * Show the form for creating a new resource.
@@ -59,28 +50,33 @@ class Reports extends Controller
     public function show(Request $req)
     {
         $pname = $req->input('party_name');
-        $fromDate = $req->input('invoice1');
-        $toDate = $req->input('invoice2');
+        
+        //Search_by_party_name_only
+        if( empty($req->input('invoice1')) && empty($req->input('invoice2'))) {
+            $ss =Customer::where('name','=',$pname)->get();
+            
+            foreach($ss as $sale)   {
+                $sale->customer=Sale::where('customer_id','=',$sale->id)->get();
 
-        //return json_encode($pname);
-        if( empty($fromDate) && empty($toDate)){
-        $ss =Customer::where('name','=',$pname)->get();
-        foreach($ss as $sale){
-            $sale->customer=Sale::where('customer_id','=',$sale->id)->get();
-            // dd($sale->customer);
+            }
+            return json_encode($sale->customer);
         }
-    return json_encode($sale->customer);
-    }
-        else
-        {
-           $ss =Customer::where('name','=',$pname)->get();
-            foreach($ss as $sale){
+        else {   
+            //Search_by_party_name_&_date
+            $fDate = explode("/",$req->input('invoice1'));
+            $tDate = explode("/",$req->input('invoice2'));
+            $fromDate = "$fDate[2]-$fDate[0]-$fDate[1]";
+            $toDate = "$tDate[2]-$tDate[0]-$tDate[1]";
 
-            $sale->customer=Sale::where('customer_id','=',$sale->id)->whereBetween('invoice_date', array($fromDate, $toDate))->get();
-            // dd($sale->customer);
-        }
-    
-        return json_encode($sale->customer);
+            $ss =Customer::where('name','=',$pname)->get();
+            
+            foreach($ss as $sale) {
+                $sale->customer=Sale::where('customer_id','=',$sale->id)->whereBetween('invoice_date', array($fromDate, $toDate))->get();
+
+            }
+
+            return json_encode($sale->customer);
+
         }
     }
         

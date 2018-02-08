@@ -114,16 +114,13 @@
         width:100%;
         color:grey;
     }
-
     button[title="Delete"]:hover{
         background-color:#E1E3E9;
         color:black;
     }
-
     .dropdown-menu >li >a{
         text-align: center;
     }
-
     .dropdown-menu li{
         z-index: 50;
     }
@@ -132,4 +129,3 @@
     }
 </style>
 @endsection
-

@@ -108,4 +108,9 @@ class Purchase extends Model
     {
         return $this->hasMany('App\Models\purchase\PurchaseItem');
     }
+
+    public function purchasePayments()
+    {
+        return $this->hasMany('App\Models\purchase\PurchasePayment');
+    }
 }

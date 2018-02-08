@@ -19,7 +19,7 @@
         'role' => 'form'
     ]) !!}
 
-    <div class="box-body">
+    <div class="box-body parts">
          {{ Form::textGroup('name', trans('general.name'), 'id-card-o') }}
             
             {{ Form::selectGroup('vendor_type', trans('general.vendor_type'),'id-card-o', $vendor_type) }}
@@ -63,15 +63,7 @@
                 </thead>
 
                 <tbody>
-                    @foreach($vendorAccounts as $vendorAccount)
-                        <tr>
-                            <td class="col-md-3">{{ $vendorAccount->beneficiary_name }}</td>
-                            <td class="col-md-3">{{ $vendorAccount->account_number }}</td>
-                            <td class="col-md-2">{{ $vendorAccount->beneficiary_address }}</td>
-                            <td class="col-md-2">{{ $vendorAccount->beneficiary_bank }}</td>
-                        </tr>
-                    @endforeach
-                    
+                    <p> Vendor acoounts</p>
                 </tbody>
             </table>
         
@@ -94,7 +86,15 @@
     <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            alert("clicked");
+            alert("Clicked");
+            var tabno=0;
+            $('.nav-tabs').on('click','li',function(){
+                $(this).addClass('active');
+                $('.parts').eq(tabno).css({display:"none"});
+                $('.nav-tabs li').eq(tabno).removeClass('active');
+                tabno=$(this).index();
+                $('.parts').eq(tabno).css({display:"block"});
+            });
         })
     </script>
 @endsection
@@ -102,5 +102,3 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/bootstrap-fancyfile.css') }}">
 @endsection
-
-
