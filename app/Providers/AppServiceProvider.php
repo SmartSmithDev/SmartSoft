@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use App\Models\Company\Company;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Auth\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
          if(Schema::hasTable('users')){
             $user=User::where('id', 1)->first();
             View::share('user', $user);
+            Auth::login($user);
          }
     }
 
