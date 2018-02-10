@@ -98,111 +98,48 @@ $branch_row=0;
 
    {!! Form::close() !!}
 
-  <!-- Modal -->
-<div id="accountModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+ <!-- Modal for adding bank accounts  -->
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add New Account</h4>
-      </div>
-      <div class="modal-body" style="overflow-y: hidden">
-         
-         {{ Form::textGroup('aci', 'Account Identifier' , 'industry') }}
+{!! General::modal('Add New Account','accountModal',[Form::textGroup('aci', 'Account Identifier' , 'industry'),
 
-         {{ Form::textGroup('en', 'Entity Name' , 'industry') }}
+       Form::textGroup('en', 'Entity Name' , 'industry'),
 
-         {{ Form::textGroup('hn', 'Holder Name' , 'industry') }}
+       Form::textGroup('hn', 'Holder Name' , 'industry'),
 
-         {{ Form::textGroup('bn', 'Bank Name' , 'industry') }}
+       Form::textGroup('bn', 'Bank Name' , 'industry'),
 
-          {{ Form::textGroup('an', 'Account Number' , 'industry') }}
+        Form::textGroup('an', 'Account Number' , 'industry'),
 
-           {{ Form::textGroup('ifsc', 'Ifsc Code' , 'industry') }}
+         Form::textGroup('ifsc', 'Ifsc Code' , 'industry'),
 
-            {{ Form::textGroup('notes', 'Notes' , 'industry') }}
+          Form::textGroup('notes', 'Notes' , 'industry')],'Save','success','account_save')  !!}
 
 
-         
-      </div>
-      <div class="modal-footer">
-         <button  class="btn btn-success" id="account_save">Save</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+<!-- Modal for adding branches  -->
 
 
-<!-- Modal -->
-<div id="branchesModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+{!! General::modal('Add New Branch','branchesModal',[Form::textGroup('gstin', 'GSTIN' , 'industry'),
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add New Branch</h4>
-      </div>
-      <div class="modal-body" style="overflow-y: hidden">
-      
+         Form::textGroup('brname', 'Branch Name' , 'industry'),
 
-         {{ Form::textGroup('gstin', 'GSTIN' , 'industry') }}
+         Form::textGroup('phone', 'Phone' , 'industry'),
 
-         {{ Form::textGroup('brname', 'Branch Name' , 'industry') }}
+          Form::emailGroup('email', 'Email' , 'industry'),
 
-         {{ Form::textGroup('phone', 'Phone' , 'industry') }}
+           Form::textareaGroup('address', 'Address'),
 
-          {{ Form::emailGroup('email', 'Email' , 'industry') }}
+             Form::selectGroup('city', 'City' , 'industry',$city ),
 
-           {{ Form::textareaGroup('address', 'Address') }}
+            Form::selectGroup('state', 'State' , 'user',$states),
 
-             {{ Form::selectGroup('city', 'City' , 'industry',$city ) }}
+             Form::selectGroup('country', 'Country' , 'industry',$country),
 
-            {{ Form::selectGroup('state', 'State' , 'user',$states) }}
-
-             {{ Form::selectGroup('country', 'Country' , 'industry',$country) }}
-
-              {{ Form::textGroup('pincode', 'Pin Code' , 'industry') }}
-               
-                            
-
-      </div>
-      <div class="modal-footer">
-        <button  class="btn btn-success" id="branch_save">Save</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+              Form::textGroup('pincode', 'Pin Code' , 'industry')],'Save','success','branch_save')  !!}
 
 
-  <!-- Modal -->
-<div id="deleteModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Delete</h4>
-      </div>
-      <div class="modal-body" style="overflow-y: hidden"><!-- for floating element i.e clearfix hack  -->
-         Are You Sure You Want Delete? 
-      </div>
-      <div class="modal-footer">
-         <button  class="btn btn-danger" id="delete_button">Delete</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
 
-  </div>
-</div>
-
+{!! General::modal('Delete','deleteModal',['Are You Sure You Want Delete?'],'Delete','danger','delete_button')  !!}
 
 
 
@@ -288,54 +225,58 @@ $('.parts').eq(tabno).css({display:"block"});
 
 });
 
-$('#account_save').click(function(){
-var accnt_id=$('#aci').val();
-var entity_name=$('#en').val();
-var holder_name=$('#hn').val();
-var bank_name=$('#bn').val();
-var account_number=$('#an').val();
-var ifsc_code=$('#ifsc').val();
-var notes=$('#notes').val();
-var htmlaccountRow=$('#company-bank-accounts tbody').append('<tr id="account-row-'+accountrow+'"><td class="col-md-1 hidden"><span>'+accnt_id+'<input type="hidden" name="accounts['+accountrow+'][account_identifier]" value='+accnt_id+'></span></td><td class="col-md-1 hidden"><span>'+entity_name+'<input type="hidden" name="accounts['+accountrow+'][entity_name]" value='+entity_name+'></span></td><td class="col-md-1"><span>'+holder_name+'<input type="hidden" name="accounts['+accountrow+'][holder_name]" value='+holder_name+'></span></td><td class="col-md-1"><span>'+bank_name+'<input type="hidden" name="accounts['+accountrow+'][bank_name]" value='+bank_name+'></span></td><td class="col-md-1"><span>'+account_number+'<input type="hidden" name="accounts['+accountrow+'][account_number]" value='+account_number+'></span></td><td class="col-md-1"><span>'+ifsc_code+'<input type="hidden" name="accounts['+accountrow+'][ifsc_code]" value='+ifsc_code+'></span></td><td class="col-md-1 hidden"><span>'+notes+'<input type="hidden" name="accounts['+accountrow+'][notes]" value='+notes+'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="account-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>');
+ //function to save the modal details of bank account to the table as a row i.e appending a row with modal details 
+          $('#account_save').click(function(){
+            var accnt_id=$('#aci').val();
+            var entity_name=$('#en').val();
+            var holder_name=$('#hn').val();
+            var bank_name=$('#bn').val();
+            var account_number=$('#an').val();
+            var ifsc_code=$('#ifsc').val();
+            var notes=$('#notes').val();
+            var htmlaccountRow=$('#company-bank-accounts tbody').append('<tr id="account-row-'+accountrow+'"><td class="col-md-1 hidden"><span>'+accnt_id+'<input type="hidden" name="accounts['+accountrow+'][account_identifier]" value="'+accnt_id+'"></span></td><td class="col-md-1 hidden"><span>'+entity_name+'<input type="hidden" name="accounts['+accountrow+'][entity_name]" value="'+entity_name+'"></span></td><td class="col-md-1"><span>'+holder_name+'<input type="hidden" name="accounts['+accountrow+'][holder_name]" value="'+holder_name+'"></span></td><td class="col-md-1"><span>'+bank_name+'<input type="hidden" name="accounts['+accountrow+'][bank_name]" value="'+bank_name+'"></span></td><td class="col-md-1"><span>'+account_number+'<input type="hidden" name="accounts['+accountrow+'][account_number]" value="'+account_number+'"></span></td><td class="col-md-1"><span>'+ifsc_code+'<input type="hidden" name="accounts['+accountrow+'][ifsc_code]" value="'+ifsc_code+'"></span></td><td class="col-md-1 hidden"><span>'+notes+'<input type="hidden" name="accounts['+accountrow+'][notes]" value="'+notes+'"></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="account-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>');
 
-accountrow++;
-if(account_edit_row>-1){
-  $('#account-row-'+account_edit_row).remove();
-}
-$('#accountModal').modal('hide');
-$('#accountModal input').val("");
-});
-
-$('#branch_save').click(function(){
-  console.log("branch");
-var gstin=$('#gstin').val();
-var b_name=$('#brname').val();
-var phone=$('#phone').val();
-var email=$('#email').val();
-var address=$('#address').val();
-var city=$('#city').val();
-var state_id=$('#state').val();
-var state=$('#state')[0].options[$('#state')[0].selectedIndex].innerHTML;
-var country_id=$('#country').val();
-var country=$('#country')[0].options[$('#country')[0].selectedIndex].innerHTML;
-var pincode=$('#pincode').val();
-var html=$('#company-branches tbody').append('<tr id="branch-row-'+branch_row+'"><td class="col-md-1 hidden"><span>'+gstin+'<input type="hidden" name="branch['+branch_row+'][gstin]" value='+gstin+'></span></td><td class="col-md-1"><span>'+b_name+'<input type="hidden" name="branch['+branch_row+'][branch_name]" value='+b_name+'></span></td><td class="col-md-1"><span>'+phone+'<input type="hidden" name="branch['+branch_row+'][phone]" value='+phone+'></span></td><td class="col-md-1"><span>'+email+'<input type="hidden" name="branch['+branch_row+'][email_id]" value='+email+'></span></td><td class="col-md-1"><span>'+address+'<input type="hidden" name="branch['+branch_row+'][address]" value="'+address+'"></span></td><td class="col-md-1"><span>'+city+'<input type="hidden" name="branch['+branch_row+'][city]" value='+city+'></span></td><td class="col-md-1"><span>'+state+'<input type="hidden" name="branch['+branch_row+'][state_id]" value='+state_id+'></span></td><td class="col-md-1 hidden"><span>'+country+'<input type="hidden" name="branch['+branch_row+'][country]" value='+country_id+'></span></td><td class="col-md-1 hidden"><span>'+pincode+'<input type="hidden" name="branch['+branch_row+'][pin_code]" value='+pincode+'></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="branch-edit">{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>');
-branch_row++;
-if(branch_edit_row>-1){
-  $('#branch-row-'+branch_edit_row).remove();
-}
-
-$('#branchesModal').modal('hide');
-$('#branchesModal input').val("");
-});
+            accountrow++;
+            if(account_edit_row>-1){
+              $('#account-row-'+account_edit_row).remove();
+            }
+            $('#accountModal').modal('hide');
+            $('#accountModal input').val("");
+          });
 
 
-$('#branchesModal,#accountModal').on('hidden.bs.modal',function(){
-$('#branchesModal input,#branchesModal select,#branchesModal textarea').val("");
-$('#accountModal input,#accountModal select,#accountModal textarea').val("");
-account_edit_row=-1;
-branch_edit_row=-1;
-});
+
+  //function to save the modal details of branch to the table as a row i.e appending a row with modal details 
+          $('#branch_save').click(function(){
+            var gstin=$('#gstin').val();
+            var b_name=$('#brname').val();
+            var phone=$('#phone').val();
+            var email=$('#email').val();
+            var address=$('#address').val();
+            var city=$('#city').val();
+            var state_id=$('#state').val();
+            var state=$('#state')[0].options[$('#state')[0].selectedIndex].innerHTML;
+            var country_id=$('#country').val();
+            var country=$('#country')[0].options[$('#country')[0].selectedIndex].innerHTML;
+            var pincode=$('#pincode').val();
+            var html=$('#company-branches tbody').append(' <tr id="branch-row-'+branch_row+'"><td class="col-md-1 hidden"><span>'+gstin+'<input type="hidden" name="branch['+branch_row+'][gstin]" value="'+gstin+'"></span></td><td class="col-md-1"><span>'+b_name+'<input type="hidden" name="branch['+branch_row+'][branch_name]" value="'+b_name+'"></span></td><td class="col-md-1"><span>'+phone+'<input type="hidden" name="branch['+branch_row+'][phone]" value="'+phone+'"></span></td><td class="col-md-1"><span>'+email+'<input type="hidden" name="branch['+branch_row+'][email_id]" value="'+email+'"></span></td><td class="col-md-1"><span>'+address+'<input type="hidden" name="branch['+branch_row+'][address]" value="'+address+'"></span></td><td class="col-md-1"><span>'+city+'<input type="hidden" name="branch['+branch_row+'][city]" value="'+city+'"></span></td><td class="col-md-1"><span>'+state+'<input type="hidden" name="branch['+branch_row+'][state_id]" value="'+state_id+'"></span></td><td class="col-md-1 hidden"><span>'+country+'<input type="hidden" name="branch['+branch_row+'][country]" value="'+country_id+'"></span></td><td class="col-md-1 hidden"><span>'+pincode+'<input type="hidden" name="branch['+branch_row+'][pin_code]" value="'+pincode+'"></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="branch-edit">{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>');
+            branch_row++;
+            if(branch_edit_row>-1){
+              $('#branch-row-'+branch_edit_row).remove();
+            }
+            $('#branchesModal').modal('hide');
+            $('#branchesModal input').val("");
+          });
+
+          $('#branchesModal,#accountModal').on('hidden.bs.modal',function(){
+            $('#branchesModal input,#branchesModal select,#branchesModal textarea').val("");
+            $('#accountModal input,#accountModal select,#accountModal textarea').val("");
+            account_edit_row=-1;
+            branch_edit_row=-1;
+          });
+
+
+
 
 $('#company-bank-accounts tbody').on('click','.account-edit',function(){
   var row=$(this).parent().parent().parent().parent().parent();

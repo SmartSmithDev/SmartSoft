@@ -26,6 +26,7 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         'd7354eb4c8441fbf08eec280b61c7c73' => __DIR__ . '/..' . '/rachidlaasri/laravel-installer/src/Helpers/functions.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
+        'fd1193538f452c4ac8fd71976c56bb4a' => __DIR__ . '/../..' . '/app/libraries/General.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -525,6 +526,7 @@ class ComposerStaticInit7195d8e53875225c12168c8341cb170a
         'App\\Providers\\GoogleDriveServiceProvider' => __DIR__ . '/../..' . '/app/Providers/GoogleDriveServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Traits\\InventoryTrait' => __DIR__ . '/../..' . '/app/Traits/InventoryTrait.php',
+        'App\\libraries\\General' => __DIR__ . '/../..' . '/app/libraries/General.php',
         'App\\libraries\\GstCalculator' => __DIR__ . '/../..' . '/app/libraries/GstCalculator.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
