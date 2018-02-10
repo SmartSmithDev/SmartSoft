@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Purchases;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreGstIn;
@@ -10,9 +8,6 @@ use DB;
 use App\Models\Vendor\Vendor;
 use App\Models\Setting\State;
 use App\Models\Vendor\VendorAccount;
-use App\Models\Setting\Country;
-
-
 class Vendors extends Controller
 {
     /**
@@ -22,13 +17,12 @@ class Vendors extends Controller
      */
     public function index()
     {
-
         //
         $vendors=DB::table('vendors')->get();
         $vendorAccounts=VendorAccount::all();
+        //dd($vendorAccounts);
         return view('purchase.vendors.index',compact('vendors','vendorAccounts'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -36,11 +30,12 @@ class Vendors extends Controller
      */
     public function create()
     {
-    
-        return view('purchase.vendors.create');
-
+        //
+        $states = State::all()->pluck ('name' , 'id');
+        $vendor_type= Vendors::getEnumValues('vendors','vendor_type');
+        $business_type= Vendors::getEnumValues('vendors','business_type');
+        return view('purchase.vendors.create',compact('vendor_type','business_type','states'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -61,16 +56,16 @@ class Vendors extends Controller
         }
         return redirect("/purchases/vendors");
     }
-
-        $cname=$request->input('name');
-        $email_id=$request->input('email_id');
-        $bn=$request->input('beneficiary_name');
-         return $this->insert($cname,$email_id,$bn);
+    public function store1(Request $request)
+    {
+          // $this->validate($request , [
+          //   'gstin' => 'unique:vendors|max:15|min:15'
+          //   ],['gstin.min:15' => 'The gst must have 15 characters '
+          //       ]);
+            Vendor::create($request->all());
+          return redirect("purchases/purchases/create");
             
-            
-       
     }
-
     /**
      * Display the specified resource.
      *
@@ -81,28 +76,19 @@ class Vendors extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request,$id)
+    public function edit(Vendor $vendor)
     {
-        //
-
-       
-      
-          $vendors = Vendor::find($id);
-       //$vendorAccounts=VendorAccount::find($id);
-           $vendor_accounts=Vendor::find($id)->vendorAccounts()->get();
-       
-            return view('purchase.vendors.edit',compact('vendors','vendor_accounts'));
-
-       
+        $states = State::all()->pluck ('name' , 'id');
+        $vendor_type= Vendors::getEnumValues('vendors','vendor_type');
+        $business_type= Vendors::getEnumValues('vendors','business_type');
+        return view('purchase.vendors.edit',compact('vendor','vendor_type','business_type','states'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -110,23 +96,14 @@ class Vendors extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Vendor $vendor,Request $request)
     {
         //
-        /*$vendor->update($request->input());
+        $vendor->update($request->input());
         $message = trans('messages.success.updated', ['type' => trans_choice('general.vendors', 1)]);
         flash($message)->success();
-        return redirect('purchases/vendors');*/
-        //Vendor::find($id)->vendorAccounts()->delete();
-        Vendor::find($id)->delete();
-        VendorAccount::find($id)->delete();
-        $cname=$request->input('name');
-        $email_id=$request->input('email_id');
-        $bn=$request->input('beneficiary_name');
-        return $this->insert($cname,$email_id,$bn);
-            
+        return redirect('purchases/vendors');
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -136,23 +113,21 @@ class Vendors extends Controller
     public function destroy(Vendor $vendor)
     {
         //
-        /* $vendor->delete();
-        $message = trans('messages.success.deleted', ['type' => trans_choice('general.vendors', 1)]);
-
-            flash($message)->success();
-        return redirect('purchases/vendors');*/
-    
-         $VendorAccount->delete();
-        $Vendor->delete();
-     $message = trans('messages.success.deleted', ['type' => trans_choice('general.vendors', 1)]);
-    flash($message)->success();
-        return redirect('purchases/vendors');
-    }
-
-    
-     public function insert($cname,$pan,$bn){
-         $vendor=Vendor::create(["name"=>$cname]);
-    
-          return redirect("/purchases/vendors");
+       $vendor->delete();
+       $message = trans('messages.success.deleted', ['type' => trans_choice('general.vendors', 1)]);
+       flash($message)->success();
+       return redirect('purchases/vendors');
+   }
+    //to retrieve enum values from  database as an array
+    public static function getEnumValues($table, $column) {
+      $type = DB::select(DB::raw("SHOW COLUMNS FROM $table WHERE Field = '{$column}'"))[0]->Type ;
+      preg_match('/^enum\((.*)\)$/', $type, $matches);
+      $enum = array();
+      foreach( explode(',', $matches[1]) as $value )
+      {
+        $v = trim( $value, "'" );
+        $enum = array_add($enum, $v, $v);
+      }
+      return $enum;
     }
 }
