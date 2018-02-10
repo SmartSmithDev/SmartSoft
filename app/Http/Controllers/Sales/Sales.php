@@ -18,6 +18,7 @@ use App\Models\Company\CompanyBranch;
 use App\Models\Company\CompanyBankAccount;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use PDF;
 use Illuminate\Http\Request; //for Request class
 use Exception;//for exception handling
@@ -35,6 +36,7 @@ class Sales extends Controller
     public function index()
     {
         //
+        
         $sales=Sale::all(); 
         return view('sales.sales.index',compact('sales'));
 
@@ -64,7 +66,7 @@ class Sales extends Controller
         $bank_accounts=CompanyBankAccount::all()->pluck('account_number','id');
         
 
-        $statement = DB::select("SHOW TABLE STATUS LIKE 'purchases'"); //for getting the next value auto increment id
+        $statement = DB::select("SHOW TABLE STATUS LIKE 'sales'"); //for getting the next value auto increment id
         $new_invoice_id = $statement[0]->Auto_increment;
         return view('sales.sales.create' , compact('gst' , 'customers' , 'hsn' , 'units' , 'states','countries','items','bank_branch','customer_type','business_type','cess','new_invoice_id','bank_accounts'));
     }
@@ -89,7 +91,7 @@ class Sales extends Controller
             $sale_table['payment_status']="Completed";
           }
           $bank_branch_id=$request->input('bank_branch');
-          $user_id=1; 
+          $user_id=Auth::id(); 
             
           $company=CompanyBranch::find($bank_branch_id);
           $company_id=$company->company_id;
@@ -109,12 +111,13 @@ class Sales extends Controller
           foreach($items_table as $item_row){
              //dd($item_row);
                if(!empty($item_row)){
-                   $sales_item=SalesItem::insert(['sales_id'=>$sale_id,'item_id'=>$item_row['id'],'hsn'=>$item_row['hsn'],'item_type'=>$item_row['type'],'unit_price'=>$item_row['unit_price'],'quantity'=>$item_row['quantity'],'unit_id'=>$item_row['unit_id'],'discount'=>$item_row['discount'],'taxable_value'=>$item_row['taxable_value'],'gst_id'=>$item_row['gst'],'cgst'=>$item_row['cgst'],'sgst'=>$item_row['sgst'],'igst'=>$item_row['igst'],'ugst'=>$item_row['ugst'],'cess_id'=>$item_row['cess'],'tax_amount'=>$item_row['tax_amount'],'total_product_amount'=>$item_row['total_amount'],'cess_amount'=>$item_row['cess_amount']]);
+                   $sales_item=SalesItem::create(['sales_id'=>$sale_id,'item_id'=>$item_row['id'],'hsn'=>$item_row['hsn'],'item_type'=>$item_row['type'],'unit_price'=>$item_row['unit_price'],'quantity'=>$item_row['quantity'],'unit_id'=>$item_row['unit_id'],'discount'=>$item_row['discount'],'taxable_value'=>$item_row['taxable_value'],'gst_id'=>$item_row['gst'],'cgst'=>$item_row['cgst'],'sgst'=>$item_row['sgst'],'igst'=>$item_row['igst'],'ugst'=>$item_row['ugst'],'cess_id'=>$item_row['cess'],'tax_amount'=>$item_row['tax_amount'],'total_product_amount'=>$item_row['total_amount'],'cess_amount'=>$item_row['cess_amount']]);
+                   $item_row["name"]=$sales_item->item()->first()->name;
 
                   
                }
            }
-
+           $sale_table["money_in_words"]=$this->displaywords($sale_table["round_off"]);
            $customer=$sale_table->customer()->pluck('address','gstin')->toArray();
            $state=$sale_table->supplyState()->pluck('state_tax_code')->toArray()[0];
            $sale_table["gstin"]=array_keys($customer)[0];
@@ -180,7 +183,7 @@ class Sales extends Controller
         }
 
 
-       // $newRowDetails=json_encode($newRowDetails);
+        $newRowDetails=json_encode($newRowDetails);
         
 
         return view('sales.sales.edit',compact('sale','sales_items','items','hsn','units','customers','gst','states','bank_branch','customer_type','business_type','cess','newRowDetails','bank_accounts'));
@@ -196,8 +199,8 @@ class Sales extends Controller
     public function update(Request $request, $id)
     {
         //
-        //dd($id);
-        Sale::find($id)->delete();
+       
+       Sale::find($id)->delete();
 
         try {
           $file=$request->file('attachment'); 
@@ -208,10 +211,10 @@ class Sales extends Controller
             $sale_table['payment_status']="Completed";
           }
           $bank_branch_id=$request->input('bank_branch');
-          $user_id=1; 
+          $user_id=Auth::id(); 
             
-          $company=Company::find($bank_branch_id);
-          $company_id=$company->id;
+          $company=CompanyBranch::find($bank_branch_id);
+          $company_id=$company->company_id;
           $account_id=$request->input('bank_account');
             
           $sale_table["company_branch_id"]=$bank_branch_id;
@@ -227,13 +230,15 @@ class Sales extends Controller
           $file_table=DB::table('sales_files')->insert(['user_id'=>$user_id,'sales_id'=>$sale_id,'path'=>$file->storeAs('files','sales_files'.$count.$user_id.$sale_id)]);
         }
 
-          foreach($items_table as $item_row){
+          foreach($items_table as $key=>$item_row){
              //dd($item_row);
                if(!empty($item_row)){
-                   SalesItem::insert(['sales_id'=>$sale_id,'item_id'=>$item_row['id'],'hsn'=>$item_row['hsn'],'item_type'=>$item_row['type'],'unit_price'=>$item_row['unit_price'],'quantity'=>$item_row['quantity'],'unit_id'=>$item_row['unit_id'],'discount'=>$item_row['discount'],'taxable_value'=>$item_row['taxable_value'],'gst_id'=>$item_row['gst'],'cgst'=>$item_row['cgst'],'sgst'=>$item_row['sgst'],'igst'=>$item_row['igst'],'ugst'=>$item_row['ugst'],'cess_id'=>$item_row['cess'],'tax_amount'=>$item_row['tax_amount'],'total_product_amount'=>$item_row['total_amount'],'cess_amount'=>$item_row['cess_amount']]);
+                   $sales_item=SalesItem::create(['sales_id'=>$sale_id,'item_id'=>$item_row['id'],'hsn'=>$item_row['hsn'],'item_type'=>$item_row['type'],'unit_price'=>$item_row['unit_price'],'quantity'=>$item_row['quantity'],'unit_id'=>$item_row['unit_id'],'discount'=>$item_row['discount'],'taxable_value'=>$item_row['taxable_value'],'gst_id'=>$item_row['gst'],'cgst'=>$item_row['cgst'],'sgst'=>$item_row['sgst'],'igst'=>$item_row['igst'],'ugst'=>$item_row['ugst'],'cess_id'=>$item_row['cess'],'tax_amount'=>$item_row['tax_amount'],'total_product_amount'=>$item_row['total_amount'],'cess_amount'=>$item_row['cess_amount']]);
+                   $items_table[$key]["name"]=$sales_item->item()->first()->name;
+                   
                }
            }
-
+           $sale_table["money_in_words"]=$this->displaywords($sale_table["round_off"]);
            $customer=$sale_table->customer()->pluck('address','gstin')->toArray();
            $state=$sale_table->supplyState()->pluck('state_tax_code')->toArray()[0];
            $sale_table["gstin"]=array_keys($customer)[0];
@@ -248,7 +253,7 @@ class Sales extends Controller
 
        }
        catch (Exception $e) {
-        $errorCode = $e->errorInfo[1];          
+                 
         return "Some error occured : " .$e ;
     }
     }
@@ -339,4 +344,39 @@ class Sales extends Controller
         else
             return "-1";
     }
+
+
+    function displaywords($number){
+     $decimal = round($number - ($no = floor($number)), 2) * 100;
+     $hundred = null;
+     $digits_length = strlen($no);
+     $i = 0;
+     $str = array();
+     $words = array(0 => '', 1 => 'one', 2 => 'two',
+      3 => 'three', 4 => 'four', 5 => 'five', 6 => 'six',
+      7 => 'seven', 8 => 'eight', 9 => 'nine',
+      10 => 'ten', 11 => 'eleven', 12 => 'twelve',
+      13 => 'thirteen', 14 => 'fourteen', 15 => 'fifteen',
+      16 => 'sixteen', 17 => 'seventeen', 18 => 'eighteen',
+      19 => 'nineteen', 20 => 'twenty', 30 => 'thirty',
+      40 => 'forty', 50 => 'fifty', 60 => 'sixty',
+      70 => 'seventy', 80 => 'eighty', 90 => 'ninety');
+     $digits = array('', 'hundred','thousand','lakh', 'crore');
+     while( $i < $digits_length ) {
+      $divider = ($i == 2) ? 10 : 100;
+      $number = floor($no % $divider);
+      $no = floor($no / $divider);
+      $i += $divider == 10 ? 1 : 2;
+      if ($number) {
+        $plural = (($counter = count($str)) && $number > 9) ? 's' : null;
+        $hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
+        $str [] = ($number < 21) ? $words[$number].' '. $digits[$counter]. $plural.' '.$hundred:$words[floor($number / 10) * 10].' '.$words[$number % 10]. ' '.$digits[$counter].$plural.' '.$hundred;
+      } else $str[] = null;
+    }
+    $Rupees = implode('', array_reverse($str));
+    $paise = ($decimal) ? "." . ($words[$decimal / 10] . " " . $words[$decimal % 10]) . ' Paise' : '';
+    return ($Rupees ? $Rupees . 'Rupees ' : '') . $paise;
+
+  }
+
 }
