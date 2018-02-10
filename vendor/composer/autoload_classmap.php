@@ -75,6 +75,7 @@ return array(
     'App\\Providers\\GoogleDriveServiceProvider' => $baseDir . '/app/Providers/GoogleDriveServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
     'App\\Traits\\InventoryTrait' => $baseDir . '/app/Traits/InventoryTrait.php',
+    'App\\libraries\\General' => $baseDir . '/app/libraries/General.php',
     'App\\libraries\\GstCalculator' => $baseDir . '/app/libraries/GstCalculator.php',
     'ArithmeticError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
     'AssertionError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
