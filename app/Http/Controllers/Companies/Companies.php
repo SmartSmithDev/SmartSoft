@@ -79,7 +79,7 @@ class Companies extends Controller
      */
     public function edit(Request $req,$id)
     {
-         $states = State::all()->pluck('name' ,'id');
+        $states = State::all()->pluck('name' ,'id');
         $city=["0"=>"Mumbai"];
         $country=DB::table('countries')->get()->pluck('name','id');
         $company=Company::find($id);

@@ -82,12 +82,14 @@ class Vendors extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vendor $vendor)
+    public function edit(Request $request, $id)
     {
+        $vendorAccounts=Vendor::find($id)->vendorAccounts()->get();
+        $vendor=Vendor::find($id);
         $states = State::all()->pluck ('name' , 'id');
         $vendor_type= Vendors::getEnumValues('vendors','vendor_type');
         $business_type= Vendors::getEnumValues('vendors','business_type');
-        return view('purchase.vendors.edit',compact('vendor','vendor_type','business_type','states'));
+        return view('purchase.vendors.edit',compact('vendor','vendorAccounts','vendor_type','business_type','states'));
     }
     /**
      * Update the specified resource in storage.
