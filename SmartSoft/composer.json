@@ -8,6 +8,7 @@
         "php": ">=7.0.0",
         "almasaeed2010/adminlte": "~2.4",
         "barryvdh/laravel-dompdf": "^0.8.1",
+        "davejamesmiller/laravel-breadcrumbs": "^4.2",
         "fideloper/proxy": "~3.3",
         "grimthorr/laravel-user-settings": "^2.1",
         "kyslik/column-sortable": "5.5.*",
@@ -27,6 +28,9 @@
         "phpunit/phpunit": "~6.0"
     },
     "autoload": {
+        "files":[
+                "app/libraries/General.php"
+        ],
         "classmap": [
             "database/seeds",
             "database/factories"

@@ -49,31 +49,27 @@ class expenses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $req)//expenses_modal
-    {
-        $pname = $req->input('party_name');
-        //return json_encode($pname);
+    public function show(Request $req) {
+        $pname = $req->input('party_name');//VendorName
+        //Search by vendorName
         if( empty($req->input('pdate1')) && empty($req->input('pdate2'))) {
             $ss =Vendor::where('name','=',$pname)->get();
-                foreach($ss as $sale)   {
-                    $sale->vendor=VendorAccount::where('vendor_id','=', $sale->id )->pluck('id');
-                    $sale->cname=SalesPayment::where('customer_account_id','=',$sale->vendor)->get();
-                }
-        return json_encode($sale->cname);
+            foreach($ss as $sale) {
+                $sale->vendor=VendorAccount::where('vendor_id','=', $sale->id )->pluck('id');
+                $sale->cname=SalesPayment::where('customer_account_id','=',$sale->vendor)->get();
+            }
+        return json_encode($sale->cname); //Return SalesPayment Details
         }
-        else
+        else //Search by Vendorname and Payment Details Range
         {   $fDate = explode("/",$req->input('pdate1'));
             $tDate = explode("/",$req->input('pdate2'));
-            $fromDate = "$fDate[2]-$fDate[0]-$fDate[1]";
+            $fromDate = "$fDate[2]-$fDate[0]-$fDate[1]";//date format
             $toDate = "$tDate[2]-$tDate[0]-$tDate[1]";
             $ss =Vendor::where('name','=',$pname)->get();
-            foreach($ss as $sale){
+            foreach($ss as $sale) {
                 $sale->vendor=VendorAccount::where('vendor_id','=', $sale->id )->pluck('id');
-            
                 $sale->cname=SalesPayment::where('customer_account_id','=',$sale->vendor)->whereBetween('payment_date', array($fromDate, $toDate))->get();
-            // dd($sale->cname);
             }
-    
         return json_encode($sale->cname);
         }
     }

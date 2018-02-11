@@ -41,6 +41,8 @@ return [
     'account_number'        => 'Account Number',
     'address'               => 'Address',
     'beneficiary_bank'      => 'Beneficiary Bank',
+    'pictures'              => 'Picture|Pictures',
+    'company'               => 'Company|Companies',
 
     'title' => [
         'new'               => 'New :type',

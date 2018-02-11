@@ -52,4 +52,10 @@ class CompanyBranch extends Model
     }
 
 
+    
+
+
+
+
+
 }
