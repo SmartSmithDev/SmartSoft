@@ -43,7 +43,7 @@ class Users extends Controller
          // Upload picture
         $picture = $request->file('picture');
         if ($picture) {
-            $request['picture'] = $picture->store('uploads/users');
+            $request['picture'] = $picture->store('public/uploads/users');
         }
 
         //password checking
@@ -105,7 +105,7 @@ class Users extends Controller
         // Upload picture
         $picture = $request->file('picture');
         if ($picture) {
-            $request['picture'] = $picture->store('uploads/users');
+            $request['picture'] = $picture->store('public/uploads/users');  
         }
 
          // Do not reset password if not entered/changed
