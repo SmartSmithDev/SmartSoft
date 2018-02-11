@@ -98,10 +98,18 @@ class Vendors extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Vendor $vendor,Request $request)
+    public function update(Request $request,$id)
     {
-        //
+        $vendor=Vendor::find($id);
         $vendor->update($request->input());
+        $vendor_id=$id;
+        if($request->input('accounts')){
+            $vendorAccounts=$request->input('accounts');
+            foreach ($vendorAccounts as $vendorAccount) {
+                $vendorAccount['vendor_id']=$vendor_id;
+                VendorAccount::update($vendorAccount);
+            }
+        }
         $message = trans('messages.success.updated', ['type' => trans_choice('general.vendors', 1)]);
         flash($message)->success();
         return redirect('purchases/vendors');
