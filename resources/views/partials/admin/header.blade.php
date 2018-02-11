@@ -24,12 +24,12 @@
                   <li class="user-header">
                       @if ($user->picture)
                         <img src="{{  Storage::url($user->picture) }}" class="img-circle" alt="User Image">
+                      @else
+                        <i class="fa fa-4 fa-user-o" style="color: #fff; font-size: 7em;"></i>
                       @endif
                     <p>
                       @if (!empty($user->name))
                             {{ $user->name }}
-                       @else
-                                <i class="fa fa-4 fa-user-o" style="color: #fff; font-size: 7em;"></i>
                       @endif
                     </p>
                   </li>
