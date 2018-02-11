@@ -141,6 +141,9 @@ class Companies extends Controller
      $cid=$company->id;
      if(!empty($branches)){
         foreach($branches as $branch){
+            if(empty($branch)){
+                continue;
+            }
          $country=Country::where("id",$branch["country_id"])->first()->name;
          $gstin=CompanyGstin::create(["gstin"=>$branch['gstin'],"company_id"=>$cid,"state_id"=>$branch['state_id']]);
          $gstin_id=$gstin->id;
@@ -149,6 +152,9 @@ class Companies extends Controller
  }
      if(!empty($accounts)){
         foreach($accounts as $account){
+            if(empty($account)){
+                continue;
+            }
             $account_row=CompanyBankAccount::create(["company_id"=>$cid,"account_identifier"=>$account["account_identifier"],"entity_name"=>$account["entity_name"],"holder_name"=>$account["holder_name"],"bank_name"=>$account["bank_name"],"account_number"=>$account["account_number"],"ifsc_code"=>$account["ifsc_code"],"notes"=>$account["notes"]]);
         }
 }
