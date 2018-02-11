@@ -50,12 +50,12 @@ class Companies extends Controller
     public function store(Request $request)
     {
         //
-        $accounts=$request->input('accounts');
-        $branches=$request->input('branch');
+        $accounts=json_decode($request->input('accounts'),true);
+        $branches=json_decode($request->input('branches'),true);
         $status= $request->input('type');
         $cname=$request->input('name');
         $pan=$request->input('pan');
-        //dd($pan);
+        //dd($request->all());
          return $this->insert($cname,$pan,$branches,$accounts);
             
         
@@ -109,9 +109,8 @@ class Companies extends Controller
 
 
        Company::find($id)->delete();
-       $accounts=$request->input('accounts');
-       $branches=$request->input('branch');
-        //$status= $request->input('type');
+       $accounts=json_decode($request->input('accounts'),true);
+       $branches=json_decode($request->input('branches'),true);
        $cname=$request->input('name');
        $pan=$request->input('pan');
        return  $this->insert($cname,$pan,$branches,$accounts);
@@ -142,7 +141,7 @@ class Companies extends Controller
      $cid=$company->id;
      if(!empty($branches)){
         foreach($branches as $branch){
-         $country=Country::where("id",$branch["country"])->first()->name;
+         $country=Country::where("id",$branch["country_id"])->first()->name;
          $gstin=CompanyGstin::create(["gstin"=>$branch['gstin'],"company_id"=>$cid,"state_id"=>$branch['state_id']]);
          $gstin_id=$gstin->id;
          $branch_row=CompanyBranch::create(["company_id"=>$cid,"gstin_id"=>$gstin_id,"branch_name"=>$branch['branch_name'],"phone"=>$branch['phone'],"email_id"=>$branch['email_id'],"address"=>$branch['address'],"city"=>$branch['city'],"state_id"=>$branch['state_id'],"country"=>$country,"pin_code"=>$branch['pin_code']]);

@@ -8,7 +8,7 @@ namespace App\libraries;
 class General {
 // function to create modals
   
-  public static function modal($header='title',$modalId='myModal', $body=array(" "),$buttonText='Save',$buttonClass='default',$buttonId='buttonId'){
+  public static function modal($header='title',$modalId, $body=array(" "),$buttonText='Save',$buttonClass='default',$buttonId){
     $modal='<div id="'.$modalId.'" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
