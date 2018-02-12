@@ -82,12 +82,14 @@ class Vendors extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vendor $vendor)
+    public function edit(Request $request, $id)
     {
+        $vendorAccounts=Vendor::find($id)->vendorAccounts()->get();
+        $vendor=Vendor::find($id);
         $states = State::all()->pluck ('name' , 'id');
         $vendor_type= Vendors::getEnumValues('vendors','vendor_type');
         $business_type= Vendors::getEnumValues('vendors','business_type');
-        return view('purchase.vendors.edit',compact('vendor','vendor_type','business_type','states'));
+        return view('purchase.vendors.edit',compact('vendor','vendorAccounts','vendor_type','business_type','states'));
     }
     /**
      * Update the specified resource in storage.
@@ -96,10 +98,19 @@ class Vendors extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Vendor $vendor,Request $request)
+    public function update(Request $request,$id)
     {
-        //
+        $vendor=Vendor::find($id);
+        Vendor::find($id)->vendorAccounts()->delete();
         $vendor->update($request->input());
+        $vendor_id=$id;
+        if($request->input('accounts')){
+            $vendorAccounts=$request->input('accounts');
+            foreach ($vendorAccounts as $vendorAccount) {
+                $vendorAccount['vendor_id']=$vendor_id;
+                VendorAccount::create($vendorAccount);
+            }
+        }
         $message = trans('messages.success.updated', ['type' => trans_choice('general.vendors', 1)]);
         flash($message)->success();
         return redirect('purchases/vendors');
