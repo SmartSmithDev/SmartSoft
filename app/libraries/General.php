@@ -22,7 +22,6 @@ class General {
 
     foreach($body as $content){
       $modal=$modal.$content;
-
     }
 
     $modal=$modal.'</div>
@@ -36,6 +35,4 @@ class General {
     </div>';
     return $modal;
   }
-
-
 }
