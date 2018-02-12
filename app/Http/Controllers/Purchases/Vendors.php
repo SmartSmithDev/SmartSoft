@@ -101,13 +101,14 @@ class Vendors extends Controller
     public function update(Request $request,$id)
     {
         $vendor=Vendor::find($id);
+        Vendor::find($id)->vendorAccounts()->delete();
         $vendor->update($request->input());
         $vendor_id=$id;
         if($request->input('accounts')){
             $vendorAccounts=$request->input('accounts');
             foreach ($vendorAccounts as $vendorAccount) {
                 $vendorAccount['vendor_id']=$vendor_id;
-                VendorAccount::update($vendorAccount);
+                VendorAccount::create($vendorAccount);
             }
         }
         $message = trans('messages.success.updated', ['type' => trans_choice('general.vendors', 1)]);
