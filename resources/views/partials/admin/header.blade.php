@@ -22,14 +22,14 @@
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                      @if ($user->picture)
-                        <img src="{{  Storage::url($user->picture) }}" class="img-circle" alt="User Image">
+                      @if ($user1->picture)
+                        <img src="{{  Storage::url($user1->picture) }}" class="img-circle" alt="User Image">
                       @else
                         <i class="fa fa-4 fa-user-o" style="color: #fff; font-size: 7em;"></i>
                       @endif
                     <p>
-                      @if (!empty($user->name))
-                            {{ $user->name }}
+                      @if (!empty($user1->name))
+                            {{ $user1->name }}
                       @endif
                     </p>
                   </li>
@@ -45,7 +45,7 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                     <a href="{{ url('auth/users/' . $user->id . '/edit') }}" class="btn btn-default btn-flat">{{ trans('auth.profile') }}</a>
+                     <a href="{{ url('auth/users/' . $user1->id . '/edit') }}" class="btn btn-default btn-flat">{{ trans('auth.profile') }}</a>
                     </div>
                     <div class="pull-right">
                        <a href="{{ url('auth/logout') }}" class="btn btn-default btn-flat">{{ trans('auth.logout') }}</a>

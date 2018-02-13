@@ -24,9 +24,9 @@ class AppServiceProvider extends ServiceProvider
             View::share('companies', $companies);
         }
          if(Schema::hasTable('users')){
-            $user=User::where('id', 1)->first();
-            View::share('user', $user);
-            Auth::login($user);
+            $user1=User::where('id', 1)->first();
+            View::share('user1', $user1);
+            Auth::login($user1);
          }
     }
 
