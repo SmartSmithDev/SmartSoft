@@ -12,229 +12,196 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">New Customer Details</h4>
-          
+        <h4 class="modal-title">New Customer Details</h4>   
       </div>
-
       <div class="modal-body">
-         
-         {!! Form::open(array('action' => 'Sales\Customers@store1')) !!}
+        {!! Form::open(array('action' => 'Sales\Customers@store1')) !!}
+        
+        {{ Form::textGroup('name', 'Name', 'id-card-o') }}
+        
+        {{ Form::selectGroup('customer_type','Customer Type','id-card-o', $customer_type) }}
+        
+        {{ Form::textGroup('gstin', 'GST No.', 'percent', []) }}  
+        
+        {{ Form::textGroup('pan', 'PAN No.', 'id-badge', []) }}
 
-            {{ Form::textGroup('name', 'Name', 'id-card-o') }}
-            
-            {{ Form::selectGroup('customer_type','Customer Type','id-card-o', $customer_type) }}
+        {{ Form::emailGroup('email_id', 'Email', 'envelope', []) }}
 
-            {{ Form::textGroup('gstin', 'GST No.', 'percent', []) }}
-            
-            {{ Form::textGroup('pan', 'PAN No.', 'id-badge', []) }}
+        {{ Form::textGroup('phone', 'Phone No.', 'phone', []) }}
 
-            {{ Form::emailGroup('email_id', 'Email', 'envelope', []) }}
+        {{ Form::textareaGroup('address','Address') }}
 
-            {{ Form::textGroup('phone', 'Phone No.', 'phone', []) }}
+        {{ Form::textGroup('city', 'City', 'home') }}
 
-            {{ Form::textareaGroup('address','Address') }}
+        {{ Form::selectGroup('state_id','State','home', $states) }}
 
-            {{ Form::textGroup('city', 'City', 'home') }}
+        {{ Form::selectGroup('country', 'Country', 'plane', $countries) }}
 
-            {{ Form::selectGroup('state_id','State','home', $states) }}
+        {{ Form::textGroup('pin_code', 'Pin-Code', 'paperclip') }}
 
-            {{ Form::selectGroup('country', 'Country', 'plane', $countries) }}
+        {{ Form::textGroup('website', 'Website', 'globe',[]) }}
 
-            {{ Form::textGroup('pin_code', 'Pin-Code', 'paperclip') }}
+        {{ Form::selectGroup('business_type','Business Type','briefcase', $business_type) }}
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Save</button>
 
-            {{ Form::textGroup('website', 'Website', 'globe',[]) }}
-
-            {{ Form::selectGroup('business_type','Business Type','briefcase', $business_type) }}
-   
-
-      <div class="modal-footer">
-       <!--  {{ Form::submit('Submit')}} -->
-
-       <button type="submit" class="btn btn-success">Save</button>
-
-
-        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return false;">Close</button>
-      </div>
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return false;">Close</button>
+        </div>
       
         {!! Form::close() !!}
-
       </div>
-
-
     </div>
-
   </div>
 </div>
 
 <!-- Default box -->
-  <div class="box box-success">
-    {!! Form::open(['url' => 'sales/sales', 'files' => true, 'role' => 'form']) !!}
+<div class="box box-success">
+  {!! Form::open(['url' => 'sales/sales', 'files' => true, 'role' => 'form']) !!}
 
-<div class="box-body">
-        {{ Form::selectGroup('customer_id', 'Party Name', 'user', $customers) }}
+  <div class="box-body">
+    {{ Form::selectGroup('customer_id', 'Party Name', 'user', $customers) }}
          
-         {{ Form::selectGroup('bank_branch', 'Bank Branch', 'university', $bank_branch) }} 
-         <!--  params(id,label,favicon-name,array for foreach)  -->
-        {{ Form::selectGroup('bank_account', 'Bank Account', 'university', $bank_accounts) }}
+    {{ Form::selectGroup('bank_branch', 'Bank Branch', 'university', $bank_branch) }} 
+    <!--  params(id,label,favicon-name,array for foreach)  -->
+    {{ Form::selectGroup('bank_account', 'Bank Account', 'university', $bank_accounts) }}
 
-        {{ Form::textGroup('invoice_date', 'Invoice Date', 'calendar',['id' => 'invoice_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''], null) }}
+    {{ Form::textGroup('invoice_date', 'Invoice Date', 'calendar',['id' => 'invoice_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''], null) }}
 
-        {{ Form::textGroup('order_date', 'Order Date', 'calendar',['id' => 'order_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''], null) }}
+    {{ Form::textGroup('order_date', 'Order Date', 'calendar',['id' => 'order_date', 'class' => 'form-control datepicker', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => ''], null) }}
 
-        {{ Form::textGroup('invoice_number', 'Invoice Number', 'file-text-o',[],$new_invoice_id) }}
+    {{ Form::textGroup('invoice_number', 'Invoice Number', 'file-text-o',[],$new_invoice_id) }}
 
-        {{ Form::textGroup('order_id', 'Order ID', 'shopping-cart',[]) }}
+    {{ Form::textGroup('order_id', 'Order ID', 'shopping-cart',[]) }}
 
-        {{ Form::selectGroup('supply_state_id', 'Place of Supply', 'user', $states) }}
+    {{ Form::selectGroup('supply_state_id', 'Place of Supply', 'user', $states) }}
        
+    <div class="form-group col-md-12">
+      {!! Form::label('items', 'Items', ['class' => 'control-label']) !!}
+      <div class="table-responsive">
+        <table class="table table-bordered" style="font-size: 13px;" id="items">
+          <thead>
+            <tr style="background-color: #f9f9f9;">
 
-        <div class="form-group col-md-12">
-            {!! Form::label('items', 'Items', ['class' => 'control-label']) !!}
-            <div class="table-responsive">
-                <table class="table table-bordered" style="font-size: 13px;" id="items">
-                    <thead>
-                        <tr style="background-color: #f9f9f9;">
-                        
-                            <th  colspan="1" rowspan="2" class="text-center">{{ 'Actions' }}</th>
-                            <th   colspan="1" rowspan="2" class="text-center">{{ 'Name' }}</th>
-                            <th  colspan="1" rowspan="2" class="text-center">{{ 'Extra Info' }}</th>
-                                   
-                            <th  colspan="1" rowspan="2" class="text-center">{{ 'Quantity' }}</th>
-                            
-                            <th  colspan="1" rowspan="1" class="text-center" >{{ 'Rate' }}</th>
-                            <th  rowspan="1" colspan="1" class="text-center">{{ 'Discount' }}</th>
-                            
-                            <th  colspan="1" rowspan="2" class="text-center">{{ 'Tax Amount' }}</th>
-                            <th  colspan="1" rowspan="2" class="text-center">{{ 'Total Amount' }}</th>
-                            
-                        </tr>
-                        <tr style="background-color: #f9f9f9;">
-                           <th colspan="1"  class="text-center">
-                                <span style="float:left"> {{ Form::radio('rateType', '0' , true) }} Exc. GST</span>
-                                <span style="float:right"> {{ Form::radio('rateType', '1') }} Inc. GST</span>
-                            </th>
+              <th  colspan="1" rowspan="2" class="text-center">{{ 'Actions' }}</th>
+              <th   colspan="1" rowspan="2" class="text-center">{{ 'Name' }}</th>
+              <th  colspan="1" rowspan="2" class="text-center">{{ 'Extra Info' }}</th>
+
+              <th  colspan="1" rowspan="2" class="text-center">{{ 'Quantity' }}</th>
+
+              <th  colspan="1" rowspan="1" class="text-center" >{{ 'Rate' }}</th>
+              <th  rowspan="1" colspan="1" class="text-center">{{ 'Discount' }}</th>
+
+              <th  colspan="1" rowspan="2" class="text-center">{{ 'Tax Amount' }}</th>
+              <th  colspan="1" rowspan="2" class="text-center">{{ 'Total Amount' }}</th>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+              <th colspan="1"  class="text-center">
+                <span style="float:left"> {{ Form::radio('rateType', '0' , true) }} Exc. GST</span>
+                <span style="float:right"> {{ Form::radio('rateType', '1') }} Inc. GST</span>
+              </th>
+
+              <th colspan="1" >
+                <span style="float:left"> {{ Form::radio('discountType', '0' , true) }}  "Rs" </span>
+                <span style="float:right">{{ Form::radio('discountType', '1') }} "%" </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php $item_row = 0; ?>
+            <tr id="item-row-{{ $item_row }}" class="item-row">
+
+              <!-- Delete Button -->
+              <td class="text-center" style="vertical-align: middle;">
+                <button type="button" onclick="$(this).tooltip('destroy'); $('#item-row-{{ $item_row }}').remove();rowsDetails[0]=null;itemCalculate();" data-toggle="tooltip" title="{{ trans('general.delete') }}" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+              </td>
+
+              <!-- Item Name -->
+              <td>
+                <select id="item-name-{{ $item_row }}"  name="item[{{ $item_row }}][name]"  id="item-name-{{ $item_row }}" class="select2 items-dropdown">
+                  <option  selected>Select Item</option>
+                  <?php
+                    foreach($items as $id=>$name){
+
+                      echo "<option value='".$id."'>".$name."</option>";
+                    }
+                  ?>
+               </select>
+              </td>
+              <!-- HSN Code -->
+              <td class="text-center">
+                <span id="item-extra-info-0" class="extra-info-popup" data-toggle="popover" data-trigger="click" tabindex="0" data-placement="bottom" data-content='<button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row="{{ $item_row }}">Edit</button><br><br>' data-html="true"><i style="font-size:1.5vw;color:blue" class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i></span>
+              </td>
+
+              <!-- Item Type -->
+                              
+              <!-- Quantity -->
+              <td>
+                <input class="form-control text-center quantity-class" required="required" name="item[{{ $item_row }}][quantity]" type="text" id="item-quantity-{{ $item_row }}">
+              </td>
+
+              <!-- Unit -->
+
+              <!-- Rate -->
+              <td>
+                <input class="form-control text-right" required="required" name="item[{{ $item_row }}][price]" type="text" id="item-price-{{ $item_row }}">
+              </td>
+
+              <!-- Discount -->
+              <td>
+                <input class="form-control typeahead" required="required" placeholder="{{ 'Discount' }}" name="item[{{ $item_row }}][discount]" type="text" id="item-discount-{{ $item_row }}">
+                <input name="item[{{ $item_row }}][item_id]" type="hidden" id="item-id-{{ $item_row }}">
+              </td>
+
+              <!-- GST ID -->
 
 
+              <!-- Total Tax -->
+              <td class="text-right" style="vertical-align: middle;">
+                <span id="item-tax-info-0" class="item-tax-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Please Select All OptionscFirst" data-html="true" style="float:left"><i style="font-size:1.5vw;color:blue" class="fa">&#xf129;</i></span>
+               <span id="item-total-tax-{{ $item_row }}">0</span>
+              </td>
 
-                            <th colspan="1" >
-                               <span style="float:left"> {{ Form::radio('discountType', '0' , true) }}  "Rs" </span>
-                                <span style="float:right">{{ Form::radio('discountType', '1') }} "%" </span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $item_row = 0; ?>
-                        <tr id="item-row-{{ $item_row }}" class="item-row">
+              <!-- Product Total -->
+              <td class="text-right" style="vertical-align: middle;">
+                <span id="item-total-{{ $item_row }}">0</span>
+                <input type="hidden" name="item[{{ $item_row }}][gst_id]" class="hidden-gst-id"/>
+                <input type="hidden" name="item[{{ $item_row }}][cess_id]" class="hidden-cess-id"/>
+              </td>
+            </tr>
 
-                            <!-- Delete Button -->
-                            <td class="text-center" style="vertical-align: middle;">
-                                <button type="button" onclick="$(this).tooltip('destroy'); $('#item-row-{{ $item_row }}').remove();rowsDetails[0]=null;itemCalculate();" data-toggle="tooltip" title="{{ trans('general.delete') }}" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                            </td>
+            <?php $item_row++; ?>
+            <!-- Add Item Button -->
+            <tr id="addItem">
+              <td class="text-center"><button type="button" onclick="addItem();" data-toggle="tooltip" title="{{ trans('general.add') }}" class="btn btn-xs btn-primary" data-original-title="{{ trans('general.add') }}"><i class="fa fa-plus"></i></button></td>
 
-                            <!-- Item Name -->
-                            <td>
-                                <!-- <input class="form-control typeahead" required="required" placeholder="{{ 'Enter Item Name' }}" name="item[{{ $item_row }}][name]" type="text" id="item-name-{{ $item_row }}">
-                                <input name="item[{{ $item_row }}][item_id]" type="hidden" id="item-id-{{ $item_row }}"> -->
-                              <select id="item-name-{{ $item_row }}"  name="item[{{ $item_row }}][name]"  id="item-name-{{ $item_row }}" class="select2 items-dropdown">
-                                <option  selected>Select Item</option>
-                                 <?php
-                                 foreach($items as $id=>$name){
-                                    
-                                   echo "<option value='".$id."'>".$name."</option>";
-                                 }
-                                 ?>
-                                 
-                                </select>
-                                
+              <td class="text-right" colspan="7"></td>
+            </tr>
 
-                             
-                            </td>
+            <tr>
+              <td class="text-right" colspan="7"><strong>{{ 'Total Taxable Value' }}</strong></td>
 
-                            <!-- HSN Code -->
-                            <td class="text-center">
-                                 <span id="item-extra-info-0" class="extra-info-popup" data-toggle="popover" data-trigger="click" tabindex="0" data-placement="bottom" data-content='<button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row="{{ $item_row }}">Edit</button><br><br>' data-html="true"><i style="font-size:1.5vw;color:blue" class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i></span>
-                                
-                                
-                            </td>
+              <td class="text-right"><span id="sub-total">0</span></td>
+            </tr>
+            <tr>
+              <td class="text-right" colspan="7"><strong>{{ 'Total Tax Amount' }}</strong></td>
 
-                            <!-- Item Type -->
-                            
+              <td class="text-right"><span id="tax-total">0</span></td>
+            </tr>
+            <tr>
+              <td class="text-right" colspan="7"><strong>{{ 'Total Invoice Amount' }}</strong></td>
 
-                            <!-- Quantity -->
-                            <td>
-                                <input class="form-control text-center quantity-class" required="required" name="item[{{ $item_row }}][quantity]" type="text" id="item-quantity-{{ $item_row }}">
-                            </td>
-
-
-                            <!-- Unit -->
-                            
-
-                            <!-- Rate -->
-                            <td>
-                                <input class="form-control text-right" required="required" name="item[{{ $item_row }}][price]" type="text" id="item-price-{{ $item_row }}">
-                            </td>
-
-                            <!-- Discount -->
-                            <td>
-                                <input class="form-control typeahead" required="required" placeholder="{{ 'Discount' }}" name="item[{{ $item_row }}][discount]" type="text" id="item-discount-{{ $item_row }}">
-                                <input name="item[{{ $item_row }}][item_id]" type="hidden" id="item-id-{{ $item_row }}">
-                            </td>
-                            
-                            <!-- GST ID -->
-                            
-   
-                            <!-- Total Tax -->
-                            <td class="text-right" style="vertical-align: middle;">
-                                 <span id="item-tax-info-0" class="item-tax-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Please Select All Options First" data-html="true" style="float:left"><i style="font-size:1.5vw;color:blue" class="fa">&#xf129;</i></span>
-                                <span id="item-total-tax-{{ $item_row }}">0</span>
-                            </td>
-
-                            <!-- Product Total -->
-                            <td class="text-right" style="vertical-align: middle;">
-                                <span id="item-total-{{ $item_row }}">0</span>
-                                <input type="hidden" name="item[{{ $item_row }}][gst_id]" class="hidden-gst-id"/>
-                                <input type="hidden" name="item[{{ $item_row }}][cess_id]" class="hidden-cess-id"/>
-                            </td>
-
-                       
-
-                        </tr>
-
-                        <?php $item_row++; ?>
-                        <!-- Add Item Button -->
-                        <tr id="addItem">
-                            <td class="text-center"><button type="button" onclick="addItem();" data-toggle="tooltip" title="{{ trans('general.add') }}" class="btn btn-xs btn-primary" data-original-title="{{ trans('general.add') }}"><i class="fa fa-plus"></i></button></td>
-
-                            <td class="text-right" colspan="7"></td>
-                        </tr>
-
-                        <tr>
-                            <td class="text-right" colspan="7"><strong>{{ 'Total Taxable Value' }}</strong></td>
-
-                            <td class="text-right"><span id="sub-total">0</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-right" colspan="7"><strong>{{ 'Total Tax Amount' }}</strong></td>
-
-                            <td class="text-right"><span id="tax-total">0</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-right" colspan="7"><strong>{{ 'Total Invoice Amount' }}</strong></td>
-
-                            <td class="text-right"><span id="grand-total">0</span></td>
-                        </tr>
-                    </tbody>
-                        
-                </table>
-            </div>
-        </div>
-        {{ Form::textareaGroup('notes', trans_choice('general.notes', 2)) }}
-
-        {{ Form::fileGroup('attachment', trans('general.attachment')) }}
-        <input type="hidden" name="table-object" id="table-object">
-        <input type="hidden" name="common-object" id="common-object">
-
+              <td class="text-right"><span id="grand-total">0</span></td>
+            </tr>
+          </tbody>                
+        </table>
+      </div>
     </div>
+      {{ Form::textareaGroup('notes', trans_choice('general.notes', 2)) }}
+
+      {{ Form::fileGroup('attachment', trans('general.attachment')) }}
+      <input type="hidden" name="table-object" id="table-object">
+      <input type="hidden" name="common-object" id="common-object">
+  </div>
     <!-- /.box-body -->
      
     <div class="box-footer">
@@ -248,8 +215,8 @@
 
 
     <!-- Modal -->
-<div id="add-item-Modal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div id="add-item-Modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -259,34 +226,30 @@
       </div>
       <div class="modal-body">
         <form class="add-item-form">
-            <div class="box-body">
-                {{ Form::textGroup('name', 'Item Name' , 'id-card-o') }}
+          <div class="box-body">
+            {{ Form::textGroup('name', 'Item Name' , 'id-card-o') }}
 
-                {{ Form::textGroup('sku', 'Item SKU' , 'key') }}
+            {{ Form::textGroup('sku', 'Item SKU' , 'key') }}
 
-                {{ Form::selectGroup('hsn', 'HSN Code' , 'barcode', $hsn, '00000000' , []) }}
+            {{ Form::selectGroup('hsn', 'HSN Code' , 'barcode', $hsn, '00000000' , []) }}
 
-                {{ Form::selectGroup('unit_id', 'Unit' , 'balance-scale', $units, '59', []) }}
+            {{ Form::selectGroup('unit_id', 'Unit' , 'balance-scale', $units, '59', []) }}
 
-                {{ Form::itemTypeGroup('type', 'Item Type' ) }}
+            {{ Form::itemTypeGroup('type', 'Item Type' ) }}
 
-                 <div class="col-md-6">
-                 <input type="checkbox" name="manage_inventory" value="1" />&nbsp;<label>Manage Inventory</label>
-                     
-                 </div>
-
-                {{ Form::textareaGroup('details', 'Item Details') }}
-                <div style="float:right">
-             <input type="submit" name="submit" value="Save" class="btn btn-success"/>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <div class="col-md-6">
+              <input type="checkbox" name="manage_inventory" value="1" />&nbsp;<label>Manage Inventory</label>     
             </div>
+
+            {{ Form::textareaGroup('details', 'Item Details') }}
+            <div style="float:right">
+              <input type="submit" name="submit" value="Save" class="btn btn-success"/>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
-             
+          </div>  
         </form>
-      </div>
-      
+      </div>  
     </div>
-
   </div>
 </div>
 
