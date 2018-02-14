@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Companies;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Setting\State;
@@ -11,7 +9,6 @@ use App\Models\Company\CompanyBranch;
 use App\Models\Company\CompanyGstin;
 use App\Models\Setting\Country;
 use Illuminate\Support\Facades\DB;
-
 class Companies extends Controller
 {
     /**
@@ -25,7 +22,6 @@ class Companies extends Controller
     
         return view('company.company.index',['companies'=>$company]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -40,7 +36,6 @@ class Companies extends Controller
         $country=DB::table('countries')->get()->pluck('name','id');
         return view('company.company.create',compact('companies','states','city','country'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -60,7 +55,6 @@ class Companies extends Controller
             
         
     }
-
     /**
      * Display the specified resource.
      *
@@ -71,7 +65,6 @@ class Companies extends Controller
     {
         
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -95,7 +88,6 @@ class Companies extends Controller
         }
         return view("company.company.edit",compact("company","company_accounts","company_branches","states","city","country")); 
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -106,17 +98,13 @@ class Companies extends Controller
     public function update(Request $request, $id)
     {
         //
-
-
        Company::find($id)->delete();
        $accounts=json_decode($request->input('accounts'),true);
        $branches=json_decode($request->input('branches'),true);
        $cname=$request->input('name');
        $pan=$request->input('pan');
        return  $this->insert($cname,$pan,$branches,$accounts);
-
    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -131,11 +119,9 @@ class Companies extends Controller
        $company->CompanyGstin()->delete();
        $company->delete();
        $message = trans('messages.success.deleted', ['type' => trans_choice('general.company', 1)]);
-
        flash($message)->success();
        return redirect('companies/companies');
    }
-
     public function insert($cname,$pan,$branches,$accounts){
      $company=Company::create(["name"=>$cname,"pan"=>$pan]);
      $cid=$company->id;

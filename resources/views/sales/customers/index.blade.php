@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
-@section('title', trans_choice('general.vendors',2))
+@section('title', trans_choice('general.customer',2))
 
 @section('content')
 
 @section('new_button')
-<span class="new-button"><a href="{{url('customers/create')}}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
+<span class="new-button"><a href="{{url('sales/customers/create')}}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
 @endsection
 
     <div class="box-body">
@@ -28,7 +28,7 @@
                             <td class="col-md-3">{{ $customer->name }}</td>
                             <td class="col-md-3">{{ $customer->email_id }}</td>
                             <td class="col-md-2">{{ $customer->phone }}</td>
-                            <td class="col-md-2">{{ $customer->vendor_type }}</td>
+                            <td class="col-md-2">{{ $customer->customer_type }}</td>
                             <td class="col-md-2">{{ $customer->business_type }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
@@ -36,9 +36,9 @@
                                         <i class="fa fa-ellipsis-h"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right">
-                                       <li><a href="{{ url('vendors/' . $customer->id . '/edit') }}">{{ 'Edit' }}</a></li>
+                                       <li><a href="{{ url('sales/customers/' . $customer->id . '/edit') }}">{{ 'Edit' }}</a></li>
                                         
-                                        <li>{!! Form::deleteLink($customer, '/customers') !!}</li>
+                                        <li>{!! Form::deleteLink($customer, 'sales/customers') !!}</li>
                                     </ul>
                                 </div>
                             </td>

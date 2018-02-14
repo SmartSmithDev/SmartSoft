@@ -43,6 +43,9 @@ return [
     'beneficiary_bank'      => 'Beneficiary Bank',
     'pictures'              => 'Picture|Pictures',
     'company'               => 'Company|Companies',
+    'sale'                  => 'Sale|Sales',
+    'customer'              => 'Customer|Customers',
+    'customer_type'           => 'Customer Type',
 
     'title' => [
         'new'               => 'New :type',

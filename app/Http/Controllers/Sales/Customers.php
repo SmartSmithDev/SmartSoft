@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use App\Models\Customer\Customer;
 use App\Models\Setting\State;
+use App\Models\Setting\Country;
 
 class Customers extends Controller
 {
@@ -33,7 +34,8 @@ class Customers extends Controller
         $states = State::all()->pluck('name' , 'id');
         $customer_type= Customers::getEnumValues('customers','customer_type');
         $business_type= Customers::getEnumValues('customers','business_type');
-        return view('customers.customers.create',compact('customer_type','business_type','states'));
+        $countries=Country::all()->pluck ('name' , 'id');
+        return view('sales.customers.create',compact('customer_type','business_type','states','countries'));
     }
 
     /**
@@ -78,9 +80,10 @@ class Customers extends Controller
     {
         //
         $states = State::all()->pluck ('name' , 'id');
+        $countries=Country::all()->pluck ('name' , 'id');
         $customer_type= Customers::getEnumValues('customers','customer_type');
         $business_type= Customers::getEnumValues('customers','business_type');
-        return view('customers.customers.edit',compact('customer','customer_type','business_type','states'));
+        return view('sales.customers.edit',compact('customer','customer_type','business_type','states','countries'));
     }
 
       /**
@@ -110,8 +113,7 @@ class Customers extends Controller
         //
          $customer->delete();
         $message = trans('messages.success.deleted', ['type' => trans_choice('general.customers', 1)]);
-
-            flash($message)->success();
+        flash($message)->success();
         return redirect('sales/customers');
     }
 

@@ -1,21 +1,21 @@
 @extends('layouts.admin')
 
-@section('title', trans('general.title.edit', ['type' => trans_choice('general.vendors', 1)]))
+@section('title', trans('general.title.edit', ['type' => trans_choice('general.customer', 1)]))
 
 @section('content')
 
 <div class="box box-success">
-    {!! Form::model($vendor, [
+    {!! Form::model($customer, [
         'method' => 'PATCH',
         'files' => true,
-        'url' => ['customers', $vendor->id],
+        'url' => ['sales/customers', $customer->id],
         'role' => 'form'
     ]) !!}
 
     <div class="box-body">
          {{ Form::textGroup('name', trans('general.name'), 'id-card-o') }}
             
-            {{ Form::selectGroup('vendor_type', trans('general.customer_type'),'id-card-o', $vendor_type) }}
+            {{ Form::selectGroup('vendor_type', trans('general.customer_type'),'id-card-o', $customer_type) }}
 
             {{ Form::textGroup('gstin', 'GST No.', 'percent', []) }}
             
@@ -31,7 +31,7 @@
 
             {{ Form::selectGroup('state_id','State','home', $states) }}
 
-            {{ Form::textGroup('country', 'Country', 'plane') }}
+            {{ Form::selectGroup('country', 'Country', 'plane',$countries) }}
 
             {{ Form::textGroup('pin_code', 'Pin-Code', 'paperclip') }}
 

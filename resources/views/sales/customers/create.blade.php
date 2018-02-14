@@ -11,7 +11,7 @@
 
             {{ Form::textGroup('name', trans('general.name'), 'id-card-o') }}
             
-            {{ Form::selectGroup('customer_type', trans('general.customer_type'),'id-card-o', $vendor_type) }}
+            {{ Form::selectGroup('customer_type', trans('general.customer_type'),'id-card-o', $customer_type) }}
 
             {{ Form::textGroup('gstin', 'GST No.', 'percent', []) }}
             
@@ -27,7 +27,7 @@
 
             {{ Form::selectGroup('state_id','State','home', $states) }}
 
-            {{ Form::textGroup('country', 'Country', 'plane') }}
+            {{ Form::selectGroup('country', 'Country', 'plane', $countries) }}
 
             {{ Form::textGroup('pin_code', 'Pin-Code', 'paperclip') }}
 
