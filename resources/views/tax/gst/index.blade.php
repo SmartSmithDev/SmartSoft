@@ -13,12 +13,12 @@
       <table class="table table-striped table-hover" id="tbl-gst">
         <thead>
           <tr>
-            <th class="col-md-2">@sortablelink('rate', 'Rate')</th>
+            <th class="col-md-2">@sortablelink('rate', 'rate')</th>
             <th class="col-md-2">@sortablelink('cgst', 'cgst')</th>
             <th class="col-md-2">@sortablelink('sgst', 'sgst')</th>
             <th class="col-md-2">@sortablelink('ugst', 'ugst')</th>
             <th class="col-md-2">@sortablelink('igst', 'igst')</th>
-            <th class="col-md-2">@sortablelink('description','Description')</th>
+            <th class="col-md-2">@sortablelink('description','description')</th>
             <th class="col-md-1 text-center">{{ trans('general.actions') }}</th>
           </tr>
         </thead>
@@ -34,17 +34,17 @@
               <td class="col-md-2">{{ $gst->igst}}</td>
               <td class="col-md-2">{{ $gst->description}}</td>
               <td class="text-center">
-                <div class="btn-group">
+              <div class="btn-group">
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false">
                     <i class="fa fa-ellipsis-h"></i>
                   </button>
 
                   <ul class="dropdown-menu dropdown-menu-right">
-                    <li><a href="{{ url('gst/' . $gst->id . '/edit') }}">{{ 'Edit' }}</a></li>
+                    <li><a href="{{ url('taxes/gst/' . $gst->id . '/edit') }}">{{ 'Edit' }}</a></li>
                     
                     <li>{!! Form::deleteLink($gst, '/gst') !!}</li>
                   </ul>
-                </div>
+               </div>
               </td>
             </tr>
           @endforeach
