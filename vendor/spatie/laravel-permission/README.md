@@ -1,5 +1,16 @@
 # Associate users with permissions and roles
 
+
+### Sponsor
+
+<table>
+   <tr>
+      <td><img src="http://spatie.github.io/laravel-permission/sponsor-logo.png"></td>
+      <td>If you want to quickly add authentication and authorization to Laravel projects, feel free to check Auth0's Laravel SDK and free plan at <a href="https://auth0.com/overview?utm_source=GHsponsor&utm_medium=GHsponsor&utm_campaign=laravel-permission&utm_content=auth">https://auth0.com/overview</a>.</td>
+   </tr>
+</table>
+
+
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-permission.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-permission)
 [![Build Status](https://img.shields.io/travis/spatie/laravel-permission/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-permission)
 [![StyleCI](https://styleci.io/repos/42480275/shield)](https://styleci.io/repos/42480275)
@@ -268,6 +279,28 @@ use Spatie\Permission\Models\Permission;
 
 $role = Role::create(['name' => 'writer']);
 $permission = Permission::create(['name' => 'edit articles']);
+```
+
+
+A permission can be assigned to a role using 1 of these methods:
+
+```php
+$role->givePermissionTo($permission);
+$permission->assignRole($role);
+```
+
+Multiple permissions can be synced to a role using 1 of these methods:
+
+```php
+$role->syncPermissions($permissions);
+$permission->syncRoles($roles);
+```
+
+A permission can be removed from a role using 1 of these methods:
+
+```php
+$role->revokePermissionTo($permission);
+$permission->removeRole($role);
 ```
 
 If you're using multiple guards the `guard_name` attribute needs to be set as well. Read about it in the [using multiple guards](#using-multiple-guards) section of the readme.
@@ -706,18 +739,23 @@ Two notes about Database Seeding:
 
 ## Extending
 
-If you need to extend or replace the existing `Role` or `Permission` models you just need to
-keep the following things in mind:
+If you need to EXTEND the existing `Role` or `Permission` models note that:
+
+- Your `Role` model needs to extend the `Spatie\Permission\Models\Role` model
+- Your `Permission` model needs to extend the `Spatie\Permission\Models\Permission` model
+
+If you need to REPLACE the existing `Role` or `Permission` models you need to keep the
+following things in mind:
 
 - Your `Role` model needs to implement the `Spatie\Permission\Contracts\Role` contract
 - Your `Permission` model needs to implement the `Spatie\Permission\Contracts\Permission` contract
-- You can publish the configuration with this command:
+
+In BOTH cases, whether extending or replacing, you will need to specify your new models in the configuration. To do this you must update the `models.role` and `models.permission` values in the configuration file after publishing the configuration with this command:
 
 ```bash
 php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="config"
 ```
-  
-  And update the `models.role` and `models.permission` values
+ 
 
 ## Cache
 
@@ -732,6 +770,9 @@ $user->syncRoles(params);
 $role->givePermissionTo('edit articles');
 $role->revokePermissionTo('edit articles');
 $role->syncPermissions(params);
+$permission->assignRole('writer');
+$permission->removeRole('writer');
+$permission->syncRoles(params);
 ```
 
 HOWEVER, if you manipulate permission/role data directly in the database instead of calling the supplied methods, then you will not see the changes reflected in the application unless you manually reset the cache.
