@@ -14,44 +14,74 @@ $item_row=0;
 
 
 <!-- Modal -->
-{!! Form::open(array('action' => 'Sales\Customers@store1')) !!}
- 
-{!! General::modal('New Customer Details','customerModal',[
-        
-         Form::textGroup('name', 'Name', 'id-card-o'),
-        
-         Form::selectGroup('customer_type','Customer Type','id-card-o', $customer_type),
-        
-         Form::textGroup('gstin', 'GST No.', 'percent', []),  
-        
-         Form::textGroup('pan', 'PAN No.', 'id-badge', []),
+<div id="myModal" class="modal fade " style="z-index: 2500" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
 
-         Form::emailGroup('email_id', 'Email', 'envelope', []),
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">New Customer Details</h4>
+          
+      </div>
 
-         Form::textGroup('phone', 'Phone No.', 'phone', []),
+      <div class="modal-body">
+         
+        <!-- {!! Form::open(array('url' => '/vendor','action' => 'Vendors@store')) !!} -->
+         {!! Form::open(array('action' => 'Sales\Customers@store1')) !!}
 
-         Form::textareaGroup('address','Address'),
+            {{ Form::textGroup('name', 'Name', 'id-card-o') }}
+            
+            {{ Form::selectGroup('vendor_type','Vendor Type','id-card-o', $customer_type) }}
 
-         Form::textGroup('city', 'City', 'home'),
+            {{ Form::textGroup('gstin', 'GST No.', 'percent', []) }}
+            
+            {{ Form::textGroup('pan', 'PAN No.', 'id-badge', []) }}
 
-         Form::selectGroup('state_id','State','home', $states),
+            {{ Form::emailGroup('email_id', 'Email', 'envelope', []) }}
 
-         Form::selectGroup('country', 'Country', 'plane', $countries),
+            {{ Form::textGroup('phone', 'Phone No.', 'phone', []) }}
 
-         Form::textGroup('pin_code', 'Pin-Code', 'paperclip'),
+            {{ Form::textareaGroup('address','Address') }}
 
-         Form::textGroup('website', 'Website', 'globe',[]),
+            {{ Form::textGroup('city', 'City', 'home') }}
 
-         Form::selectGroup('business_type','Business Type','briefcase', $business_type)],'Save','success','new_customer')  !!}
+            {{ Form::selectGroup('state','State','home', $states) }}
 
-{!! Form::close() !!}
+            {{ Form::textGroup('country', 'Country', 'plane') }}
+
+            {{ Form::textGroup('pin_code', 'Pin-Code', 'paperclip') }}
+
+            {{ Form::textGroup('website', 'Website', 'globe',[]) }}
+
+            {{ Form::selectGroup('business_type','Business Type','briefcase', $business_type) }}
+   
+
+      <div class="modal-footer">
+       <!--  {{ Form::submit('Submit')}} -->
+
+       <button type="submit" class="btn btn-success">Save</button>
+
+
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return false;">Close</button>
+      </div>
+      
+        {!! Form::close() !!}
+
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
 
 <!-- Default box -->
   <div class="box box-success">
     {!! Form::open(['url' => 'sales/sales/'.$sale->id, 'files' => true, 'role' => 'form','method'=>'PUT']) !!}
 
 <div class="box-body">
-        {{ Form::selectGroup('customer_id', 'Party Name', 'user', $customers,$sale->customer_id) }}
+        {{ Form::selectGroup('vendor_id', 'Party Name', 'user', $customers,$sale->customer_id) }}
          
          {{ Form::selectGroup('bank_branch', 'Bank Branch', 'university', $bank_branch,$sale->company_branch_id) }} 
          <!--  params(id,label,favicon-name,array for foreach)  -->
@@ -113,8 +143,9 @@ $item_row=0;
                             </td>
 
                             <!-- Item Name -->
-                            <td class="text-center">
-                            
+                            <td>
+                                <!-- <input class="form-control typeahead" required="required" placeholder="{{ 'Enter Item Name' }}" name="item[{{ $item_row }}][name]" type="text" id="item-name-{{ $item_row }}">
+                                <input name="item[{{ $item_row }}][item_id]" type="hidden" id="item-id-{{ $item_row }}"> -->
                               <select id="item-name-{{ $item_row }}"  name="item[{{ $item_row }}][name]"  id="item-name-{{ $item_row }}" class="select2 items-dropdown">
                                 <option >Select Item</option>
                                  <?php
@@ -237,32 +268,90 @@ $item_row=0;
 
 
     <!-- Modal -->
-  <form class="add-item-form">
-{!! General::modal('Add Item',"add-item-Modal",[  Form::textGroup('name', 'Item Name' , 'id-card-o'),
+<div id="add-item-Modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
-             Form::textGroup('sku', 'Item SKU' , 'key'),
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Item</h4>
+      </div>
+      <div class="modal-body">
+        <form class="add-item-form">
+            <div class="box-body">
+                {{ Form::textGroup('name', 'Item Name' , 'id-card-o') }}
 
-             Form::selectGroup('hsn', 'HSN Code' , 'barcode', $hsn, '00000000' , []),
+                {{ Form::textGroup('sku', 'Item SKU' , 'key') }}
 
-             Form::selectGroup('unit_id', 'Unit' , 'balance-scale', $units, '59', []),
+                {{ Form::selectGroup('hsn', 'HSN Code' , 'barcode', $hsn, '00000000' , []) }}
 
-             Form::itemTypeGroup('type', 'Item Type' ),
-             "&nbsp&nbsp".Form::checkBox("manage_inventory","1"),
-             Form::label("inv_label","Manage Inventory")."<br>",
-             Form::textareaGroup('details', 'Item Details')],'Save','success','new_item') !!}
-</form>
+                {{ Form::selectGroup('unit_id', 'Unit' , 'balance-scale', $units, '59', []) }}
+
+                {{ Form::itemTypeGroup('type', 'Item Type' ) }}
+
+                {{ Form::textareaGroup('details', 'Item Details') }}
+                <div style="float:right">
+             <input type="submit" name="submit" value="Save" class="btn btn-success"/>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+             
+        </form>
+      </div>
+      
+    </div>
+
+  </div>
+</div>
+
 
     <!-- Modal -->
-   {!! General::modal('Item Details',"item-details-Modal",[Form::selectGroup('item[' . $item_row . '][tax_id]','HSN  Code','exchange', $hsn ,null,['required'=>'required','class' => 'select2 hsn-code', 'placeholder' => 'Select HSN']), 
-              
-               Form::selectGroup('type','Item Type','exchange', ['Goods'=>'Goods','Services'=>'Services'] ,null,['required'=>'required','class' => 'select2 item-type-class no-ajax', 'placeholder' => 'Select Type']),
+<div id="item-details-Modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
-               Form::selectGroup('unit_modal','Unit','exchange', $units ,null,['required'=>'required','class' => 'select2 unit-class no-ajax', 'placeholder' => 'Select Unit']), 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Item Details</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="box-body">
+              {!! Form::select('item[' . $item_row . '][tax_id]', $hsn , 'HSN Code', ['class' => 'select2 hsn-code', 'placeholder' => 'Select HSN']) !!} 
+              <br>
+              <br>
+               <select class="select2 item-type-class no-ajax" required="required"  name="type">
+                                    
+                                    <option value="Goods">Goods</option>
+                                    <option value="Services">Services</option>
+                </select>
+                   <br>
+                   <br>
+                  {!! Form::select('unit_modal', $units , 'UNIT', ['class' => 'select2 unit-class no-ajax', 'placeholder' => 'Select Unit']) !!}
+
+                     <br>
+                     <br>
+                   {!! Form::select('gst', $gst , 'GST', ['class' => 'select2 gst-type no-ajax', 'placeholder' => 'Select GST']) !!}
+                     <br>
+                      <br>
+
+                    {!! Form::select('cess', $cess , 'Cess', ['class' => 'select2 cess-type no-ajax', 'placeholder' => 'Select CESS']) !!}
+
+
              
-               Form::selectGroup('gst','Gst','exchange', $gst ,null,['required'=>'required','class' => 'select2 gst-type no-ajax', 'placeholder' => 'Select GST']),
+            </div>
+             </form>
+           <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">Done</button>
+            </div>
+      </div>
+      
+    </div>
 
-               Form::selectGroup('cess','Cess','exchange', $cess ,null,['required'=>'required','class' => 'select2 cess-type no-ajax', 'placeholder' => 'Select Cess']) ],'Done','success','item_check',0) !!}
-
+  </div>
+</div>
 
 <input type="hidden" id="newRowDetails" value=<?php echo $newRowDetails; ?> />
 
@@ -278,11 +367,10 @@ $item_row=0;
     <!-- Select2 -->
     <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
     <!-- Date Picker -->
-    <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('js/bootstrap-datepicker.min.js') }}">
     <script src="{{ asset('js/bootstrap-fancyfile.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/common.js') }}"></script>
 @endsection
 
 @section('css')
@@ -294,16 +382,15 @@ $item_row=0;
 
 <style type="text/css">
 .input-group .select2-container,#item-details-Modal .select2-container,td .select2-container  {
-  width:100% !important;
-
+  width:100% !important;  
 }
 .item-row td:nth-child(2){
   width:30%;
 }
    #item-details-Modal input.form-control,td input.form-control{
-        
-        height:3.8vh;
-        border-color:#d2d6de ;
+        border-radius: 4%;
+        height:4.2vh;
+        border-color: grey;
 
     }
 
@@ -330,10 +417,6 @@ color:white;
  
 }
 
-[class^='select2'] {
-  border-radius: 0px !important;
-  border-color: #d2d6de !important;
-}
 
 
 
@@ -359,64 +442,57 @@ color:white;
         var ogRow;
         var visible=-1;
         var rowsDetails={};
-
+//console.log(rowsDetails);
 
         function addItem() {
-            var elementsObject={};
-            elementsObject[0]={etype:"button",id:"item-row-"+item_row,class:"btn btn-xs btn-danger",onclick:"$(this).tooltip('destroy');$('#item-row-"+item_row+"').remove();rowsDetails["+item_row+"]=null;itemCalculate();","data-toggle":"tooltip",title:"{{ trans('general.delete') }}",innerHTML:"<i class='fa fa-trash'></i>"};
-            
-            elementsObject[1]={etype:"select",id:"item-name-"+item_row,name:"item["+item_row+"][name]", class:"select2 items-dropdown", innerHTML:"<option  selected>Select Item</option>"};
-            
-            elementsObject[2]={etype:"span",id:"item-extra-info-"+item_row, class:"extra-info-popup", "data-toggle":"popover", "data-trigger":"click", tabindex:"0", "data-placement":"bottom", "data-content":"<button type='button' class='btn extra-info-modal' style='width:100%;background-color:#3C8DBC;color:white' data-row="+item_row+">Edit</button><br><br>","data-html":"true",innerHTML:"<i style='font-size:1.5vw;color:blue' class='fa fa-cog fa-spin fa-3x fa-fw' aria-hidden='true'></i>"};
+            html  = '<tr id="item-row-'+item_row+'" class="item-row"><td class="text-center" style="vertical-align: middle;"><button type="button" onclick="$(this).tooltip(\'destroy\'); $(\'#item-row-'+item_row+'\').remove();rowsDetails['+item_row+']=null;itemCalculate();" data-toggle="tooltip" title=\'{{ trans("general.delete") }}\' class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td><td><select id="item-name-'+item_row+'"  name="item['+item_row+'][name]"  id="item-name-'+item_row+'" class="select2 items-dropdown"><option  selected>Select Item</option></select></td><td class="text-center"><span id="item-extra-info-'+item_row+'" class="extra-info-popup" data-toggle="popover" data-trigger="click" tabindex="0" data-placement="bottom" data-content=\'<button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row="'+item_row+'">Edit</button><br><br>\' data-html="true"><i style="font-size:1.5vw;color:blue" class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i></span></td><td><input class="form-control text-center quantity-class" required="required" name="item['+item_row+'][quantity]" type="text" id="item-quantity-'+item_row+'"></td><td><input class="form-control text-right" required="required" name="item['+item_row+'][price]" type="text" id="item-price-'+item_row+'"></td><td><input class="form-control typeahead" required="required" placeholder=\'{{ "Discount" }}\' name="item['+item_row+'][discount]" type="text" id="item-discount-'+item_row+'"><input name="item['+item_row+'][item_id]" type="hidden" id="item-id-'+item_row+'"></td><td class="text-right" style="vertical-align: middle;"><span id="item-tax-info-'+item_row+'" class="item_tax-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Please Select All Options First" data-html="true" style="float:left"><i style="font-size:1.5vw;color:blue" class="fa">&#xf129;</i></span><span id="item-total-tax-'+item_row+'">0</span></td><td class="text-right" style="vertical-align: middle;"><span id="item-total-'+item_row+'">0</span><input type="hidden" name="item['+item_row+'][gst_id]" class="hidden-gst-id"/><input type="hidden" name="item['+item_row+'][cess_id]" class="hidden-cess-id"/></td></tr>';
+            $('#items tbody #addItem').before(html);
 
-            elementsObject[3]={etype:"input",class:"form-control text-center quantity-class", required:"required", name:"item["+item_row+"][quantity]", type:"text", id:"item-quantity-"+item_row};
+                       $(document).ready(function() {
+    console.log("bind");
+    $('td .select2').select2();
+     $("#item-tax-info-"+item_row).popover();
+     $('#item-extra-info-'+item_row).popover();
 
-            elementsObject[4]={etype:"input",class:"form-control text-right", required:"required", name:"item["+item_row+"][price]", type:"text", id:"item-price-"+item_row};
-
-            elementsObject[5]={ 0:{etype:"input",class:"form-control typeahead", required:"required", placeholder:"Discount", name:"item["+item_row+"][discount]", type:"text", id:"item-discount-"+item_row},
-             1:{  etype:"input",name:"item["+item_row+"][item_id]", type:"hidden", id:"item-id-"+item_row }
-             };
-
-            elementsObject[6]={ 0:{etype:"span",id:"item-tax-info-"+item_row, class:"item_tax-info", "data-toggle":"popover", "data-trigger":"hover", "data-placement":"bottom", "data-content":"Please Select All Options First","data-html":"true",style:"float:left",innerHTML:"<i style='font-size:1.5vw;color:blue' class='fa'>&#xf129;</i>"},
-
-              1:{ etype:"span",id:"item-total-tax-"+item_row, innerHTML:0,style:"float:right"}
-             };
-
-             elementsObject[7]={ 0:{ etype:"span",id:"item-total-"+item_row, innerHTML:0,style:"float:right" },
-             1:{ etype:"input",type:"hidden", name:"item["+item_row+"][gst_id]", class:"hidden-gst-id" },
-             2:{ etype:"input",type:"hidden", name:"item["+item_row+"][cess_id]", class:"hidden-cess-id" }
-
-             };
-
-            var rowObject=$(document.createElement("tr")).attr({"id":"item-row-"+item_row,"class":"item-row"});
-            
-            rowObject=addTableRow(elementsObject,rowObject);
-
-            $('#items tbody #addItem').before(rowObject);
-
-            $('td .select2').select2();
-            initPopover(["#item-tax-info-"+item_row,'#item-extra-info-'+item_row]);
-
+});
             item_row++;
         }
 
 
- $(document).ready(function(){
 
-            var initialLength=$('#item-name-0')[0].options.length;
-            for(var i=1;i<initialLength;i++){
-                itemsArray[$('#item-name-0')[0].options[i].value]=$('#item-name-0')[0].options[i].innerHTML;
-            }
-
+       $(document).ready(function(){
+            //Date picker
    
 
+      
+  
+     var initialLength=$('#item-name-0')[0].options.length;
+    for(var i=1;i<initialLength;i++){
+      itemsArray[$('#item-name-0')[0].options[i].value]=$('#item-name-0')[0].options[i].innerHTML;
+    }
+
+    console.log(itemsArray);
+
+
+
             $('.datepicker').datepicker({
-                format: 'yyyy-mm-dd',
+                dateFormat: 'yy-mm-dd',
                 autoclose: true
             });
 
+
+            //$('#vendor_id').select2($("<option value=\"add_item\"><b>Add Vendor</b></option>"));
+
+            
             //Select2 For Vendor ID
-            $('#customer_id').on("select2:select", function(e) { 
+            $('#vendor_id').select2({
+                placeholder: "{{ 'Select Vendors' }}",
+            })
+            .on("select2:select", function(e) { 
+                   // what you would like to happen
+                   // if($(this).val() == "add_item")
+                   //    alert("Here it IS!");
+
                   $.ajax({
                 url: '{{ url("sales/customerInfo") }}',
                 type: 'POST',
@@ -426,9 +502,9 @@ color:white;
                 success: function(data) {
                      
                     if (data) {
-                        
+                        //$('#supply_state_id').select2("val", data[0]);
                         $('#supply_state_id').val(data[0]).trigger('change.select2');// for changing the values in select2 tag
-                        
+                        //console.log(state);
 
                        itemCalculate();
                     }
@@ -438,15 +514,88 @@ color:white;
 
             })
             .on('select2:open', () => {
-                    $(".select2-results:not(:has(a))").append('<a href="" data-toggle="modal" data-target="#customerModal" style="padding: 6px;height: 20px;display: inline-table;width:100%">Add New</a>');
+                    $(".select2-results:not(:has(a))").append('<a href="" data-toggle="modal" data-target="#myModal" style="padding: 6px;height: 20px;display: inline-table;width:100%">Add New</a>');
             });
 
+
+
+            //Select2 For State ID
+            $('#supply_state_id').select2({
+                placeholder: "{{ 'Select Supply State' }}",
+            }).on("select2:select", function(e) { 
+                   // what you would like to happen
+                   var selectedOption = ($(e.currentTarget).val());
+                   //console.log(selectedOption);
+                   itemCalculate();
+            });
+
+            //$(document).on('click', '#add, #select2-results-2, .select2-results,.select2-drop', function(){
+            //    alert();
+            //});
+            
+
+
+            $(document).on('click', '.form-control.typeahead', function() {
+                input_id = $(this).attr('id').split('-');
+
+                item_id = parseInt(input_id[input_id.length-1]);
+
+                itemCalculate();
+
+                $(this).typeahead({
+                    minLength: 3,
+                    displayText:function (data) {
+                        return data.name;
+                    },
+                    source: function (query, process) {
+                        $.ajax({
+                            url: autocomplete_path,
+                            type: 'GET',
+                            dataType: 'JSON',
+                            data: 'query=' + query + '&type=invoice&currency_code=' + $('#currency_code').val(),
+                            success: function(data) {
+                                return process(data);
+                            }
+                        });
+                    },
+                    afterSelect: function (data) {
+                        $('#item-id-' + item_id).val(data.item_id);
+                        $('#item-quantity-' + item_id).val('1');
+                        $('#item-price-' + item_id).val(data.sale_price);
+                        $('#item-tax-' + item_id).val(data.tax_id);
+
+                        // This event Select2 Stylesheet
+                        $('#item-tax-' + item_id).trigger('change');
+
+                        $('#item-total-' + item_id).html(data.total);
+
+                        itemCalculate();
+                    }
+                });
+            });
 
             //When any Item data is changed
             $(document).on('keyup', '#items tbody .form-control', function(){
                 itemCalculate();
             });
 
+          
+
+            $(document).on('change', '#vendor_id', function (e) {
+                $.ajax({
+                    url: '{{ url("vendor") }}',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    data: 'customer_id=' + $(this).val(),
+                    success: function(data) {
+                        $('#currency_code').val(data.currency_code);
+
+                        // This event Select2 Stylesheet
+                        $('#currency_code').trigger('change');
+                    }
+                });
+            });
+        });
 
        $(document).on('click','input[name="rateType"],input[name="discountType"]',function(){
         itemCalculate();
@@ -470,6 +619,10 @@ color:white;
                                     $('#item-total-' + key).html(subvalue);
                                 if(attr == 'totalTax')
                                     $('#item-total-tax-' + key).html(subvalue);
+                            //$('#item-total-tax-' + key).html(subvalue);
+                            //$('#item-total-' + key).html(subvalue);
+                      
+                             
                             });
                             console.log("key="+key);
                        rowsDetails[key].cgst=data.items[key].cgst;
@@ -480,14 +633,14 @@ color:white;
                        rowsDetails[key].unit_price=(parseInt(data.items[key].taxableValue)+parseInt(data.items[key].discount));
                        rowsDetails[key].discount=parseInt(data.items[key].discount);  
                       $("#item-tax-info-"+key).attr("data-content","Taxable<br>Value:"+data.items[key].taxableValue+"<br>CGST:"+data.items[key].cgst+"<br>SGST:"+data.items[key].sgst+"<br>IGST:"+data.items[key].igst+"<br>UGST:"+data.items[key].ugst+"<br>Cess:"+data.items[key].cess).data('bs.popover').setContent();      
-                         //used for reinitializing the popover element after changing content    
+                            
                         });
                         
                         $('#sub-total').html(data.sub_total);
                         $('#tax-total').html(data.tax_total);
                         $('#grand-total').html(data.grand_total);
-                        
-                        
+                         //used for reinitializing the popover element after changing content
+                        //console.log(rowsDetails[0]);
                     }
                 },
                 complete:function(){
@@ -498,7 +651,19 @@ color:white;
                 }
             });
         }
+     
 
+
+//This method uses element having class:'item-name-class' and autofills the item information 
+//It is the first input of every row in items html table
+  
+
+
+     $(document).ready(function(){
+        
+     $(".item-tax-info").popover();
+     $('.extra-info-popup').popover();
+});
 
 $(document).on('change','.hsn-code',function(){
 
@@ -533,13 +698,18 @@ $.ajax({
                 }
             });
 
+});  
+   
+
+$(document).ready(function() {
+    $('#item-details-Modal .select2').select2();
+    $('td .select2').select2();
+    $('#bank_branch,#company_name').select2();
+    
 });
 
 
-//This method uses element having class:'item-name-class' and autofills the item information 
-//It is the first input of every row in items html table
 
-   
 $(document).ready(function() {
     $('#items').on('select2:select','.items-dropdown',function(){
   
@@ -547,7 +717,9 @@ $(document).ready(function() {
    row=row[row.length-1];
     
     var itemId=$("#item-name-"+row).val();
-  
+    //console.log(itemName);
+   
+
     var xml=new XMLHttpRequest();
      xml.onreadystatechange=function(){
       if(this.readyState==4 && this.status==200){
@@ -557,11 +729,17 @@ $(document).ready(function() {
          rowsDetails[row]=item_details;
          $('input[name="item['+row+'][gst_id]"]').val(rowsDetails[row]['gst']);
          $('input[name="item['+row+'][cess_id]"]').val(rowsDetails[row]['cess']);
+         //console.log(row);
+         //console.log(rowsDetails);
          count++;
          console.log(count);
         if(count>=noOfItems){ 
         itemCalculate();
-      }         
+      }
+
+
+
+               
       }
       }        
      };
@@ -587,6 +765,9 @@ $.ajax({
                     rowsDetails[ogRow]=data;
                
           itemsArray[data.id]=data.name;       
+        // document.getElementById('item-type-'+globalRow).value=data['type'];
+        // document.getElementById('item-tax-'+globalRow).value=data['unit_id'];
+        //  document.getElementById('item-gst-'+globalRow).value=data['gst'];
          var option = new Option(data.name,data.id, true, true);  // Option(innerHTML,value,selected,actual Selection)
          $('#item-name-'+globalRow).append(option);
 
@@ -600,6 +781,7 @@ $.ajax({
 
 $(document).ready(function(){ //function for adding a "Add new Button in options of select2"
 $('#items').on('select2:open','.items-dropdown', () => {
+  //console.log("first");
         $(".select2-results:not(:has(a))").append("<a href='#' data-row="+ogRow+" class='add-new-item' style='padding: 2px;height: 20px;display: inline-table;width:100%'>Add new item</a>");
 });
 
@@ -646,20 +828,31 @@ $(this).css({"background-color":"#3C8DBC","color":"white"});
 });
 
 $(document).on('mouseover','.add-new-item',function(){
+    //console.log("lol");
 $('.select2-results__option').removeClass('select2-results__option--highlighted');
 });
 
 
 
+
+
+
+
 $(document).on('click','.extra-info-modal',function(){
+
+
         globalRow=$(this).attr("data-row");
         $('#item-details-Modal .select2').val("").trigger('change.select2'); //for resetting values
+        //console.log("modal");
         if(!rowsDetails[globalRow]){
       alert("Please Select Item First");
       return;
         }
         $('#item-details-Modal').modal();
+        //$('#item-extra-info-'+globalRow).trigger('click');
+       
         if(rowsDetails[globalRow]){
+            //console.log("if")
           $('#item-details-Modal select')[0].value=rowsDetails[globalRow].hsn;
           $('#item-details-Modal select')[1].value=rowsDetails[globalRow].type;
           $('#item-details-Modal select')[2].value=rowsDetails[globalRow].unit_id;
@@ -669,14 +862,22 @@ $(document).on('click','.extra-info-modal',function(){
         }
 
         ogRow=globalRow;// tells modal opened for which row in table
+        //console.log(ogRow);
+        
+    
+
 });
 
 
 $(document).ready(function(){
   $('#items').on('shown.bs.popover','.extra-info-popup', function () {
+  // do something…
+  console.log("popup");
+  
   var row=$(this).parent().parent().attr("id").split("-");
   row=row[row.length-1];
   visible=row;
+    //console.log(rowsDetails[row]);
     if(rowsDetails[row]){
       var unit=$('select[name="unit_modal"]')[0].options[parseInt(rowsDetails[row].unit_id)+1].innerHTML;
       var gst=$('select[name="gst"]')[0].options[parseInt(rowsDetails[row].gst)+1].innerHTML;
@@ -691,6 +892,7 @@ $(document).ready(function(){
 
 $(document).on('change','#item-details-Modal .no-ajax',function(){
 rowsDetails[ogRow][$(this).attr("name")]=$(this).val();//changing values of changed element in extra info modal in rowsDetails using their name attributes 
+//console.log(rowsDetails);
 if($(this).attr("name")=="gst"){
     $('input[name="item['+ogRow+'][gst_id]"]').val(rowsDetails[ogRow]['gst']);
 }
@@ -747,7 +949,11 @@ for(var i=0;i<(nrows);i++){
   //commonDetails['ecommerce_vendor_id']=0;
 }
 
-commonDetails['customer_id']=$('#customer_id').val();
+//console.log(rowsDetails);
+
+
+
+commonDetails['customer_id']=$('#vendor_id').val();
 commonDetails['invoice_date']=$('#invoice_date').val();
 commonDetails['invoice_number']=$('#invoice_number').val();
 commonDetails['order_id']=$('#order_id').val();
@@ -759,8 +965,12 @@ commonDetails['notes']=$('#notes').val();
 commonDetails['round_off']=Math.round(parseFloat($('#grand-total').text()));
 commonDetails['shipping_cost']=0;
 commonDetails['order_date']=$('#order_date').val();
+//console.log(commonDetails);
+//console.log(rowsDetails);
 $('#common-object').val(JSON.stringify(commonDetails));
 $('#table-object').val(JSON.stringify(rowsDetails));
+//console.log($('#common-object').val());
+//console.log($('#table-object').val());
 });
 
 
@@ -807,6 +1017,12 @@ $.ajax({
 });
 });
 
+
+ 
+
+
+  
+
 // $('#items').on('blur','.quantity-class',function(){
 //   var elem=$(this);
 //   var quantity=$(this).val();
@@ -831,17 +1047,22 @@ $.ajax({
 
 
 // });
-initPopover([".item-tax-info",'.extra-info-popup']);
-initSelect(['#item-details-Modal .select2','td .select2','#customer_id']);
-
 $('.items-dropdown').trigger('select2:select');
+
+
+
 
 });
 
 
 function update(){
   var newRowDetails=document.getElementById('newRowDetails').value;
+  console.log(newRowDetails);
   newRowDetails=JSON.parse(newRowDetails);
+  console.log(Object.keys(newRowDetails).length);
+
+
+
   for(var i=0;i<Object.keys(newRowDetails).length;i++){
     rowsDetails[i]['hsn']=newRowDetails[i]['hsn'];
     rowsDetails[i]['gst']=newRowDetails[i]['gst'];
@@ -852,10 +1073,10 @@ function update(){
     itemCalculate(); 
 
   }
-
+  console.log(rowsDetails);
 }
 
-});
+
 
     </script>
 @endsection

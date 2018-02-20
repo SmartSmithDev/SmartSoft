@@ -8,7 +8,7 @@ namespace App\libraries;
 class General {
 // function to create modals
   
-  public static function modal($header='title',$modalId, $body=array(" "),$buttonText='Save',$buttonClass='default',$buttonId,$closeButton=1){
+  public static function modal($header='title',$modalId, $body=array(" "),$buttonText='Save',$buttonClass='default',$buttonId){
     $modal='<div id="'.$modalId.'" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -26,11 +26,13 @@ class General {
 
     $modal=$modal.'</div>
     <div class="modal-footer">
-    <button  class="btn btn-'.$buttonClass.'" id="'.$buttonId.'"  data-dismiss="modal">'.$buttonText.'</button>';
-    if($closeButton){
-    $modal=$modal.'<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
-    }
-    $modal=$modal.'</div></div></div></div>';
+    <button  class="btn btn-'.$buttonClass.'" id="'.$buttonId.'">'.$buttonText.'</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+    </div>
+
+    </div>
+    </div>';
     return $modal;
   }
 }

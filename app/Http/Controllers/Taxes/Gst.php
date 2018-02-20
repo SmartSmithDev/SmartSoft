@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Taxes;
+
 use Illuminate\Http\Request;
 use App\Models\Tax\Gst as gsts;
 use App\Http\Controllers\Controller;
-use DB;
-use App\Http\Requests;
 
 class Gst extends Controller
 {
@@ -27,7 +26,7 @@ class Gst extends Controller
      */
     public function create()
     {
-         return view ('tax.gst.create' );
+        //
     }
 
     /**
@@ -38,14 +37,7 @@ class Gst extends Controller
      */
     public function store(Request $request)
     {
-       
-        $rate=$request->input('rate');
-        $cgst= $request->input('cgst');
-        $sgst=$request->input('sgst');
-        $ugst=$request->input('ugst');
-        $igst=$request->input('igst');
-        $description=$request->input('description');
-         return $this->insert( $rate, $cgst, $sgst, $ugst,$igst, $description);
+        //
     }
 
     /**
@@ -65,13 +57,9 @@ class Gst extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Gst $gst,$id)
-    {  
-         $gst = gsts::find($id);
-        return view('tax.gst.edit',compact('gst')) ;
-      
-  
-        
+    public function edit($id)
+    {
+        //
     }
 
     /**
@@ -81,17 +69,9 @@ class Gst extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-       
-         gsts::find($id)->delete();
-        $rate=$request->input('rate');
-        $cgst= $request->input('cgst');
-        $sgst=$request->input('sgst');
-        $ugst=$request->input('ugst');
-        $igst=$request->input('igst');
-        $description=$request->input('description');
-        return $this->insert($rate, $cgst, $sgst, $ugst,$igst, $description);
+        //
     }
 
     /**
@@ -100,17 +80,8 @@ class Gst extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Gst $gst)
+    public function destroy($id)
     {
-        $gst->delete();
-        $message = trans('messages.success.deleted', ['type' => trans_choice('general.gsts', 1)]);
-
-            flash($message)->success();
-         return redirect('taxes/gst');
-    }
-    public function insert( $rate, $cgst, $sgst, $ugst,$igst, $description)
-{
-$gst=gsts::create(["rate"=>$rate,"cgst"=>$cgst,"sgst"=>$sgst,"ugst"=>$ugst,"igst"=>$igst,"description"=>$description]);
-       return redirect("/taxes/gst");
+        //
     }
 }
