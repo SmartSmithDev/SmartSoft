@@ -251,8 +251,21 @@
           accountList[accountrow].ifsc_code=ifsc_code;
           accountList[accountrow].notes=notes;
 
-          //appending a row containing all the details entered by users in modal
-          // var htmlaccountRow=$('#company-bank-accounts tbody').append('<tr id="account-row-'+accountrow+'"><td class="col-md-1 hidden"><span>'+accnt_id+'<input type="hidden" name="accounts['+accountrow+'][account_identifier]" value="'+accnt_id+'"></span></td><td class="col-md-1 hidden"><span>'+entity_name+'<input type="hidden" name="accounts['+accountrow+'][entity_name]" value="'+entity_name+'"></span></td><td class="col-md-1"><span>'+holder_name+'<input type="hidden" name="accounts['+accountrow+'][holder_name]" value="'+holder_name+'"></span></td><td class="col-md-1"><span>'+bank_name+'<input type="hidden" name="accounts['+accountrow+'][bank_name]" value="'+bank_name+'"></span></td><td class="col-md-1"><span>'+account_number+'<input type="hidden" name="accounts['+accountrow+'][account_number]" value="'+account_number+'"></span></td><td class="col-md-1"><span>'+ifsc_code+'<input type="hidden" name="accounts['+accountrow+'][ifsc_code]" value="'+ifsc_code+'"></span></td><td class="col-md-1 hidden"><span>'+notes+'<input type="hidden" name="accounts['+accountrow+'][notes]" value="'+notes+'"></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="account-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>');
+          var i=0;
+          var elementObject={};
+          var rowObject=$(document.createElement("tr")).attr({"id":"account-row-"+accountrow,"class":"account-row"});
+          var className="account-row";
+          $.each(accountList[i],function(key,value){
+            elementObject[i]={etype:"span",innerHTML:value};
+            i++;
+          });
+          elementObject[i]={etype:"div",innerHTML:'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="'+className+'-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul>'};
+          rowObject=addTableRow(elementObject,rowObject);
+          $('#items tbody #addItem').append(rowObject);
+
+          $('#company-bank-accounts tbody').append('<tr id="account-row-'+accountrow+'"></tr>');
+          save(accountList,accountrow,'#account-row-'+accountrow);
+          accountrow++;
 
           $('#company-bank-accounts tbody').append('<tr id="account-row-'+accountrow+'"></tr>');
           save(accountList,accountrow,'#account-row-'+accountrow);
@@ -303,9 +316,22 @@
           branchList[branch_row].pin_code=pincode;
 
 
-          //appending a row containing all the details entered by users in modal
+          var i=0;
+          var elementObject={};
+          var rowObject=$(document.createElement("tr")).attr({"id":"branch-row-"+branch_row,"class":"branch-row"});
+          var className="branch-row";
+          $.each(branchList[i],function(key,value){
+            elementObject[i]={etype:"span",innerHTML:value};
+            i++;
+          });
+          elementObject[i]={etype:"div",innerHTML:'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="'+className+'-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul>'};
+          rowObject=addTableRow(elementObject,rowObject);
+          $('#items tbody #addItem').append(rowObject);
 
-          // var html=$('#company-branches tbody').append('<tr id="branch-row-'+branch_row+'"><td class="col-md-1 hidden"><span>'+gstin+'<input type="hidden" name="branch['+branch_row+'][gstin]" value="'+gstin+'"></span></td><td class="col-md-1"><span>'+b_name+'<input type="hidden" name="branch['+branch_row+'][branch_name]" value="'+b_name+'"></span></td><td class="col-md-1"><span>'+phone+'<input type="hidden" name="branch['+branch_row+'][phone]" value="'+phone+'"></span></td><td class="col-md-1"><span>'+email+'<input type="hidden" name="branch['+branch_row+'][email_id]" value="'+email+'"></span></td><td class="col-md-1"><span>'+address+'<input type="hidden" name="branch['+branch_row+'][address]" value="'+address+'"></span></td><td class="col-md-1"><span>'+city+'<input type="hidden" name="branch['+branch_row+'][city]" value="'+city+'"></span></td><td class="col-md-1"><span>'+state+'<input type="hidden" name="branch['+branch_row+'][state_id]" value="'+state_id+'"></span></td><td class="col-md-1 hidden"><span>'+country+'<input type="hidden" name="branch['+branch_row+'][country]" value="'+country_id+'"></span></td><td class="col-md-1 hidden"><span>'+pincode+'<input type="hidden" name="branch['+branch_row+'][pin_code]" value="'+pincode+'"></span></td><td class="text-center"><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="branch-edit">{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul></div></td></tr>');
+          $('#company-branches tbody').append('<tr id="branch-row-'+branch_row+'"></tr>');
+          save(branchList,branch_row,'#branch-row-'+branch_row);
+
+          branch_row++;
 
           $('#company-branches tbody').append('<tr id="branch-row-'+branch_row+'"></tr>');
           save(branchList,branch_row,'#branch-row-'+branch_row);
