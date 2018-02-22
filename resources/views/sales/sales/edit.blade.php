@@ -136,7 +136,7 @@ $item_row=0;
 
                             <!-- HSN Code -->
                             <td class="text-center">
-                                 <span id="item-extra-info-{{ $item_row }}" class="extra-info-popup" data-toggle="popover" data-trigger="click" tabindex="0" data-placement="bottom" data-content='<button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row="{{ $item_row }}">Edit</button><br><br>' data-html="true"><i style="font-size:1.5vw;color:blue" class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i></span>
+                                 <span id="item-extra-info-{{ $item_row }}" class="extra-info-popup" data-toggle="popover" data-trigger="click" tabindex="0" data-placement="bottom" data-content='<button type="button" class="btn extra-info-modal" style="width:100%;background-color:#3C8DBC;color:white"  data-row="{{ $item_row }}">Edit</button><br><br>' data-html="true"><i style="font-size:1.5vw;" class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i></span>
                                 
                                 
                             </td>
@@ -170,7 +170,7 @@ $item_row=0;
    
                             <!-- Total Tax -->
                             <td class="text-right" style="vertical-align: middle;">
-                                 <span id="item-tax-info-{{$item_row }}" class="item-tax-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Please Select All Options First" data-html="true" style="float:left"><i style="font-size:1.5vw;color:blue" class="fa">&#xf129;</i></span>
+                                 <span id="item-tax-info-{{$item_row }}" class="item-tax-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Please Select All Options First" data-html="true" style="float:left"><i style="font-size:1.5vw;" class="fa">&#xf129;</i></span>
                                 <span id="item-total-tax-{{ $item_row }}">0</span>
                             </td>
 
@@ -335,7 +335,13 @@ color:white;
   border-color: #d2d6de !important;
 }
 
+td{
+  vertical-align: center;
+}
 
+td input{
+  text-align: center;
+}
 
 
 
@@ -362,38 +368,85 @@ color:white;
 
 
         function addItem() {
-            var elementsObject={};
-            elementsObject[0]={etype:"button",id:"item-row-"+item_row,class:"btn btn-xs btn-danger",onclick:"$(this).tooltip('destroy');$('#item-row-"+item_row+"').remove();rowsDetails["+item_row+"]=null;itemCalculate();","data-toggle":"tooltip",title:"{{ trans('general.delete') }}",innerHTML:"<i class='fa fa-trash'></i>"};
             
-            elementsObject[1]={etype:"select",id:"item-name-"+item_row,name:"item["+item_row+"][name]", class:"select2 items-dropdown", innerHTML:"<option  selected>Select Item</option>"};
+             {{-- below functions defined in public/js/common.js--}}
+
+            {{-- creating a dropdown --}}
+            var select =  select2("Select Item");
+            attributes={id:"item-name-"+item_row,name:"item["+item_row+"][name]",class:"items-dropdown"};
+
+            {{--  attributes- object containing various attributes for created element  --}}
+
+            select=addAttributes(attributes,select);
+
+            {{-- creating a popup --}}
+            var hsnPopup=popup("click","bottom","cog fa-spin fa-3x fa-fw","button","Edit",{ class:'btn extra-info-modal', style:'width:100%;background-color:#3C8DBC;color:white', "data-row":item_row });
+            attributes={id:"item-extra-info-"+item_row, class:"extra-info-popup"};
+
+            hsnPopup=addAttributes(attributes,hsnPopup);
+
+            {{-- creating input with type text --}}
+            var quantityBox= input("text");
+            attributes= {class:"quantity-class", required:"required", name:"item["+item_row+"][quantity]",id:"item-quantity-"+item_row};
+            quantityBox= addAttributes(attributes,quantityBox);
+
+            {{-- creating input with type text --}}
+            var rateBox= input("text");
+            attributes= { class:"text-right", required:"required", name:"item["+item_row+"][price]",id:"item-price-"+item_row };
+
+            rateBox= addAttributes(attributes,rateBox);
+
+            {{-- creating input with type text --}}
+            var discount= input("text");
+            attributes= {class:"typeahead", required:"required", placeholder:"Discount", name:"item["+item_row+"][discount]",  id:"item-discount-"+item_row};
+            discount= addAttributes(attributes,discount);
+
+            {{-- creating a popup --}}
+            var taxInfo= popup("hover","bottom","info","span","Please Select All Options First");
+            attributes= { id:"item-tax-info-"+item_row, class:"item_tax-info",style:"float:left" };
+
+            taxInfo=addAttributes(attributes,taxInfo);
+
+            {{-- creating a span --}}
+            var taxAmount= span("0");
+            attributes= { name:"item["+item_row+"][item_id]", id:"item-total-tax-"+item_row, style:"float:right"  };
+
+            taxAmount= addAttributes(attributes,taxAmount);
+
+            {{-- creating a span --}}
+            var totalAmount= span("0");
+            attributes= {id:"item-total-"+item_row, style:"float:right" };
+            totalAmount =addAttributes(attributes,totalAmount);
+
+            {{-- creating input with type hidden --}}
+            hiddenGst= input("hidden");
+            attributes= { name:"item["+item_row+"][gst_id]", class:"hidden-gst-id" };
+            hiddenGst= addAttributes(attributes,hiddenGst);
+
+            {{-- creating input with type hidden --}}
+            hiddenCess= input("hidden");
+            attributes={ name:"item["+item_row+"][cess_id]", class:"hidden-cess-id"  };
+            hiddenCess= addAttributes(attributes,hiddenCess);
             
-            elementsObject[2]={etype:"span",id:"item-extra-info-"+item_row, class:"extra-info-popup", "data-toggle":"popover", "data-trigger":"click", tabindex:"0", "data-placement":"bottom", "data-content":"<button type='button' class='btn extra-info-modal' style='width:100%;background-color:#3C8DBC;color:white' data-row="+item_row+">Edit</button><br><br>","data-html":"true",innerHTML:"<i style='font-size:1.5vw;color:blue' class='fa fa-cog fa-spin fa-3x fa-fw' aria-hidden='true'></i>"};
-
-            elementsObject[3]={etype:"input",class:"form-control text-center quantity-class", required:"required", name:"item["+item_row+"][quantity]", type:"text", id:"item-quantity-"+item_row};
-
-            elementsObject[4]={etype:"input",class:"form-control text-right", required:"required", name:"item["+item_row+"][price]", type:"text", id:"item-price-"+item_row};
-
-            elementsObject[5]={ 0:{etype:"input",class:"form-control typeahead", required:"required", placeholder:"Discount", name:"item["+item_row+"][discount]", type:"text", id:"item-discount-"+item_row},
-             1:{  etype:"input",name:"item["+item_row+"][item_id]", type:"hidden", id:"item-id-"+item_row }
-             };
-
-            elementsObject[6]={ 0:{etype:"span",id:"item-tax-info-"+item_row, class:"item_tax-info", "data-toggle":"popover", "data-trigger":"hover", "data-placement":"bottom", "data-content":"Please Select All Options First","data-html":"true",style:"float:left",innerHTML:"<i style='font-size:1.5vw;color:blue' class='fa'>&#xf129;</i>"},
-
-              1:{ etype:"span",id:"item-total-tax-"+item_row, innerHTML:0,style:"float:right"}
-             };
-
-             elementsObject[7]={ 0:{ etype:"span",id:"item-total-"+item_row, innerHTML:0,style:"float:right" },
-             1:{ etype:"input",type:"hidden", name:"item["+item_row+"][gst_id]", class:"hidden-gst-id" },
-             2:{ etype:"input",type:"hidden", name:"item["+item_row+"][cess_id]", class:"hidden-cess-id" }
-
-             };
-
+            {{-- creating a row object --}}
             var rowObject=$(document.createElement("tr")).attr({"id":"item-row-"+item_row,"class":"item-row"});
+           
+            {{-- creating a delete button with trash icon --}} 
+            var deleteButton=button().append(icon("trash"));
+            var attributes={id:"item-row-"+item_row,class:"btn btn-xs btn-danger",onclick:"$(this).tooltip('destroy');$('#item-row-"+item_row+"').remove();rowsDetails["+item_row+"]=null;itemCalculate();","data-toggle":"tooltip",title:"{{ trans('general.delete') }}"};
             
-            rowObject=addTableRow(elementsObject,rowObject);
+            deleteButton=addAttributes(attributes,deleteButton);
+
+            {{-- array of elements to add in new row --}}
+            var elementsOfRow=[deleteButton,select,hsnPopup,quantityBox,rateBox,discount,[taxInfo,taxAmount],[totalAmount,hiddenGst,hiddenCess]];
+            {{-- for adding multiple elements in single td use nested array  --}}
+
+            {{-- addToRow returns a row object with added elements --}}
+            rowObject=addToRow(elementsOfRow,rowObject);
 
             $('#items tbody #addItem').before(rowObject);
 
+            {{-- initializing select2 and popup --}}
             $('td .select2').select2();
             initPopover(["#item-tax-info-"+item_row,'#item-extra-info-'+item_row]);
 
