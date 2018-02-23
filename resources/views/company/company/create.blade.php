@@ -74,6 +74,9 @@
   <textarea name="accounts" class="hidden"></textarea>
   {!! Form::close() !!}
 
+@endsection
+  
+@push('modal')
   <!-- Modal for adding bank accounts  -->
 
   {!! General::modal('Add New Account','accountModal',[Form::textGroup('account_identifier', 'Account Identifier' , 'industry'),
@@ -88,9 +91,73 @@
 
     Form::textGroup('ifsc_code', 'Ifsc Code' , 'industry'),
 
-    Form::textGroup('notes', 'Notes' , 'industry')],'Save','success','account_save')  !!}
+    Form::textGroup('notes', 'Notes' , 'industry')],'Save','success','account_save')  
+  !!}
+  <script type="text/javascript">
+    var accountrow=0; //used for assigning id to each row while appending a row in bank accounts 
+    var account_edit_row=-1; //used to identify modal is opened for which row while editing the account
+    var accountList={}; //object for account list
+    $('#account_save').click(function(){
+      //fetching all the values entered by user in modal fields
+      var accnt_id=$('#account_identifier').val();
+      var entity_name=$('#entity_name').val();
+      var holder_name=$('#holder_name').val();
+      var bank_name=$('#bank_name').val();
+      var account_number=$('#account_number').val();
+      var ifsc_code=$('#ifsc_code').val();
+      var notes=$('#notes').val();
+      if(account_edit_row==-1){
 
-  <!-- Modal for adding branches  -->
+        accountList[accountrow]={};
+        accountList[accountrow].account_identifier=accnt_id;
+        accountList[accountrow].entity_name=entity_name;
+        accountList[accountrow].holder_name=holder_name;
+        accountList[accountrow].bank_name=bank_name;
+        accountList[accountrow].account_number=account_number;
+        accountList[accountrow].ifsc_code=ifsc_code;
+        accountList[accountrow].notes=notes;
+
+        var i=0;
+        var elementObject={};
+        var rowObject=$(document.createElement("tr")).attr({"id":"account-row-"+accountrow,"class":"account-row"});
+        var className="account-row";
+        $.each(accountList[i],function(key,value){
+          elementObject[i]={etype:"span",innerHTML:value};
+          i++;
+        });
+        
+        //Creates an object of all the rows of account table to be added
+        elementObject[i]={etype:"div",innerHTML:'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="'+className+'-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul>'};
+        rowObject=addTableRow(elementObject,rowObject);
+        $('#items tbody #addItem').append(rowObject);
+
+        $('#company-bank-accounts tbody').append('<tr id="account-row-'+accountrow+'"></tr>');
+        save(accountList,accountrow,'#account-row-'+accountrow);
+        accountrow++;
+      }
+      else{
+        accountList[account_edit_row].account_identifier=accnt_id;
+        accountList[account_edit_row].entity_name=entity_name;
+        accountList[account_edit_row].holder_name=holder_name;
+        accountList[account_edit_row].bank_name=bank_name;
+        accountList[account_edit_row].account_number=account_number;
+        accountList[account_edit_row].ifsc_code=ifsc_code;
+        accountList[account_edit_row].notes=notes;
+
+        save(accountList,account_edit_row,'#account-row-'+account_edit_row);
+      }
+      $('#accountModal').modal('hide');
+      $('#accountModal input').val("");
+    });
+    $('#accountModal').on('hidden.bs.modal',function(){
+      $('#accountModal input,#accountModal select,#accountModal textarea').val("");
+      account_edit_row=-1;
+    });
+  </script>
+@endpush
+
+@push('modal')
+   <!-- Modal for adding branches  -->
 
 
   {!! General::modal('Add New Branch','branchesModal',[Form::textGroup('gstin', 'GSTIN' , 'industry'),
@@ -114,7 +181,78 @@
   {!! General::modal('Delete','deleteModal',['Are You Sure You Want Delete?'],'Delete','danger','delete_button')  !!}
 
   <!-- modal helper parameters (title of modal,id of modal,array of elements to insert in body of modal,text of footer button,class of footer button,id of footer button)  -->
-@endsection
+  <script type="text/javascript">
+    var branch_row=0; //used for assigning id to each row while appending a row in branches
+    var branch_edit_row=-1; //used to identify modal is opened for which row while editing the branch 
+    var branchList={};//object for branch list
+    
+    //function to save the modal details of branch to the table as a row i.e appending a row with modal details 
+    $('#branch_save').click(function(){
+
+      //fetching all the values entered by user in modal fields
+      var gstin=$('#gstin').val();
+      var b_name=$('#branch_name').val();
+      var phone=$('#phone').val();
+      var email=$('#email_id').val();
+      var address=$('#address').val();
+      var city=$('#city').val();
+      var state_id=$('#state_id').val();
+      var country_id=$('#country_id').val();
+      var pincode=$('#pin_code').val();
+      if(branch_edit_row==-1){
+
+        branchList[branch_row]={};
+        branchList[branch_row].gstin=gstin;
+        branchList[branch_row].branch_name=b_name;
+        branchList[branch_row].phone=phone;
+        branchList[branch_row].email_id=email;
+        branchList[branch_row].address=address;
+        branchList[branch_row].city=city;
+        branchList[branch_row].state_id=state_id;
+        branchList[branch_row].country_id=country_id;
+        branchList[branch_row].pin_code=pincode;
+
+        var i=0;
+        var elementObject={};
+        var rowObject=$(document.createElement("tr")).attr({"id":"branch-row-"+branch_row,"class":"branch-row"});
+        var className="branch-row";
+        $.each(branchList[i],function(key,value){
+          elementObject[i]={etype:"span",innerHTML:value};
+          i++;
+        });
+
+        //Creates an object of all the rows of branch table to be added
+        elementObject[i]={etype:"div",innerHTML:'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="'+className+'-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul>'};
+        rowObject=addTableRow(elementObject,rowObject);
+        $('#items tbody #addItem').append(rowObject);
+
+        $('#company-branches tbody').append('<tr id="branch-row-'+branch_row+'"></tr>');
+        save(branchList,branch_row,'#branch-row-'+branch_row);
+
+        branch_row++;
+      }
+      else{
+        branchList[branch_edit_row].gstin=gstin;
+        branchList[branch_edit_row].branch_name=b_name;
+        branchList[branch_edit_row].phone=phone;
+        branchList[branch_edit_row].email_id=email;
+        branchList[branch_edit_row].address=address;
+        branchList[branch_edit_row].city=city;
+        branchList[branch_edit_row].state_id=state_id;
+        branchList[branch_edit_row].country_id=country_id;
+        branchList[branch_edit_row].pin_code=pincode;
+        save(branchList,branch_edit_row,'#branch-row-'+branch_edit_row);
+      }
+          
+      $('#branchesModal').modal('hide');
+      $('#branchesModal input').val("");
+    });
+    $('#branchesModal').on('hidden.bs.modal',function(){
+      $('#branchesModal input,#branchesModal select,#branchesModal textarea').val("");
+      branch_edit_row=-1;
+    });
+  </script>
+@endpush
 
 @section('js')
   <script src="{{ asset('js/bootstrap-fancyfile.js') }}"></script>
@@ -198,123 +336,8 @@
         tabno=$(this).index();
         $('.parts').eq(tabno).css({display:"block"});
       });
-      //function to save the modal details of bank account to the table as a row i.e appending a row with modal details 
-      $('#account_save').click(function(){
-        //fetching all the values entered by user in modal fields
-        var accnt_id=$('#account_identifier').val();
-        var entity_name=$('#entity_name').val();
-        var holder_name=$('#holder_name').val();
-        var bank_name=$('#bank_name').val();
-        var account_number=$('#account_number').val();
-        var ifsc_code=$('#ifsc_code').val();
-        var notes=$('#notes').val();
-        if(account_edit_row==-1){
-
-          accountList[accountrow]={};
-          accountList[accountrow].account_identifier=accnt_id;
-          accountList[accountrow].entity_name=entity_name;
-          accountList[accountrow].holder_name=holder_name;
-          accountList[accountrow].bank_name=bank_name;
-          accountList[accountrow].account_number=account_number;
-          accountList[accountrow].ifsc_code=ifsc_code;
-          accountList[accountrow].notes=notes;
-
-
-
-          var i=0;
-          var elementObject={};
-          var rowObject=$(document.createElement("tr")).attr({"id":"account-row-"+accountrow,"class":"account-row"});
-          var className="account-row";
-          $.each(accountList[i],function(key,value){
-            elementObject[i]={etype:"span",innerHTML:value};
-            i++;
-          });
-          elementObject[i]={etype:"div",innerHTML:'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="'+className+'-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul>'};
-          rowObject=addTableRow(elementObject,rowObject);
-          $('#items tbody #addItem').append(rowObject);
-
-          $('#company-bank-accounts tbody').append('<tr id="account-row-'+accountrow+'"></tr>');
-          save(accountList,accountrow,'#account-row-'+accountrow);
-          accountrow++;
-        }
-        else{
-          accountList[account_edit_row].account_identifier=accnt_id;
-          accountList[account_edit_row].entity_name=entity_name;
-          accountList[account_edit_row].holder_name=holder_name;
-          accountList[account_edit_row].bank_name=bank_name;
-          accountList[account_edit_row].account_number=account_number;
-          accountList[account_edit_row].ifsc_code=ifsc_code;
-          accountList[account_edit_row].notes=notes;
-
-          save(accountList,account_edit_row,'#account-row-'+account_edit_row);
-        }
-        $('#accountModal').modal('hide');
-        $('#accountModal input').val("");
-      });
-      //function to save the modal details of branch to the table as a row i.e appending a row with modal details 
-      $('#branch_save').click(function(){
-        //fetching all the values entered by user in modal fields
-        var gstin=$('#gstin').val();
-        var b_name=$('#branch_name').val();
-        var phone=$('#phone').val();
-        var email=$('#email_id').val();
-        var address=$('#address').val();
-        var city=$('#city').val();
-        var state_id=$('#state_id').val();
-        var country_id=$('#country_id').val();
-        var pincode=$('#pin_code').val();
-        if(branch_edit_row==-1){
-
-          branchList[branch_row]={};
-          branchList[branch_row].gstin=gstin;
-          branchList[branch_row].branch_name=b_name;
-          branchList[branch_row].phone=phone;
-          branchList[branch_row].email_id=email;
-          branchList[branch_row].address=address;
-          branchList[branch_row].city=city;
-          branchList[branch_row].state_id=state_id;
-          branchList[branch_row].country_id=country_id;
-          branchList[branch_row].pin_code=pincode;
-
-          var i=0;
-          var elementObject={};
-          var rowObject=$(document.createElement("tr")).attr({"id":"branch-row-"+branch_row,"class":"branch-row"});
-          var className="branch-row";
-          $.each(branchList[i],function(key,value){
-            elementObject[i]={etype:"span",innerHTML:value};
-            i++;
-          });
-          elementObject[i]={etype:"div",innerHTML:'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><ul class="dropdown-menu dropdown-menu-right"><li><a href="#" class="'+className+'-edit" >{{ "Edit" }}</a></li><li><button class="delete-link" title="Delete">Delete</button></li></ul>'};
-          rowObject=addTableRow(elementObject,rowObject);
-          $('#items tbody #addItem').append(rowObject);
-
-          $('#company-branches tbody').append('<tr id="branch-row-'+branch_row+'"></tr>');
-          save(branchList,branch_row,'#branch-row-'+branch_row);
-
-          branch_row++;
-        }
-        else{
-          branchList[branch_edit_row].gstin=gstin;
-          branchList[branch_edit_row].branch_name=b_name;
-          branchList[branch_edit_row].phone=phone;
-          branchList[branch_edit_row].email_id=email;
-          branchList[branch_edit_row].address=address;
-          branchList[branch_edit_row].city=city;
-          branchList[branch_edit_row].state_id=state_id;
-          branchList[branch_edit_row].country_id=country_id;
-          branchList[branch_edit_row].pin_code=pincode;
-          save(branchList,branch_edit_row,'#branch-row-'+branch_edit_row);
-        }
-            
-        $('#branchesModal').modal('hide');
-        $('#branchesModal input').val("");
-      });
-      $('#branchesModal,#accountModal').on('hidden.bs.modal',function(){
-        $('#branchesModal input,#branchesModal select,#branchesModal textarea').val("");
-        $('#accountModal input,#accountModal select,#accountModal textarea').val("");
-        account_edit_row=-1;
-        branch_edit_row=-1;
-      });
+      
+      
       //function to open the modal with filled details as the user clicks on edit on any row of bank accounts
       $('#company-bank-accounts tbody').on('click','.account-edit',function(){
         var row=$(this).parent().parent().parent().parent().parent();

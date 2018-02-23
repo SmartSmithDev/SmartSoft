@@ -16,6 +16,7 @@
     <section class="content">
         @include('flash::message')
         @yield('content')
+        @stack('modal')
 
     </section>
     <!-- /.content -->
