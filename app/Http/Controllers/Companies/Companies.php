@@ -33,8 +33,8 @@ class Companies extends Controller
         $companies=Company::all();
         $states = State::all()->pluck('name' ,'id');
         $city=["Mumbai"=>"Mumbai","anycity"=>"anycity"];
-        $country=DB::table('countries')->get()->pluck('name','id');
-        return view('company.company.create',compact('companies','states','city','country'));
+        $countries=DB::table('countries')->get()->pluck('name','id');
+        return view('company.company.create',compact('companies','states','city','countries'));
     }
     /**
      * Store a newly created resource in storage.
@@ -75,7 +75,7 @@ class Companies extends Controller
     {
         $states = State::all()->pluck('name' ,'id');
         $city=["Mumbai"=>"Mumbai","anycity"=>"anycity"];
-        $country=DB::table('countries')->get()->pluck('name','id');
+        $countries=DB::table('countries')->get()->pluck('name','id');
         $company=Company::find($id);
         $company_accounts=Company::find($id)->companyBankAccount()->get();
         $company_branches=Company::find($id)->companyBranch()->get();
@@ -86,7 +86,7 @@ class Companies extends Controller
             $branch->country_id=Country::where("name",$branch->country)->pluck('id')->toArray()[0];
         
         }
-        return view("company.company.edit",compact("company","company_accounts","company_branches","states","city","country")); 
+        return view("company.company.edit",compact("company","company_accounts","company_branches","states","city","countries")); 
     }
     /**
      * Update the specified resource in storage.
@@ -133,7 +133,7 @@ class Companies extends Controller
          $country=Country::where("id",$branch["country_id"])->first()->name;
          $gstin=CompanyGstin::create(["gstin"=>$branch['gstin'],"company_id"=>$cid,"state_id"=>$branch['state_id']]);
          $gstin_id=$gstin->id;
-         $branch_row=CompanyBranch::create(["company_id"=>$cid,"gstin_id"=>$gstin_id,"branch_name"=>$branch['branch_name'],"phone"=>$branch['phone'],"email_id"=>$branch['email_id'],"address"=>$branch['address'],"city"=>$branch['city'],"state_id"=>$branch['state_id'],"country"=>$country,"pin_code"=>$branch['pin_code']]);
+         $branch_row=CompanyBranch::create(["company_id"=>$cid,"gstin_id"=>$gstin_id,"branch_name"=>$branch['branch_name'],"phone"=>$branch['branch_phone'],"email_id"=>$branch['email_id'],"address"=>$branch['address'],"city"=>$branch['city'],"state_id"=>$branch['state_id'],"country"=>$country,"pin_code"=>$branch['pin_code']]);
      }
  }
      if(!empty($accounts)){
